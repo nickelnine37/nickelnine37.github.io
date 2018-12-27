@@ -204,18 +204,18 @@ y = \mathbf{w^{\top}}\phi + \nu \quad \text{where} \quad \nu \sim N(0, \sigma_{y
 $$</div>
 <p>So that means</p>
 <div class="math">$$
-\mathrm{E}[\mathbf{w^{\top}}\phi] = \mathbf{w}_{N}^{\top}\phi \quad \text{and} \quad \mathrm{Var}[\mathbf{w^{\top}}\phi] = \phi^{\top}V_{N} \phi
+\mathrm{E}[\mathbf{w^{\top}}\phi] = \mathbf{w}_{N}^{\top}\phi \quad \text{and} \quad \mathrm{Var}[\mathbf{w^{\top}}\phi] = \phi^{\top}\Sigma_{N} \phi
 $$</div>
 <p>so
 </p>
 <div class="math">$$
-p(\mathbf{w^{\top}}\phi) = \mathcal{N}(f; \; \mathbf{w}_{N}^{\top}\phi, \; \phi^{\top}V_{N} \phi)
+p(\mathbf{w^{\top}}\phi) = \mathcal{N}(f; \; \mathbf{w}_{N}^{\top}\phi, \; \phi^{\top}\Sigma_{N} \phi)
 $$</div>
 <p>
 After adding the Gaussian noise
 </p>
 <div class="math">$$
-p(y, \mathbf{x}, \mathcal{D}) = \mathcal{N}(f; \; \mathbf{w}_{N}^{\top}\phi, \;  \phi^{\top}V_{N} \phi + \sigma_{y}^{2})
+p(y, \mathbf{x}, \mathcal{D}) = \mathcal{N}(f; \; \mathbf{w}_{N}^{\top}\phi, \;  \phi^{\top}\Sigma_{N} \phi + \sigma_{y}^{2})
 $$</div>
 <p>Oh yeahhhh</p>
 <h3>Implementation</h3>
