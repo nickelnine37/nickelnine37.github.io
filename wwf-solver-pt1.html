@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta charset="utf-8" content="text/html" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<title>A Quick and Dirty Words With Friends Solver: Part 1</title>
+<meta content="True" name="HandheldFriendly"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="origin" name="referrer"/>
+<meta content="Pelican" name="generator"/>
+<link href="" rel="canonical"/>
+<!-- Feed -->
+<link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+<!-- Code highlight color scheme -->
+<link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+<!-- CSS specified by the user -->
+<link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css">
+<!-- Custom fonts -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<link href="/wwf-solver-pt1.html" rel="canonical"/>
+<meta content="A quick and dirty solver for all your words with friends woes. Part 1" name="description"/>
+<meta content="Edward Antonian" name="author"/>
+<meta content="words with friends" name="tags"/>
+<meta content="solver" name="tags"/>
+<meta content="scrabble" name="tags"/>
+<meta content="python" name="tags"/>
+<meta content="" property="og:locale">
+<meta content="PA2" property="og:site_name">
+<meta content="website" property="og:type">
+<meta content="PA2" property="og:title">
+<meta content="View the blog." property="og:description">
+<meta content="" property="og:url">
+<meta content="/static/images/contact-bg.jpg" property="og:image"/>
+<meta content="https://facebook.com/myprofile" property="article:publisher"/>
+<meta content="article" property="og:type"/>
+<meta content="/author/edward-antonian.html" property="article:author"/>
+<meta content="/wwf-solver-pt1.html" property="og:url"/>
+<meta content="A Quick and Dirty Words With Friends Solver: Part 1" property="og:title"/>
+<meta content="2018-05-31 00:00:00+01:00" property="article:published_time"/>
+<meta content="A quick and dirty solver for all your words with friends woes. Part 1" property="og:description"/>
+<meta content="/static/images/contact-bg.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@myprofile" name="twitter:site"/>
+<meta content="A Quick and Dirty Words With Friends Solver: Part 1" name="twitter:title"/>
+<meta content="/wwf-solver-pt1.html" name="twitter:url"/>
+<meta content="/static/images/contact-bg.jpg" name="twitter:image:src"/>
+<meta content="A quick and dirty solver for all your words with friends woes. Part 1" name="twitter:description"/>
+</meta></meta></meta></meta></meta></meta></link></meta></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+<nav id="menu">
+<a class="close-button">Close</a>
+<div class="nav-wrapper">
+<p class="nav-label">Menu</p>
+<ul><li role="presentation"><a href="pages/about.html">About</a></li><li role="presentation"><a href="archives.html">Archive</a></li>
+</ul>
+</div>
+</nav>
+<!-- Progressbar -->
+<div class="progress-container">
+<span class="progress-bar"></span>
+</div>
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="has-cover" id="post-header">
+<div class="inner">
+<nav id="navigation">
+<span class="nav-button" id="home-button">
+<a class="home-button" href="index.html" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+</span>
+<span class="nav-button" id="menu-button">
+<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+</span>
+</nav>
+<h1 class="post-title">A Quick and Dirty Words With Friends Solver: Part 1</h1>
+<!-- TODO : Proper class for headline -->
+<span class="post-meta">
+<a href="/author/edward-antonian.html">Edward antonian</a>
+            | <time datetime="Thu 31 May 2018">Thu 31 May 2018</time>
+</span>
+<!-- TODO : Modified check -->
+<span class="post-meta"> | Updated on Thu 31 May 2018</span>
+<div class="post-cover cover" style="background-image: url('static/images/contact-bg.jpg')">
+</div>
+</div></header>
+<section id="wrapper">
+<a class="hidden-close"></a>
+<!-- Post content -->
+<main class="content" role="main">
+<article class="post">
+<div class="inner">
+<section class="post-content">
+<h1>A Quick and Dirty Words With Friends Solver: Part 1</h1>
+<h2>It's not cheating it's science</h2>
+<p>We've all been there. You're 50 points and two games down on words with friends. The pain and humiliation is beginning to get very real. If you don't turn this around you will probably have to change your name and go live in a forest somewhere. It's crunch time. </p>
+<p>Whilst most normal people would just accept defeat and spend a couple of days nursing a bruised ego, I simply could not. Instead, I spent those two days building this: a words with friends solver in Python. Ha! Who's a loser now!</p>
+<p>For those that don't know, words with friends is essentially budget/american scrabble. I've recently found myself playing tonne of games on the facebook messenger app and I have to say it's both very fun and very addictive. But it got me thinking. How easy would it be for a computer to comprehensively search through every single permutation of possible letter placements and find the highest scoring word? The total number of possibilities when it comes to combinations and permutations gets out of hand very quickly, with pesky factorials popping up all over the shop, but I hoped that with just seven letters on an 11x11 board the numbers would stay manageable. And I'm happy to say that for the most part, they do! In fact, the solver is more or less instanteneous. </p>
+<p>If you just want to beat your mates and aren't interested in how it's done, head over to the <a href="https://github.com/nickelnine37/words_with_friends_solver">github repo</a>, clone it and follow the instructions in the README:). </p>
+<p>So. How is it done?</p>
+<p>I'm going to break this down into two posts. The first will just set up the basic mechanics of the board and take a quick look at how to start building a solver. The second will go in depth on how to find the best solution for a given board. </p>
+<h2>1.1 The WWF Dictionary</h2>
+<p>The first thing to note is that the WWF dictionary is based off of 'ENABLE', which is a specific set of words. It also has some naughty words removed and some modern words added. Unfortunately the company doesn't tell you ecactly which words are included but <a href="http://www.greenworm.net/notes/2011/05/02/words-friends-wordlist">this post</a> does a bit of detective work to try and work it out. Using that, I was able to create what I believe is a <em>pretty</em> accurate WWF dictionary and save it to the file <code>dictionary.txt</code> which you can download from the repo. As you might imagine, the code involves searching through this dictionary a lot, so the first thing I wanted to do is sort this dictionary into (confusingly) a python dictionary, with 27^3 (because we include a blank letter in case the word is less than three letters long) keys, which are the first three letters of a word. That way, if we want to know whether 'splines' is actually a word we only have to search through the set of words beginning with 'spl', which is much faster. </p>
+<div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'dictionary.txt'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">dictionary</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">sort_dict</span><span class="p">():</span>
+    <span class="sd">'''A function to sort the dictionary by the first </span>
+<span class="sd">    three letters of each word'''</span>
+
+    <span class="n">sorted_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">alphabet</span> <span class="o">=</span> <span class="s1">'abcdefghijklmnopqrstuvwxyz '</span>
+
+    <span class="k">for</span> <span class="n">letter1</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">letter2</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">letter3</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
+                <span class="n">sorted_dict</span><span class="p">[</span><span class="n">letter1</span> <span class="o">+</span> <span class="n">letter2</span> <span class="o">+</span> <span class="n">letter3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">:</span>
+
+        <span class="n">starting_letters</span> <span class="o">=</span> <span class="n">word</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">starting_letters</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">sorted_dict</span><span class="p">[</span><span class="n">starting_letters</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">sorted_dict</span><span class="p">[</span><span class="n">starting_letters</span> <span class="o">+</span> <span class="s1">' '</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">sorted_dict</span><span class="p">[</span><span class="n">starting_letters</span> <span class="o">+</span> <span class="s1">'  '</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sorted_dict</span>
+
+<span class="n">sorted_dict</span> <span class="o">=</span> <span class="n">sort_dict</span><span class="p">()</span>
+</pre></div>
+<p>The next step is to build a function that queries whether a word is in the dictionary or not, which is pretty simple. </p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+    <span class="sd">'''Find out whether a word is in the dictionary'''</span>
+
+    <span class="n">starting_letters</span> <span class="o">=</span> <span class="n">word</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">starting_letters</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sorted_dict</span><span class="p">[</span><span class="n">starting_letters</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sorted_dict</span><span class="p">[</span><span class="n">starting_letters</span> <span class="o">+</span> <span class="s1">' '</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sorted_dict</span><span class="p">[</span><span class="n">starting_letters</span> <span class="o">+</span> <span class="s1">'  '</span><span class="p">]</span>
+</pre></div>
+<h2>1.2 The Board Set-up</h2>
+<p>The next thing to do is to set up the dimensions and mechanics of the words with friends board. Below is a picture of an empty board. </p>
+<p><img alt="Image" src="images/board.png"/></p>
+<p>We can specify the (x, y) coordinates (from 0 to 10) of each of the four differennt power-ups and also the number of points each letter is worth. </p>
+<div class="highlight"><pre><span></span><span class="c1"># double letter coordinates</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+       <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+
+<span class="c1"># triple letter coordinates</span>
+<span class="n">tls</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+       <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+
+<span class="c1"># double word coordinates</span>
+<span class="n">dws</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+       <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
+
+<span class="c1"># triple word coordinates</span>
+<span class="n">tws</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+       <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)]</span>
+
+<span class="c1"># letter values</span>
+<span class="n">points</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="s1">'f'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'g'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'h'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'i'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'j'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+          <span class="s1">'k'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">'l'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'m'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'n'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="s1">'p'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'q'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'s'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'t'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="s1">'u'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'v'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'x'</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>  <span class="s1">'y'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+          <span class="s1">'z'</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</pre></div>
+<p>The next task is to creat a <code>Board</code> class that holds information about the board. The <code>__init__</code> method creates two key vairables. Namely <code>letters</code> and <code>powers</code>. These are NumPy character arrays that hold the letters currently on the board, and the unactivated power-ups. The reason I choose to use a NumPy array as opposed to just a set of lists is it makes slicing and indexing a little more natural, making it easier to extract a specific row or column.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">Board</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">letters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">chararray</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">itemsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">powers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">chararray</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">itemsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dls</span><span class="p">:</span>
+                    <span class="n">power</span> <span class="o">=</span> <span class="s1">'dlr'</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tls</span><span class="p">:</span>
+                    <span class="n">power</span> <span class="o">=</span> <span class="s1">'tlr'</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dws</span><span class="p">:</span>
+                    <span class="n">power</span> <span class="o">=</span> <span class="s1">'dwr'</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tws</span><span class="p">:</span>
+                    <span class="n">power</span> <span class="o">=</span> <span class="s1">'twr'</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">power</span> <span class="o">=</span> <span class="s1">''</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="s1">''</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">powers</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">power</span>
+</pre></div>
+<p>In order to make it quick and easy to edit letters on the a board and get a solutinon out, I need a function that ingests a string representation of the board, adding it the class variable. The board string needs to be of the form:</p>
+<div class="highlight"><pre><span></span><span class="n">board_string</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">  A   B   C   D   E   F   G   H   I   J   K</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 1</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 2</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 3</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 4</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 5</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   | w | o | r | d | s |   | 6</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 7</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 8</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 9</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 10</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 11</span>
+<span class="s1"> --------------------------------------------</span>
+<span class="s1">'''</span>
+</pre></div>
+<p>That way you can then go in to the Python file and edit the letters individually with ease. The ingestion function is</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ingest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board_string</span><span class="p">):</span>
+    <span class="sd">'''A method to take the string representation</span>
+<span class="sd">    of the board and add it to the class variable self.letters'''</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">board_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+
+        <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">2</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">new_row</span> <span class="o">=</span> <span class="p">[</span><span class="s1">''</span> <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">' '</span> <span class="k">else</span> <span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">new_row</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">[:,</span> <span class="mi">10</span> <span class="o">-</span> <span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_row</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">new_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">powers</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">10</span> <span class="o">-</span> <span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="s1">''</span>
+</pre></div>
+<p>Finally, we want a method to print out the current state of the board, either the powers or the letters. (I decided to keep them on seperate boards because it just all looks a little cluttered otherwise)</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_board</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board_type</span><span class="o">=</span><span class="s1">'letters'</span><span class="p">):</span>
+    <span class="sd">'''A method to print out the board'''</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s2">"  A   B   C   D   E   F   G   H   I   J   K  "</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">" "</span> <span class="o">+</span> <span class="s1">'-'</span> <span class="o">*</span> <span class="mi">11</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">board_type</span> <span class="o">==</span> <span class="s1">'letters'</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
+                    <span class="n">item</span> <span class="o">=</span> <span class="s1">' '</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">'| '</span> <span class="o">+</span> <span class="n">item</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">" "</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">'| {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">11</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'-'</span> <span class="o">*</span> <span class="mi">11</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">board_type</span> <span class="o">==</span> <span class="s1">'powers'</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">powers</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
+                    <span class="n">item</span> <span class="o">=</span> <span class="s1">'   '</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">'|'</span> <span class="o">+</span> <span class="n">item</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">'| {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">11</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'-'</span> <span class="o">*</span> <span class="mi">11</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+<h2>1.3 A Basic Solver</h2>
+<p>The most basic way in which you might want to search for solutions can be posed like this: given a set of <span class="math">\(n\)</span> letters, what possible words can we make from those? The way to solve this is simply to find every possible permutation of letters of length <span class="math">\(n\)</span> or less, and check each one against the dictionary. Python has some lovely functionality built in for finding combinations and permutations in the itertools module for just this type of thing. </p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span><span class="p">,</span> <span class="n">combinations</span>
+
+<span class="k">def</span> <span class="nf">find_words_simple</span><span class="p">(</span><span class="n">letters</span><span class="p">):</span>
+    <span class="sd">'''Find every possible word for a given set of letters'''</span>
+
+    <span class="n">all_combs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_perms</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+        <span class="n">all_combs</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">all_combs</span><span class="p">:</span>
+        <span class="n">all_perms</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">(</span><span class="n">comb</span><span class="p">)]</span>
+
+    <span class="n">all_perms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_perms</span><span class="p">)</span>
+    <span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">all_perms</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">perm</span><span class="p">):</span>
+            <span class="n">all_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">all_words</span>
+
+<span class="n">find_words_simple</span><span class="p">(</span><span class="s1">'jkros'</span><span class="p">)</span>
+</pre></div>
+<div class="highlight"><pre><span></span>['kors', 'ors', 'or', 'os', 'kos', 'so', 'jo', 'kor']
+</pre></div>
+<p>Thus concludes part 1. Read on in part 2 to find out how to use the Board class in conjunction with a Solver class to find the best possible move on a board. </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+</section>
+<section class="post-info">
+<div class="post-share">
+<a class="twitter" href="https://twitter.com/share?text=A Quick and Dirty Words With Friends Solver: Part 1&amp;url=/wwf-solver-pt1.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+<i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+</a>
+<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/wwf-solver-pt1.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+<i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+</a>
+<a class="googleplus" href="https://plus.google.com/share?url=/wwf-solver-pt1.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+<i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+</a>
+<div class="clear"></div>
+</div>
+<aside class="post-tags">
+<a href="/tag/words-with-friends.html">words with friends</a><a href="/tag/solver.html">solver</a><a href="/tag/scrabble.html">scrabble</a><a href="/tag/python.html">python</a> </aside>
+<div class="clear"></div>
+</section>
+<aside class="post-nav">
+<div class="clear"></div>
+</aside>
+</div>
+</article>
+</main>
+<!-- TODO : Body class -->
+<div class="" id="body-class" style="display: none;"></div>
+<footer id="footer">
+<div class="inner">
+<section class="credits">
+<span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+<span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+</section>
+</div>
+</footer>
+</section>
+<script src="/theme/js/script.js" type="text/javascript"></script>
+</body>
+</html>

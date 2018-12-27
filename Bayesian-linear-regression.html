@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta charset="utf-8" content="text/html" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<title>Bayesian Linear Regression - Closed form Expression</title>
+<meta content="True" name="HandheldFriendly"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="origin" name="referrer"/>
+<meta content="Pelican" name="generator"/>
+<link href="" rel="canonical"/>
+<!-- Feed -->
+<link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+<!-- Code highlight color scheme -->
+<link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+<!-- CSS specified by the user -->
+<link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css">
+<!-- Custom fonts -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<link href="/Bayesian-linear-regression.html" rel="canonical"/>
+<meta content="A colsed form expression for Bayesian Linear Regression with code" name="description"/>
+<meta content="Edward Antonian" name="author"/>
+<meta content="pelican" name="tags"/>
+<meta content="Machine Learning" name="tags"/>
+<meta content="Linear Regression" name="tags"/>
+<meta content="Bayesian" name="tags"/>
+<meta content="Probability" name="tags"/>
+<meta content="" property="og:locale">
+<meta content="PA2" property="og:site_name">
+<meta content="website" property="og:type">
+<meta content="PA2" property="og:title">
+<meta content="View the blog." property="og:description">
+<meta content="" property="og:url">
+<meta content="/static/images/contact-bg.jpg" property="og:image">
+<meta content="https://facebook.com/myprofile" property="article:publisher"/>
+<meta content="article" property="og:type"/>
+<meta content="/author/edward-antonian.html" property="article:author"/>
+<meta content="/Bayesian-linear-regression.html" property="og:url"/>
+<meta content="Bayesian Linear Regression - Closed form Expression" property="og:title"/>
+<meta content="2018-12-27 00:00:00+00:00" property="article:published_time"/>
+<meta content="A colsed form expression for Bayesian Linear Regression with code" property="og:description"/>
+<meta content="/static/images/contact-bg.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@myprofile" name="twitter:site"/>
+<meta content="Bayesian Linear Regression - Closed form Expression" name="twitter:title"/>
+<meta content="/Bayesian-linear-regression.html" name="twitter:url"/>
+<meta content="/static/images/contact-bg.jpg" name="twitter:image:src"/>
+<meta content="A colsed form expression for Bayesian Linear Regression with code" name="twitter:description"/>
+</meta></meta></meta></meta></meta></meta></meta></link></meta></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+<nav id="menu">
+<a class="close-button">Close</a>
+<div class="nav-wrapper">
+<p class="nav-label">Menu</p>
+<ul><li role="presentation"><a href="pages/about.html">About</a></li><li role="presentation"><a href="archives.html">Archive</a></li>
+</ul>
+</div>
+</nav>
+<!-- Progressbar -->
+<div class="progress-container">
+<span class="progress-bar"></span>
+</div>
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="has-cover" id="post-header">
+<div class="inner">
+<nav id="navigation">
+<span class="nav-button" id="home-button">
+<a class="home-button" href="index.html" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+</span>
+<span class="nav-button" id="menu-button">
+<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+</span>
+</nav>
+<h1 class="post-title">Bayesian Linear Regression - Closed form Expression</h1>
+<!-- TODO : Proper class for headline -->
+<span class="post-meta">
+<a href="/author/edward-antonian.html">Edward antonian</a>
+            | <time datetime="Thu 27 December 2018">Thu 27 December 2018</time>
+</span>
+<!-- TODO : Modified check -->
+<span class="post-meta"> | Updated on Thu 27 December 2018</span>
+<div class="post-cover cover" style="background-image: url('static/images/contact-bg.jpg')">
+</div>
+</div></header>
+<section id="wrapper">
+<a class="hidden-close"></a>
+<!-- Post content -->
+<main class="content" role="main">
+<article class="post">
+<div class="inner">
+<section class="post-content">
+<h3>That's one fine posterior</h3>
+<p>Hello all,</p>
+<p>It's been a while - apologies. Had a pretty hectic summer and autumn but rest assured I've got loads of posts in the pipeline. This one is going to take a slightly different format to the last. I'm going to show you some cool maths. Well I think it's cool anyway..</p>
+<p>So here's the brief back story.</p>
+<p>I came across an interesting formula in a course on the foundations of machine learning this semester at uni. It gave a relatively neat expression for the posterior probability distribution over the weights of a Bayesian linear regression model and comes form the textbook <a href="https://mitpress.mit.edu/books/machine-learning-1">"Machine Learning:
+A Probabilistic Perspective"</a> by Kevin Murphy.  It was also in a format that makes it easy to implement via array-based matrix operations in, say, numpy (ooooh yeah everyone's favourite hilariously-named python thing)</p>
+<p>In this short note I want to show you a derivation, because it's just really neat and I couldn't actually find one in any textbook or anywhere online. I'm not sure how widely spread this is but it's nothing particularly revolutionary - pretty easy to follow I hope. Then I'll also show a quick implementation in python which gives some cool looking graphs. Everyone loves a good graph...</p>
+<p>So let' get to it.</p>
+<p>TW: This post is going to take a more mathematical format and a certain level of familiarity with the topics involved will be assumed.</p>
+<h3>Finding the posterior</h3>
+<p>The whole idea of Bayesian machine learning is to compute or estimate the posteria distribution over the model parameters given some data. We start with a prior distribution, which reflects our beliefs before seeing the data, and then update it using Bayes rule. For many problems, this is impractical or impossible to compute directly, but linear regression represents one of the rare situations where the maths is actually tractable.</p>
+<p>As in many machine learning tasks we have some parameterised function <span class="math">\(f_{\mathbf{w}}(\mathbf{x})\)</span> which we use to approximate the observed values <span class="math">\(\mathbf{y}\)</span>. In the case of linear regression, our <span class="math">\(y\)</span>-estimates are going to be</p>
+<div class="math">$$
+f_{\mathbf{w}}(\mathbf{X}) = \mathbf{\hat{y}} = \Phi\mathbf{w}
+$$</div>
+<p>Here, <span class="math">\(\Phi\)</span> is our "design" matrix, where each row <span class="math">\(\phi(\mathbf{x})\)</span> is a set of basis functions of the point location <span class="math">\(\mathbf{x}\)</span>.</p>
+<p>We dont know initially what the weights are, so we represent out uncertainty by specifying a <em>prior</em> probability distribution which represents what we think these weights might be. We'll use a multivariate normal.</p>
+<div class="math">$$
+p(\mathbf{w}) = \mathcal{N}(\mathbf{w}; \mathbf{w_{0}}, \Sigma_{0})
+$$</div>
+<p>where <span class="math">\(\mathbf{w_{0}}\)</span> is the mean vector and <span class="math">\(\Sigma_{0}\)</span> is the covariance matrix. If we know absolutely nothing, a sensible starting point would just be a zero-mean, independant (diagonal covariance) distribution but we <em>could</em> already have other information that would lead us to believe otherwise.  </p>
+<p>Bayes rule tells us how we should update our beliefs to find the <em>posterior</em> distribution given some data.</p>
+<div class="math">$$
+p(\mathbf{w}|\mathcal{D}) = \frac{p(\mathbf{w})\; p(\mathcal{D}|\mathbf{w})}{p(\mathcal{D})}
+$$</div>
+<p>where <span class="math">\(\mathcal{D}\)</span> is our data. The joint probability distribution of observing our data, <span class="math">\(p(\mathcal{D}|\mathbf{w})\)</span>, given a set of weights will be the product of the probability distributions of observing each point individually. So</p>
+<div class="math">$$
+\begin{split}
+p(\mathbf{w}|\mathcal{D}) &amp;\propto p(\mathbf{w})\; p(\mathcal{D}|\mathbf{w})\newline
+&amp;\propto \mathcal{N}(\mathbf{w}; \mathbf{w_{0}}, \Sigma_{0}) \prod_{n}^{N} \mathcal{N}(y^{(n)}; \mathbf{w^{\top}}\phi^{(n)}, \sigma_{y}^{2})\newline
+&amp;\propto  \mathcal{N}(\mathbf{w}; \mathbf{w_{0}}, \Sigma_{0}) \; \mathcal{N}(\mathbf{y}; \Phi \mathbf{w}, \sigma_{y}^{2}\mathbb{I})
+\end{split}
+$$</div>
+<p>Where <span class="math">\(\sigma_{y}\)</span> os our estimate of the uncertainty on the measurement of <span class="math">\(y\)</span>. We can then plug in the formula for a multivariate Gaussian distribution which is</p>
+<div class="math">$$
+\mathcal{N}(\mathbf{x}; \mathbf{\mu}, \Sigma) = \frac{1}{(2 \pi)^{D/2}|\Sigma|^{1/2}} \exp\Big(-\frac{1}{2} (\mathbf{x} -\mathbf{\mu})^{\top} \Sigma^{-1} (\mathbf{x} -\mathbf{\mu})\Big)
+$$</div>
+<p>So, dropping the constants and fiddling around with the maths, we get</p>
+<div class="math">$$
+\begin{split}
+p(\mathbf{w}|\mathcal{D}) &amp;\propto \exp\Big(-\frac{1}{2}\big((\mathbf{w} -  \mathbf{w_{0}})^{\top}\Sigma_{0}^{-1}(\mathbf{w} -  \mathbf{w_{0}}) + \frac{1}{\sigma_{y}^{2}}(\mathbf{y} - \Phi \mathbf{w})^{\top}(\mathbf{y} - \Phi \mathbf{w})\big)\Big)\newline
+&amp;\propto \exp\Big(-\frac{1}{2}\big(\mathbf{w}^{\top}\Sigma_{0}^{-1}\mathbf{w} - 2 \mathbf{w}^{\top}\Sigma_{0}^{-1} \mathbf{w_{0}} + \mathbf{w_{0}}^{\top}\Sigma_{0}^{-1} \mathbf{w_{0}} + \frac{1}{\sigma_{y}^{2}}(\mathbf{y}^{\top}\mathbf{y} - 2\mathbf{w}^{\top}\Phi ^{\top} \mathbf{y} + \mathbf{w}^{\top}\Phi ^{\top} \Phi \mathbf{w})\big) \Big)\newline
+&amp;\propto \exp\Big(-\frac{1}{2}\big(\mathbf{w}^{\top}(\Sigma_{0}^{-1} +\frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \Phi) \mathbf{w}
+- 2 \mathbf{w}^{\top} (\Sigma_{0}^{-1} \mathbf{w_{0}} + \frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \mathbf{y}) +
+\mathbf{w_{0}}^{\top}\Sigma_{0}^{-1} \mathbf{w_{0}} +
+\frac{1}{\sigma_{y}^{2}}\mathbf{y}^{\top}\mathbf{y} \big) \Big)\newline
+&amp;\propto \exp\Big(-\frac{1}{2}\big(\mathbf{w}^{\top}(\Sigma_{0}^{-1} +\frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \Phi) \mathbf{w}
+- 2 \mathbf{w}^{\top} (\Sigma_{0}^{-1} \mathbf{w_{0}} + \frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \mathbf{y}) \big) \Big)
+\end{split}
+$$</div>
+<p>Brutal to look at, yes, but hopefully each step shouldn't be too hard to follow. Any terms that don't contain <span class="math">\(\mathbf{w}\)</span> we can just drop out of the exponential and incorporate into the proportionality.</p>
+<p>Now, notice how a normal distribution with mean <span class="math">\(\mathbf{w_{N}}\)</span> and covariance <span class="math">\(\Sigma_{N}\)</span> would expand</p>
+<div class="math">$$
+\begin{split}
+\mathcal{N}(\mathbf{w}; \mathbf{w_{N}}, \Sigma_{N}) &amp;\propto \exp\Big(-\frac{1}{2}\big(\mathbf{w} -  \mathbf{w_{N}})^{\top}\Sigma_{N}^{-1}(\mathbf{w} -  \mathbf{w_{N}}) \Big)\newline
+&amp;\propto \exp\Big(-\frac{1}{2}\big(\mathbf{w}^{\top}\Sigma_{N}^{-1}\mathbf{w} - 2 \mathbf{w}^{\top}\Sigma_{N}^{-1} \mathbf{w_{N}} + \mathbf{w_{N}}^{\top}\Sigma_{N}^{-1} \mathbf{w_{N}} \big) \Big)\newline
+&amp;\propto \exp\Big(-\frac{1}{2}\big(\mathbf{w}^{\top}\Sigma_{N}^{-1}\mathbf{w} - 2 \mathbf{w}^{\top}\Sigma_{N}^{-1} \mathbf{w_{N}} \big) \Big)\newline
+\end{split}
+$$</div>
+<p>Note that we are using the fact that the covariance matrix is symmetric to combine some terms.</p>
+<p>At this point, we can look back at the expression we already computed for the posterior. By comparing term for term we can see that</p>
+<div class="math">$$
+\Sigma_{N}^{-1} =  (\Sigma_{0}^{-1} +\frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \Phi)
+$$</div>
+<p>and</p>
+<div class="math">$$
+\Sigma_{N}^{-1} \mathbf{w_{N}} = (\Sigma_{0}^{-1} \mathbf{w_{0}} + \frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \mathbf{y})
+$$</div>
+<p>So after a little more jollying around with linear algebra (if you've followed to this point I'm sure you can do it) we get</p>
+<div class="math">$$
+\Sigma_{N} = \sigma_{y}^{2} (\sigma_{y}^{2} \Sigma_{0}^{-1} + \Phi ^{\top} \Phi)^{-1}
+$$</div>
+<p>and</p>
+<div class="math">$$
+\mathbf{w_{N}} = \Sigma_{N} (\Sigma_{0}^{-1} \mathbf{w_{0}} + \frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \mathbf{y})
+$$</div>
+<p>So there we have it! We've found the posterior.</p>
+<div class="math">$$
+p(\mathbf{w}|\mathcal{D}) = \mathcal{N}(\mathbf{w}; \mathbf{w_{N}}, \Sigma_{N})
+$$</div>
+<p>Where</p>
+<div class="math">$$
+\mathbf{w_{N}} = \Sigma_{N} (\Sigma_{0}^{-1} \mathbf{w_{0}} + \frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \mathbf{y}) \quad \text{and} \quad \Sigma_{N} = \sigma_{y}^{2} (\sigma_{y}^{2} \Sigma_{0}^{-1} + \Phi ^{\top} \Phi)^{-1}
+$$</div>
+<h3>Prediction</h3>
+<p>Ok so that's great - what can we do with this? Well, we could drawy from this distibution to give a set of plausible curves. Or, better still, for a new data point we could output a best guess with an accompanying uncertainty. But how do we get this? We can get the probability distribution over <span class="math">\(y\)</span> by integrating all the probability distributions that we could get or a certain set of model parameters, and then weight each element according to how plausible we believe it is given our posterior beliefs.</p>
+<div class="math">$$
+p(y|\mathbf{x}, \mathcal{D}) = \int p(y, | \mathbf{x}, \mathbf{w}) \, p(\mathbf{w}|\mathcal{D}) \; d \mathbf{w}
+$$</div>
+<p>If we knew perfectly what the weights were, then the only uncertainy on our output would be the inherent noise in the data. So</p>
+<div class="math">$$
+p(y, | \mathbf{x}, \mathbf{w}) = \mathcal{N}(y; \mathbf{w^{\top}}\phi, \sigma_{y}^{2})
+$$</div>
+<p>So
+</p>
+<div class="math">$$
+p(y|\mathbf{x}, \mathcal{D}) = \int \mathcal{N}(y; \mathbf{w^{\top}}\phi, \sigma_{y}^{2}) \; \mathcal{N}(\mathbf{w}; \mathbf{w_{N}}, \Sigma_{N}) \; d \mathbf{w}
+$$</div>
+<p>Hmmmm.... I mean, we <em>could</em> do this integral but we're lazy. There's an easier way. Assuming the prediction is a Gaussian, we can reason about its form without doing this integral explicitly. We know the output <span class="math">\(y\)</span> should be a noisy Gaussian centred around the function output, that is</p>
+<div class="math">$$
+y = \mathbf{w^{\top}}\phi + \nu \quad \text{where} \quad \nu \sim N(0, \sigma_{y}^{2})
+$$</div>
+<p>So that means</p>
+<div class="math">$$
+\mathrm{E}[\mathbf{w^{\top}}\phi] = \mathbf{w}_{N}^{\top}\phi \quad \text{and} \quad \mathrm{Var}[\mathbf{w^{\top}}\phi] = \phi^{\top}V_{N} \phi
+$$</div>
+<p>so
+</p>
+<div class="math">$$
+p(\mathbf{w^{\top}}\phi) = \mathcal{N}(f; \; \mathbf{w}_{N}^{\top}\phi, \; \phi^{\top}V_{N} \phi)
+$$</div>
+<p>
+After adding the Gaussian noise
+</p>
+<div class="math">$$
+p(y, \mathbf{x}, \mathcal{D}) = \mathcal{N}(f; \; \mathbf{w}_{N}^{\top}\phi, \;  \phi^{\top}V_{N} \phi + \sigma_{y}^{2})
+$$</div>
+<p>Oh yeahhhh</p>
+<h3>Implementation</h3>
+<p>First we'll just make a simple class to represent Gaussians. Nothing much going on here, just makes saving and sampling from them a little neater.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="k">class</span> <span class="nc">Gaussian</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">mean</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span>
+
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+</pre></div>
+<p>Next, we'll create some fake noisy data. We'll we using a cubic polynomial with some Gaussian uncertainty added in.</p>
+<div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">38</span><span class="p">)</span> <span class="c1">#started with 37 but it looked crap :'(</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">make_y</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y_unc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_unc</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">y_unc</span> <span class="o">=</span> <span class="mf">0.008</span>
+<span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">make_y</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">y_unc</span><span class="p">)</span>
+</pre></div>
+<p>Cool, now lets make the <span class="math">\(\Phi\)</span> matrix by doing a cubic polynomial basis function transformation</p>
+<div class="highlight"><pre><span></span><span class="n">Phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+<p>and set up the prior distributions</p>
+<div class="highlight"><pre><span></span><span class="n">prior_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">prior_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">prior_cov_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">prior_cov</span><span class="p">)</span>
+<span class="n">prior</span> <span class="o">=</span> <span class="n">Gaussian</span><span class="p">(</span><span class="n">prior_mean</span><span class="p">,</span> <span class="n">prior_cov</span><span class="p">)</span>
+</pre></div>
+<p>We can then use our snazzy formula to compute the posterior distribution.</p>
+<div class="highlight"><pre><span></span><span class="n">posterior_cov</span> <span class="o">=</span> <span class="n">y_unc</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">y_unc</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">prior_cov_inv</span> <span class="o">+</span> <span class="n">Phi</span><span class="o">.</span><span class="n">T</span> <span class="err">@</span> <span class="n">Phi</span><span class="p">)</span>
+<span class="n">posterior_mean</span> <span class="o">=</span> <span class="n">posterior_cov</span> <span class="err">@</span> <span class="p">(</span><span class="n">prior_cov_inv</span> <span class="err">@</span> <span class="n">prior_mean</span> <span class="o">+</span> <span class="n">Phi</span><span class="o">.</span><span class="n">T</span> <span class="err">@</span> <span class="n">y</span> <span class="o">/</span> <span class="n">y_unc</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">posterior</span> <span class="o">=</span> <span class="n">Gaussian</span><span class="p">(</span><span class="n">posterior_mean</span><span class="p">,</span> <span class="n">posterior_cov</span><span class="p">)</span>
+</pre></div>
+<p>We'll then do two things. We're gonna make two plots. One where 25 possible curves have been randomly sampled. Another where we have literally calculated the uncertainty on each <span class="math">\(y\)</span>-point along the curve.</p>
+<div class="highlight"><pre><span></span><span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">phi_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x_axis</span><span class="p">),</span> <span class="n">x_axis</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">**</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">phi_axis</span> <span class="err">@</span> <span class="n">posterior_mean</span>
+<span class="n">uncs</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span>  <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">phi_axis</span> <span class="err">@</span> <span class="n">posterior_cov</span> <span class="err">@</span> <span class="n">phi_axis</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+</pre></div>
+<p>Our polynomial function is just goig to use numpy's built in <code>poly1d</code> function.</p>
+<div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">w</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x_axis</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">posterior</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)])</span>
+</pre></div>
+<p>Oh yeah it's plotting time baby.</p>
+<div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#75d8d5'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n_samples</span> <span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#65323e'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#94D0FF'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_axis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">uncs</span><span class="p">),</span> <span class="p">(</span><span class="n">mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">uncs</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#AD8CFF'</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.57</span><span class="p">,</span> <span class="s1">'a)'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.57</span><span class="p">,</span> <span class="s1">'b)'</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">'Bayesian Linear Regression - Cubic Polynomial'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+<p><img alt="BLR1.png" src="images/BLR1.png"/>
+<img alt="BLR2.png" src="images/BLR2.png"/></p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+</section>
+<section class="post-info">
+<div class="post-share">
+<a class="twitter" href="https://twitter.com/share?text=Bayesian Linear Regression - Closed form Expression&amp;url=/Bayesian-linear-regression.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+<i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+</a>
+<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/Bayesian-linear-regression.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+<i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+</a>
+<a class="googleplus" href="https://plus.google.com/share?url=/Bayesian-linear-regression.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+<i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+</a>
+<div class="clear"></div>
+</div>
+<aside class="post-tags">
+<a href="/tag/pelican.html">pelican</a><a href="/tag/machine-learning.html">Machine Learning</a><a href="/tag/linear-regression.html">Linear Regression</a><a href="/tag/bayesian.html">Bayesian</a><a href="/tag/probability.html">Probability</a> </aside>
+<div class="clear"></div>
+</section>
+<aside class="post-nav">
+<div class="clear"></div>
+</aside>
+</div>
+</article>
+</main>
+<!-- TODO : Body class -->
+<div class="" id="body-class" style="display: none;"></div>
+<footer id="footer">
+<div class="inner">
+<section class="credits">
+<span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+<span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+</section>
+</div>
+</footer>
+</section>
+<script src="/theme/js/script.js" type="text/javascript"></script>
+</body>
+</html>

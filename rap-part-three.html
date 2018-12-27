@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta charset="utf-8" content="text/html" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<title>Rap Skills Analysis: A Computational Approach part 3</title>
+<meta content="True" name="HandheldFriendly"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="origin" name="referrer"/>
+<meta content="Pelican" name="generator"/>
+<link href="" rel="canonical"/>
+<!-- Feed -->
+<link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+<!-- Code highlight color scheme -->
+<link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+<!-- CSS specified by the user -->
+<link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css">
+<!-- Custom fonts -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<link href="/rap-part-three.html" rel="canonical"/>
+<meta content="The third and final entry in a series on some data analysis into rap lyrics." name="description"/>
+<meta content="Edward Antonian" name="author"/>
+<meta content="data science" name="tags"/>
+<meta content="python" name="tags"/>
+<meta content="natural language processing" name="tags"/>
+<meta content="rap" name="tags"/>
+<meta content="hip hop" name="tags"/>
+<meta content="" property="og:locale">
+<meta content="PA2" property="og:site_name">
+<meta content="website" property="og:type">
+<meta content="PA2" property="og:title">
+<meta content="View the blog." property="og:description">
+<meta content="" property="og:url">
+<meta content="/static/images/contact-bg.jpg" property="og:image">
+<meta content="https://facebook.com/myprofile" property="article:publisher"/>
+<meta content="article" property="og:type"/>
+<meta content="/author/edward-antonian.html" property="article:author"/>
+<meta content="/rap-part-three.html" property="og:url"/>
+<meta content="Rap Skills Analysis: A Computational Approach part 3" property="og:title"/>
+<meta content="2017-10-30 00:00:00+00:00" property="article:published_time"/>
+<meta content="The third and final entry in a series on some data analysis into rap lyrics." property="og:description"/>
+<meta content="/static/images/contact-bg.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@myprofile" name="twitter:site"/>
+<meta content="Rap Skills Analysis: A Computational Approach part 3" name="twitter:title"/>
+<meta content="/rap-part-three.html" name="twitter:url"/>
+<meta content="/static/images/contact-bg.jpg" name="twitter:image:src"/>
+<meta content="The third and final entry in a series on some data analysis into rap lyrics." name="twitter:description"/>
+</meta></meta></meta></meta></meta></meta></meta></link></meta></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+<nav id="menu">
+<a class="close-button">Close</a>
+<div class="nav-wrapper">
+<p class="nav-label">Menu</p>
+<ul><li role="presentation"><a href="pages/about.html">About</a></li><li role="presentation"><a href="archives.html">Archive</a></li>
+</ul>
+</div>
+</nav>
+<!-- Progressbar -->
+<div class="progress-container">
+<span class="progress-bar"></span>
+</div>
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="has-cover" id="post-header">
+<div class="inner">
+<nav id="navigation">
+<span class="nav-button" id="home-button">
+<a class="home-button" href="index.html" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+</span>
+<span class="nav-button" id="menu-button">
+<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+</span>
+</nav>
+<h1 class="post-title">Rap Skills Analysis: A Computational Approach part 3</h1>
+<!-- TODO : Proper class for headline -->
+<span class="post-meta">
+<a href="/author/edward-antonian.html">Edward antonian</a>
+            | <time datetime="Mon 30 October 2017">Mon 30 October 2017</time>
+</span>
+<!-- TODO : Modified check -->
+<span class="post-meta"> | Updated on Mon 18 December 2017</span>
+<div class="post-cover cover" style="background-image: url('static/images/contact-bg.jpg')">
+</div>
+</div></header>
+<section id="wrapper">
+<a class="hidden-close"></a>
+<!-- Post content -->
+<main class="content" role="main">
+<article class="post">
+<div class="inner">
+<section class="post-content">
+<h1>Part 3: Plotting Results</h1>
+<p>So we come to the final stage - visualising the results of all this work. I plan to output three graphs:</p>
+<ol>
+<li>A histogram and distribution of the unique words</li>
+<li>A histogram and model distribution of rhyme density</li>
+<li>A scatter plot of both variables</li>
+</ol>
+<p>In order to plot a continuous distribution for the first two graphs I'm going to use a Kernel Denisty Estimator. This is a way of modelling a complicated distribution from limited data. It works by summing many small distributions at each data point to get one continuous curve</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors.kde</span> <span class="kn">import</span> <span class="n">KernelDensity</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+
+<span class="k">def</span> <span class="nf">getKDE</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">num_intervals</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">kde</span> <span class="o">=</span> <span class="n">KernelDensity</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">'gaussian'</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="n">bandwidth</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">x_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">num_intervals</span><span class="p">)</span>
+    <span class="n">logdens</span> <span class="o">=</span> <span class="n">kde</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">x_space</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">num_intervals</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">x_space</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_intervals</span><span class="p">)</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logdens</span><span class="p">)</span>  <span class="c1"># fitted density</span>
+
+    <span class="k">return</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">x_space</span>
+</pre></div>
+<p>The above function allows us to obtain this distribution as an array over our x_space. My next function takes this distribution and plots it over a histogram of the data</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotFit</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span> <span class="n">x_space</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_space</span><span class="p">,</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">)</span>
+    <span class="n">data_l</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">data_r</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">data_w</span> <span class="o">=</span> <span class="n">data_r</span> <span class="o">-</span> <span class="n">data_l</span>
+    <span class="n">dist_t</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">data_l</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">data_w</span><span class="p">,</span> <span class="n">data_r</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">data_w</span><span class="p">)</span>
+    <span class="n">axes</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+</pre></div>
+<p>Finally I want a labeled scatter plot</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">scatter_labels</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[[</span><span class="s1">'Unique Words'</span><span class="p">,</span> <span class="s1">'Rhyme Score'</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">all_labels</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">all_labels</span><span class="p">,</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+                <span class="n">label</span><span class="p">,</span>
+                <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+                <span class="n">textcoords</span><span class="o">=</span><span class="s1">'offset points'</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">'right'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">'bottom'</span><span class="p">,</span>
+                <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">'round,pad=0.5'</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">'yellow'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span>
+                <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s1">'arc3,rad=0'</span><span class="p">),)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Unique Words'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Rhyme Score'</span><span class="p">)</span>
+</pre></div>
+<p>Putting this all together we have</p>
+<div class="highlight"><pre><span></span><span class="n">adf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/home/ed/Documents/Code/Blog/Scripts/Genuis/artist_ranks.csv'</span><span class="p">)</span>
+<span class="n">adf</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">adf</span><span class="p">[</span><span class="s1">'Unnamed: 0'</span><span class="p">]</span>
+<span class="k">del</span> <span class="n">adf</span><span class="p">[</span><span class="s1">'Unnamed: 0'</span><span class="p">]</span>
+<span class="n">adf</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'Artist'</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Aesop Rock'</span><span class="p">,</span> <span class="s1">'Jam Baxter'</span><span class="p">,</span> <span class="s1">'Busdriver'</span><span class="p">,</span> <span class="s1">'Eminem'</span><span class="p">,</span> <span class="s1">'2Pac'</span><span class="p">,</span> <span class="s1">'The Notorious B.I.G.'</span><span class="p">,</span> <span class="s1">'Future'</span><span class="p">,</span>
+          <span class="s2">"Lil</span><span class="se">\'</span><span class="s2"> Wayne"</span><span class="p">,</span> <span class="s1">'Drake'</span><span class="p">,</span> <span class="s1">'Billy Woods'</span><span class="p">,</span> <span class="s1">'MF Doom'</span><span class="p">,</span> <span class="s1">'Kool Keith'</span><span class="p">,</span> <span class="s1">'Fetty Wap'</span><span class="p">,</span> <span class="s1">'2 Chainz'</span><span class="p">,</span> <span class="s1">'Danny Brown'</span><span class="p">,</span> <span class="s1">'J. Cole'</span><span class="p">]</span>
+<span class="n">scatter_labels</span><span class="p">(</span><span class="n">adf</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+
+<span class="n">word_data</span> <span class="o">=</span> <span class="n">adf</span><span class="p">[</span><span class="s1">'Unique Words'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">word_dist</span><span class="p">,</span> <span class="n">word_x_space</span> <span class="o">=</span> <span class="n">getKDE</span><span class="p">(</span><span class="n">word_data</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+<span class="n">plotFit</span><span class="p">(</span><span class="n">word_dist</span><span class="p">,</span> <span class="n">word_x_space</span><span class="p">,</span> <span class="n">word_data</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">'Unique Words'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">)</span>
+
+<span class="n">rhyme_data</span> <span class="o">=</span> <span class="n">adf</span><span class="p">[</span><span class="s1">'Rhyme Score'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">rhyme_dist</span><span class="p">,</span> <span class="n">rhyme_x_space</span> <span class="o">=</span> <span class="n">getKDE</span><span class="p">(</span><span class="n">rhyme_data</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+<span class="n">plotFit</span><span class="p">(</span><span class="n">rhyme_dist</span><span class="p">,</span> <span class="n">rhyme_x_space</span><span class="p">,</span> <span class="n">rhyme_data</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">'Rhyme Score'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">adf</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+<div class="highlight"><pre><span></span>                          Unique Words  Rhyme Score  Word Rank  Rhyme Rank
+Artist                                                                    
+Aesop Rock                        6045         2541          1           1
+Billy Woods                       5601         1248          2         125
+Busdriver                         5594         1880          3          13
+Milo                              5360         1937          4          11
+Jam Baxter                        5225         2424          5           2
+Roc Marciano                      5073         1717          6          22
+Canibus                           5054         1234          7         133
+GZA                               5034         1700          8          26
+Dan Bull                          4999         2221          9           3
+El-P                              4828         1257         10         121
+Chino XL                          4806         1482         11          63
+U-God                             4649         1046         12         167
+MF Doom                           4565         1662         13          29
+Kool A.D.                         4535         1510         14          53
+R.A. the Rugged Man               4441         1241         15         127
+Lloyd Banks                       4428         1140         16         151
+Kool Keith                        4419         1233         17         136
+Greydon Square                    4402         1468         18          67
+Immortal Technique                4401         1335         19         102
+RZA                               4358         1385         20          83
+Pharoahe Monch                    4348         1206         21         139
+Sean Price                        4298         1459         22          71
+Lupe Fiasco                       4278         1358         23          92
+Open Mike Eagle                   4261         1656         24          31
+Jean Grae                         4214         1349         25         100
+Sage Francis                      4212         1569         26          43
+Raekwon                           4180         1233         27         136
+Action Bronson                    4160         1810         28          16
+Watsky                            4132         1713         29          23
+Talib Kweli                       4125         1237         30         129
+Royce da 5'9_                     4090         1374         31          88
+Asher Roth                        4052         1545         32          45
+Louis Logic                       4042         1830         33          15
+Joey Badass                       4001          944         34         179
+Jay Z                             3965         1137         35         153
+Frank Ocean                       3960         1545         36          46
+Eminem                            3956         1510         37          53
+Ghostface Killah                  3917         1122         38         160
+E-40                              3905         1992         39           7
+A$AP Rocky                        3903         1491         40          57
+Method Man                        3879         1128         41         156
+Denzel Curry                      3875         1768         42          17
+Ab-Soul                           3875         1323         42         105
+Schoolboy Q                       3874          975         44         178
+Obie Trice                        3869         1378         45          86
+Cage                              3846         1467         46          69
+Mos Def                           3840          984         47         177
+Crooked I                         3823         1551         48          44
+M.I.A.                            3812         1492         49          56
+Redman                            3788         1354         50          95
+B.o.B                             3775         1479         51          64
+Jay Electronica                   3774         1590         52          38
+Tinie Tempah                      3772         1596         53          36
+P.O.S.                            3762         1374         54          88
+Tech N9ne                         3749         1422         55          77
+Masta Ace                         3743         1540         56          47
+Jay Rock                          3743         1137         56         154
+Busta Rhymes                      3740         1159         58         147
+Common                            3724         1163         59         144
+Funkmaster Flex                   3719         1276         60         115
+Drake                             3707          812         61         186
+LL Cool J                         3706         1017         62         170
+Brother Ali                       3701         1280         63         113
+Mac Lethal                        3696         1941         64          10
+Rakim                             3691         1305         65         109
+Dr. Dre                           3690         1005         66         172
+Rick Ross                         3682         1608         67          35
+Nas                               3669         1407         68          80
+Kendrick Lamar                    3667         1173         69         142
+Lowkey                            3663         1268         70         117
+Astronautalis                     3645         1397         71          81
+Xzibit                            3619         1440         72          75
+Big Pun                           3608         1159         73         146
+Wrekonize                         3604         1524         74          51
+Chris Webby                       3592         1352         75          97
+MF Grimm                          3591         1257         76         121
+Prozak                            3577         1005         77         172
+Akala                             3559         1393         78          82
+Danny Brown                       3555         1732         79          18
+Giggs                             3551         1323         80         105
+Sho Baraka                        3547         1452         81          73
+The Notorious B.I.G.              3545          913         82         182
+Devlin                            3543         1539         83          48
+Joell Ortiz                       3540         1459         84          71
+Killer Mike                       3537         1646         85          33
+Dizzee Rascal                     3536         1711         86          24
+Slick Rick                        3535         1354         87          95
+Mick Jenkins                      3530         1264         88         119
+Lil' Kim                          3517         1529         89          49
+Macklemore                        3511         1155         90         148
+Vince Staples                     3504         1285         91         112
+The Game                          3482         1234         92         133
+Ice-T                             3481         1122         93         160
+Ol' Dirty Bastard                 3459         1234         94         133
+Kanye West                        3429          861         95         185
+Jarren Benton                     3418         1719         96          21
+Wale                              3416         1485         97          60
+Big Daddy Kane                    3414         1126         98         157
+Murs                              3402         1488         99          58
+Sir Mix-a-Lot                     3397         1576        100          42
+2 Chainz                          3388         2053        101           5
+A$AP Ferg                         3375         1494        102          55
+Foxy Brown                        3375          892        102         183
+Lil Wayne                         3365         1680        104          27
+Classified                        3354         1371        105          90
+Eyedea                            3350         1412        106          79
+Oddisee                           3334         1619        107          34
+Del the Funky Homosapien          3327         1220        108         138
+Tyler, The Creator                3325         1200        109         140
+Tyga                              3323         1264        110         119
+KRS-One                           3322          773        111         187
+Bubba Sparxxx                     3321         1311        112         108
+Machine Gun Kelly                 3311         1529        113          49
+Mac Miller                        3305         1477        114          65
+J. Cole                           3291         1163        115         144
+Future                            3288         1417        116          78
+Travis Scott                      3286         1000        117         174
+Kevin Gates                       3283         1089        118         165
+Beastie Boys                      3276         1468        119          67
+Yelawolf                          3273         1974        120           8
+Big L                             3270         1583        121          41
+Nicki Minaj                       3268         1255        122         123
+Ice Cube                          3266         1668        123          28
+Childish Gambino                  3249         1280        124         113
+French Montana                    3223         1264        125         119
+Will Smith                        3207         1140        126         151
+Twista                            3202         1705        127          25
+Missy Elliott                     3194          766        128         188
+Big K.R.I.T.                      3182         1126        129         157
+Gucci Mane                        3180         1953        131           9
+Ace Hood                          3180         1488        131          58
+Jadakiss                          3180         1300        131         111
+Chamillionaire                    3159         1519        133          52
+Waka Flocka Flame                 3141         1466        134          70
+Hopsin                            3141         1116        134         162
+Birdman                           3131         1358        136          92
+Bizzy Bone                        3115          934        137         180
+Young Jeezy                       3110         1662        138          29
+Brotha Lynch Hung                 3110         1592        138          37
+Joe Budden                        3100         1168        140         143
+Ja Rule                           3100         1014        140         171
+Skepta                            3096         1440        142          75
+Kid Cudi                          3080         1146        143         149
+Krizz Kaliko                      3079         1475        144          66
+Dizzy Wright                      3079         1183        144         141
+Ludacris                          3077         1351        146          98
+Young Thug                        3072         1482        147          62
+Jme                               3071         1317        148         107
+Eazy-E                            3064         1902        149          12
+Benzino                           3056         1116        150         162
+Scarface                          3022         1725        151          20
+Coolio                            3008         1349        152         100
+Big Sean                          2993          998        153         176
+Wiley                             2992         1880        154          13
+Kid Ink                           2982         1452        155          73
+Freddie Gibbs                     2972         1651        156          32
+Flo Rida                          2966         1245        157         126
+Nelly                             2951         1020        158         169
+Pimp C                            2945         1381        159          84
+CeeLo Green                       2907         1123        160         159
+Master P                          2879         1356        161          94
+Twisted Insane                    2854         2031        162           6
+Meek Mill                         2847         1381        163          84
+Chief Keef                        2845         1237        164         129
+Eve                               2845         1077        164         166
+Bun B                             2826         1371        166          90
+T.I.                              2826         1333        166         103
+Juicy J                           2781         1585        168          40
+2Pac                              2773         1586        169          39
+Angel Haze                        2755         1026        170         168
+Gangsta Boo                       2747         1237        171         129
+50 Cent                           2745         1305        172         109
+Boosie Badazz                     2740         1272        173         116
+Snow Tha Product                  2733         1254        174         124
+Grieves                           2722         2104        175           4
+Kodak Black                       2711         1349        176         100
+Lil Uzi Vert                      2705         1233        177         136
+Logic                             2689          934        178         180
+Krayzie Bone                      2686          883        179         184
+T-Pain                            2678         1137        180         154
+Chris Brown                       2605         1237        181         129
+Too Short                         2602         1485        182          60
+Sean Paul                         2523         1732        183          18
+Wiz Khalifa                       2523         1323        183         105
+Rich Homie Quan                   2496         1374        185          88
+DMX                               2464         1143        186         150
+R. Kelly                          2459          999        187         175
+Fetty Wap                         2359         1108        188         164
+</pre></div>
+<p><img alt="Image Failed" src="images/bothvariables1.png"/>
+<img alt="Image Failed" src="images/rhymedist.png"/>
+<img alt="Image Failed" src="images/worddist.png"/></p>
+</section>
+<section class="post-info">
+<div class="post-share">
+<a class="twitter" href="https://twitter.com/share?text=Rap Skills Analysis: A Computational Approach part 3&amp;url=/rap-part-three.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+<i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+</a>
+<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/rap-part-three.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+<i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+</a>
+<a class="googleplus" href="https://plus.google.com/share?url=/rap-part-three.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+<i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+</a>
+<div class="clear"></div>
+</div>
+<aside class="post-tags">
+<a href="/tag/data-science.html">data science</a><a href="/tag/python.html">python</a><a href="/tag/natural-language-processing.html">natural language processing</a><a href="/tag/rap.html">rap</a><a href="/tag/hip-hop.html">hip hop</a> </aside>
+<div class="clear"></div>
+</section>
+<aside class="post-nav">
+<div class="clear"></div>
+</aside>
+</div>
+</article>
+</main>
+<!-- TODO : Body class -->
+<div class="" id="body-class" style="display: none;"></div>
+<footer id="footer">
+<div class="inner">
+<section class="credits">
+<span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+<span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+</section>
+</div>
+</footer>
+</section>
+<script src="/theme/js/script.js" type="text/javascript"></script>
+</body>
+</html>
