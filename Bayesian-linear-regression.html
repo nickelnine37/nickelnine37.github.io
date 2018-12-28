@@ -102,13 +102,16 @@
 <section class="post-content">
 <h3>That's one fine posterior</h3>
 <p>Hello all,</p>
-<p>It's been a while - apologies. Had a pretty hectic summer and autumn but rest assured I've got loads of posts in the pipeline. This one is going to take a slightly different format to the last. I'm going to show you some cool maths. Well I think it's cool anyway..</p>
-<p>So here's the brief back story.</p>
+<p>It's been a while - apologies. Had a pretty hectic summer and autumn but rest assured I've got loads of posts in the pipeline (I'm sure you're on the edge of your seat with anticipation...). This one is going to take a slightly different format to the last. I'm going to show you some cool maths. Well I think it's cool anyway..</p>
+<p>So here's the brief back-story.</p>
 <p>I came across an interesting formula in a course on the foundations of machine learning this semester at uni. It gave a relatively neat expression for the posterior probability distribution over the weights of a Bayesian linear regression model and comes form the textbook <a href="https://mitpress.mit.edu/books/machine-learning-1">"Machine Learning:
-A Probabilistic Perspective"</a> by Kevin Murphy.  It was also in a format that makes it easy to implement via array-based matrix operations in, say, numpy (ooooh yeah everyone's favourite hilariously-named python thing)</p>
+A Probabilistic Perspective"</a> by Kevin Murphy.  What makes this formula so great is it's also super easy to implement via array-based matrix operations in, say, numpy (ooooh yeah everyone's favourite hilariously-named python thing)</p>
+<div class="highlight"><pre><span></span><span class="n">SIDE</span> <span class="n">NOTE</span><span class="p">:</span> <span class="n">omg</span> <span class="n">Ive</span> <span class="n">just</span> <span class="n">found</span> <span class="n">out</span> <span class="n">that</span> <span class="n">the</span> <span class="err">@</span> <span class="n">operator</span> <span class="n">can</span>
+<span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">matrix</span> <span class="n">multiplication</span><span class="o">.</span> <span class="n">Absolute</span> <span class="n">game</span> <span class="n">changer</span><span class="o">.</span>
+</pre></div>
 <p>In this short note I want to show you a derivation, because it's just really neat and I couldn't actually find one in any textbook or anywhere online. I'm not sure how widely spread this is but it's nothing particularly revolutionary - pretty easy to follow I hope. Then I'll also show a quick implementation in python which gives some cool looking graphs. Everyone loves a good graph...</p>
 <p>So let' get to it.</p>
-<p>TW: This post is going to take a more mathematical format and a certain level of familiarity with the topics involved will be assumed.</p>
+<p>TW: This post is going to take a more mathematical format and a certain level of familiarity with the topics involved will be necessary :'(</p>
 <h3>Finding the posterior</h3>
 <p>The whole idea of Bayesian machine learning is to compute or estimate the posteria distribution over the model parameters given some data. We start with a prior distribution, which reflects our beliefs before seeing the data, and then update it using Bayes rule. For many problems, this is impractical or impossible to compute directly, but linear regression represents one of the rare situations where the maths is actually tractable.</p>
 <p>As in many machine learning tasks we have some parameterised function <span class="math">\(f_{\mathbf{w}}(\mathbf{x})\)</span> which we use to approximate the observed values <span class="math">\(\mathbf{y}\)</span>. In the case of linear regression, our <span class="math">\(y\)</span>-estimates are going to be</p>
