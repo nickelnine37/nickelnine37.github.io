@@ -113,7 +113,7 @@ A Probabilistic Perspective"</a> by Kevin Murphy.  What makes this formula so gr
 <p>So let' get to it.</p>
 <p>TW: This post is going to take a more mathematical format and a certain level of familiarity with the topics involved will be necessary :'(</p>
 <h3>Finding the posterior</h3>
-<p>The whole idea of Bayesian machine learning is to compute or estimate the posteria distribution over the model parameters given some data. We start with a prior distribution, which reflects our beliefs before seeing the data, and then update it using Bayes rule. For many problems, this is impractical or impossible to compute directly, but linear regression represents one of the rare situations where the maths is actually tractable.</p>
+<p>The whole idea of Bayesian machine learning is to compute or estimate the posterior distribution over the model parameters given some data. We start with a prior distribution, which reflects our beliefs before seeing the data, and then update it using Bayes rule. For many problems, this is impractical or impossible to compute directly, but linear regression represents one of the rare situations where the maths is actually tractable.</p>
 <p>As in many machine learning tasks we have some parameterised function <span class="math">\(f_{\mathbf{w}}(\mathbf{x})\)</span> which we use to approximate the observed values <span class="math">\(\mathbf{y}\)</span>. In the case of linear regression, our <span class="math">\(y\)</span>-estimates are going to be</p>
 <div class="math">$$
 f_{\mathbf{w}}(\mathbf{X}) = \mathbf{\hat{y}} = \Phi\mathbf{w}
@@ -188,13 +188,13 @@ $$</div>
 \mathbf{w_{N}} = \Sigma_{N} (\Sigma_{0}^{-1} \mathbf{w_{0}} + \frac{1}{\sigma_{y}^{2}} \Phi ^{\top} \mathbf{y}) \quad \text{and} \quad \Sigma_{N} = \sigma_{y}^{2} (\sigma_{y}^{2} \Sigma_{0}^{-1} + \Phi ^{\top} \Phi)^{-1}
 $$</div>
 <h3>Prediction</h3>
-<p>Ok so that's great - what can we do with this? Well, we could drawy from this distibution to give a set of plausible curves. Or, better still, for a new data point we could output a best guess with an accompanying uncertainty. But how do we get this? We can get the probability distribution over <span class="math">\(y\)</span> by integrating all the probability distributions that we could get or a certain set of model parameters, and then weight each element according to how plausible we believe it is given our posterior beliefs.</p>
+<p>Ok so that's great - what can we do with this? Well, we could draw from this distibution to give a set of plausible curves. Or, better still, for a new data point we could output a best guess with an accompanying uncertainty. But how do we get this? We can get the probability distribution over <span class="math">\(y\)</span> by integrating over all the probability distributions that we could get for a certain set of model parameters, and then weight each element according to how plausible we believe it is given our posterior beliefs.</p>
 <div class="math">$$
-p(y|\mathbf{x}, \mathcal{D}) = \int p(y, | \mathbf{x}, \mathbf{w}) \, p(\mathbf{w}|\mathcal{D}) \; d \mathbf{w}
+p(y|\mathbf{x}, \mathcal{D}) = \int p(y| \mathbf{x}, \mathbf{w}) \, p(\mathbf{w}|\mathcal{D}) \; d \mathbf{w}
 $$</div>
 <p>If we knew perfectly what the weights were, then the only uncertainy on our output would be the inherent noise in the data. So</p>
 <div class="math">$$
-p(y, | \mathbf{x}, \mathbf{w}) = \mathcal{N}(y; \mathbf{w^{\top}}\phi, \sigma_{y}^{2})
+p(y| \mathbf{x}, \mathbf{w}) = \mathcal{N}(y; \mathbf{w^{\top}}\phi, \sigma_{y}^{2})
 $$</div>
 <p>So
 </p>
