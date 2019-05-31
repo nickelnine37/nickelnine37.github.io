@@ -35,9 +35,9 @@
 <meta content="rap" name="tags"/>
 <meta content="hip hop" name="tags"/>
 <meta content="" property="og:locale">
-<meta content="It's a blog, dummy" property="og:site_name">
+<meta content="But is it Data Science?" property="og:site_name">
 <meta content="website" property="og:type">
-<meta content="It's a blog, dummy" property="og:title">
+<meta content="But is it Data Science?" property="og:title">
 <meta content="View the blog." property="og:description">
 <meta content="" property="og:url">
 <meta content="/static/images/contact-bg.jpg" property="og:image">
@@ -205,9 +205,9 @@
 
 <span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="k">print</span><span class="p">(</span><span class="n">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'KRS-One'</span><span class="p">,</span><span class="s1">'LL Cool J'</span><span class="p">,</span><span class="s1">'MF Doom'</span><span class="p">]</span> <span class="p">]</span> 
 </pre></div>
-<div class="highlight"><pre><span></span>https://genius.com/artists/Krs-one
-https://genius.com/artists/Ll-cool-j
-https://genius.com/artists/Mf-doom
+<div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Krs</span><span class="o">-</span><span class="n">one</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Ll</span><span class="o">-</span><span class="n">cool</span><span class="o">-</span><span class="n">j</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span>
 </pre></div>
 <p>I found the best way to access individual songs from here was through the albums linked from this page. This is because unfortunately, without messing around with the javascript, you only have access to a few songs directly from this page, whereas you can directly access six albums, where you can link directly to all the songs. So my next step was to find links to all albums possible. </p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
@@ -226,12 +226,12 @@ https://genius.com/artists/Mf-doom
 <span class="k">for</span> <span class="n">album_link</span> <span class="ow">in</span> <span class="n">MF_Doom_albums</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="n">album_link</span><span class="p">)</span>
 </pre></div>
-<div class="highlight"><pre><span></span>https://genius.com/albums/Mf-doom/Born-like-this
-https://genius.com/albums/Mf-doom/Metalfingers-presents-special-herbs-the-box-set-vol-0-9-disc-2
-https://genius.com/albums/Mf-doom/Metal-fingers-presents-special-herbs-the-box-set-vol-0-9-disc-1
-https://genius.com/albums/Mf-doom/Mm-food
-https://genius.com/albums/Mf-doom/Special-blends-volume-1-2
-https://genius.com/albums/Mf-doom/Dead-bent-doomsday
+<div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Born</span><span class="o">-</span><span class="k">like</span><span class="o">-</span><span class="n">this</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Metalfingers</span><span class="o">-</span><span class="n">presents</span><span class="o">-</span><span class="n">special</span><span class="o">-</span><span class="n">herbs</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="k">set</span><span class="o">-</span><span class="n">vol</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="n">disc</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Metal</span><span class="o">-</span><span class="n">fingers</span><span class="o">-</span><span class="n">presents</span><span class="o">-</span><span class="n">special</span><span class="o">-</span><span class="n">herbs</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="k">set</span><span class="o">-</span><span class="n">vol</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="n">disc</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Mm</span><span class="o">-</span><span class="n">food</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Special</span><span class="o">-</span><span class="n">blends</span><span class="o">-</span><span class="n">volume</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Dead</span><span class="o">-</span><span class="n">bent</span><span class="o">-</span><span class="n">doomsday</span>
 </pre></div>
 <p>Next, given an album url we want to extract the urls and titles of all the songs on that album</p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_songs</span><span class="p">(</span><span class="n">album_url</span><span class="p">):</span>
@@ -248,53 +248,53 @@ https://genius.com/albums/Mf-doom/Dead-bent-doomsday
 <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">doom_urls</span><span class="p">,</span> <span class="n">doom_titles</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">title</span><span class="p">[:</span><span class="n">title</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'Lyrics'</span><span class="p">)])</span>
 </pre></div>
-<div class="highlight"><pre><span></span>https://genius.com/Mf-doom-beef-rapp-lyrics 
-              Beef Rapp
+<div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">beef</span><span class="o">-</span><span class="n">rapp</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Beef</span> <span class="n">Rapp</span>
 
-https://genius.com/Mf-doom-hoe-cakes-lyrics 
-              Hoe Cakes
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">hoe</span><span class="o">-</span><span class="n">cakes</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Hoe</span> <span class="n">Cakes</span>
 
-https://genius.com/Mf-doom-potholderz-lyrics 
-              Potholderz (Ft. Count Bass D)
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">potholderz</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Potholderz</span> <span class="p">(</span><span class="n">Ft</span><span class="p">.</span> <span class="k">Count</span> <span class="n">Bass</span> <span class="n">D</span><span class="p">)</span>
 
-https://genius.com/Mf-doom-one-beer-lyrics 
-              One Beer
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">one</span><span class="o">-</span><span class="n">beer</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">One</span> <span class="n">Beer</span>
 
-https://genius.com/Mf-doom-deep-fried-frenz-lyrics 
-              Deep Fried Frenz
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">deep</span><span class="o">-</span><span class="n">fried</span><span class="o">-</span><span class="n">frenz</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Deep</span> <span class="n">Fried</span> <span class="n">Frenz</span>
 
-https://genius.com/Mf-doom-poo-putt-platter-lyrics 
-              Poo Putt Platter
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">poo</span><span class="o">-</span><span class="n">putt</span><span class="o">-</span><span class="n">platter</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Poo</span> <span class="n">Putt</span> <span class="n">Platter</span>
 
-https://genius.com/Mf-doom-fillet-o-rapper-lyrics 
-              Fillet-O-Rapper
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">fillet</span><span class="o">-</span><span class="n">o</span><span class="o">-</span><span class="n">rapper</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Fillet</span><span class="o">-</span><span class="n">O</span><span class="o">-</span><span class="n">Rapper</span>
 
-https://genius.com/Mf-doom-gumbo-lyrics 
-              Gumbo
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">gumbo</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Gumbo</span>
 
-https://genius.com/Mf-doom-fig-leaf-bi-carbonate-lyrics 
-              Fig Leaf Bi-Carbonate
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">fig</span><span class="o">-</span><span class="n">leaf</span><span class="o">-</span><span class="n">bi</span><span class="o">-</span><span class="n">carbonate</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Fig</span> <span class="n">Leaf</span> <span class="n">Bi</span><span class="o">-</span><span class="n">Carbonate</span>
 
-https://genius.com/Mf-doom-kon-karne-lyrics 
-              Kon Karne
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">kon</span><span class="o">-</span><span class="n">karne</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Kon</span> <span class="n">Karne</span>
 
-https://genius.com/Mf-doom-guinnesses-lyrics 
-              Guinnesses (Ft. 4ize &amp;amp; Stahhr)
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">guinnesses</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Guinnesses</span> <span class="p">(</span><span class="n">Ft</span><span class="p">.</span> <span class="mi">4</span><span class="n">ize</span> <span class="o">&amp;</span> <span class="n">Stahhr</span><span class="p">)</span>
 
-https://genius.com/Mf-doom-kon-queso-lyrics 
-              Kon Queso
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">kon</span><span class="o">-</span><span class="n">queso</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Kon</span> <span class="n">Queso</span>
 
-https://genius.com/Mf-doom-rapp-snitch-knishes-lyrics 
-              Rapp Snitch Knishes (Ft. Mr. Fantastik)
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">rapp</span><span class="o">-</span><span class="n">snitch</span><span class="o">-</span><span class="n">knishes</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Rapp</span> <span class="n">Snitch</span> <span class="n">Knishes</span> <span class="p">(</span><span class="n">Ft</span><span class="p">.</span> <span class="n">Mr</span><span class="p">.</span> <span class="n">Fantastik</span><span class="p">)</span>
 
-https://genius.com/Mf-doom-vomitspit-lyrics 
-              Vomitspit
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">vomitspit</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Vomitspit</span>
 
-https://genius.com/Mf-doom-kookies-lyrics 
-              Kookies
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">kookies</span><span class="o">-</span><span class="n">lyrics</span> 
+              <span class="n">Kookies</span>
 
-https://genius.com/Mf-doom-mm-food-tracklist-album-artwork-annotated 
-              MM.. FOOD [Tracklist + Album Artwork]
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">mm</span><span class="o">-</span><span class="n">food</span><span class="o">-</span><span class="n">tracklist</span><span class="o">-</span><span class="n">album</span><span class="o">-</span><span class="n">artwork</span><span class="o">-</span><span class="n">annotated</span> 
+              <span class="n">MM</span><span class="p">..</span> <span class="n">FOOD</span> <span class="p">[</span><span class="n">Tracklist</span> <span class="o">+</span> <span class="n">Album</span> <span class="n">Artwork</span><span class="p">]</span>
 </pre></div>
 <p>The next step is to get the raw text of the lyrics for each song. One thing to note here is that you must be running python3 for the following to work as expected. This is because of python3's handling of unicode strings. It's possible to do in python2 but you will have to play around with converting the text from unicode to ASCII.</p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_lyrics</span><span class="p">(</span><span class="n">song_url</span><span class="p">):</span>
@@ -309,7 +309,7 @@ https://genius.com/Mf-doom-mm-food-tracklist-album-artwork-annotated
 <span class="n">doom_lyrics</span> <span class="o">=</span> <span class="n">get_lyrics</span><span class="p">(</span><span class="n">doom_urls</span><span class="p">[</span><span class="mi">12</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="n">doom_lyrics</span><span class="p">)</span>
 </pre></div>
-<div class="highlight"><pre><span></span><span class="k">[Intro: MF DOOM &amp;amp; (Mr. Fantastik)]</span>
+<div class="highlight"><pre><span></span><span class="k">[Intro: MF DOOM &amp; (Mr. Fantastik)]</span>
 <span class="na">(Yo!) Yo!</span>
 <span class="na">(MF DOOM) Mr. Fantastik</span>
 <span class="na">(Mr. Fantastik) Villain</span>
@@ -369,7 +369,7 @@ https://genius.com/Mf-doom-mm-food-tracklist-album-artwork-annotated
 <span class="na">Son, shut your trap, save it for the bitches</span>
 <span class="na">Mmm, delicious, rapp snitch knishes</span>
 
-<span class="k">[Outro: Mr. Fantastik &amp;amp; (MF DOOM)]</span>
+<span class="k">[Outro: Mr. Fantastik &amp; (MF DOOM)]</span>
 <span class="na">You know what I'm saying?</span>
 <span class="na">(It's terrible)</span>
 <span class="na">Crazy, man, I'm just analyzing this whole game</span>
@@ -436,23 +436,23 @@ https://genius.com/Mf-doom-mm-food-tracklist-album-artwork-annotated
 <span class="n">cleaned</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">song_doom_only</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
 </pre></div>
-<div class="highlight"><pre><span></span>True, there's rules to this shit, fools dare care
-Everybody wanna rule the world with tears for fear
-Yeah, yeah, tell 'em tell it on the mountain hill
-Running up they mouth bill, everybody doubting still
-Informer, keep it up and get tested
-Pop through your bubble vest or double-breasted
-He keep a lab down south in the little beast
-So much heat you woulda thought it was the Middle East
-A little grease always keeps the wheels a spinning
-Like sitting on twenty threes to get the squealers grinning
-Hitting on many trees, feel real linen
-Spitting on enemies, get the steel for tin men
-Where no brains but gum flap
-He said his gun clap, then he fled after one slap (Pap!)
-Son, shut your trap, save it for the bitches
-Mmm, delicious, rapp snitch knishes
-Perpetrator? Yeah, I'm right here...
+<div class="highlight"><pre><span></span><span class="nv">True</span>, <span class="nv">there</span><span class="s1">'</span><span class="s">s rules to this shit, fools dare care</span>
+<span class="nv">Everybody</span> <span class="nv">wanna</span> <span class="nv">rule</span> <span class="nv">the</span> <span class="nv">world</span> <span class="nv">with</span> <span class="nv">tears</span> <span class="k">for</span> <span class="nv">fear</span>
+<span class="nv">Yeah</span>, <span class="nv">yeah</span>, <span class="nv">tell</span> <span class="s1">'</span><span class="s">em tell it on the mountain hill</span>
+<span class="nv">Running</span> <span class="nv">up</span> <span class="nv">they</span> <span class="nv">mouth</span> <span class="nv">bill</span>, <span class="nv">everybody</span> <span class="nv">doubting</span> <span class="nv">still</span>
+<span class="nv">Informer</span>, <span class="nv">keep</span> <span class="nv">it</span> <span class="nv">up</span> <span class="nv">and</span> <span class="nv">get</span> <span class="nv">tested</span>
+<span class="nv">Pop</span> <span class="nv">through</span> <span class="nv">your</span> <span class="nv">bubble</span> <span class="nv">vest</span> <span class="nv">or</span> <span class="nv">double</span><span class="o">-</span><span class="nv">breasted</span>
+<span class="nv">He</span> <span class="nv">keep</span> <span class="nv">a</span> <span class="nv">lab</span> <span class="nv">down</span> <span class="nv">south</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">little</span> <span class="nv">beast</span>
+<span class="nv">So</span> <span class="nv">much</span> <span class="nv">heat</span> <span class="nv">you</span> <span class="nv">woulda</span> <span class="nv">thought</span> <span class="nv">it</span> <span class="nv">was</span> <span class="nv">the</span> <span class="nv">Middle</span> <span class="nv">East</span>
+<span class="nv">A</span> <span class="nv">little</span> <span class="nv">grease</span> <span class="nv">always</span> <span class="nv">keeps</span> <span class="nv">the</span> <span class="nv">wheels</span> <span class="nv">a</span> <span class="nv">spinning</span>
+<span class="nv">Like</span> <span class="nv">sitting</span> <span class="nv">on</span> <span class="nv">twenty</span> <span class="nv">threes</span> <span class="nv">to</span> <span class="nv">get</span> <span class="nv">the</span> <span class="nv">squealers</span> <span class="nv">grinning</span>
+<span class="nv">Hitting</span> <span class="nv">on</span> <span class="nv">many</span> <span class="nv">trees</span>, <span class="nv">feel</span> <span class="nv">real</span> <span class="nv">linen</span>
+<span class="nv">Spitting</span> <span class="nv">on</span> <span class="nv">enemies</span>, <span class="nv">get</span> <span class="nv">the</span> <span class="nv">steel</span> <span class="k">for</span> <span class="nv">tin</span> <span class="nv">men</span>
+<span class="nv">Where</span> <span class="nv">no</span> <span class="nv">brains</span> <span class="nv">but</span> <span class="nv">gum</span> <span class="nv">flap</span>
+<span class="nv">He</span> <span class="nv">said</span> <span class="nv">his</span> <span class="nv">gun</span> <span class="nv">clap</span>, <span class="k">then</span> <span class="nv">he</span> <span class="nv">fled</span> <span class="nv">after</span> <span class="nv">one</span> <span class="nv">slap</span> <span class="ss">(</span><span class="nv">Pap</span><span class="o">!</span><span class="ss">)</span>
+<span class="nv">Son</span>, <span class="nv">shut</span> <span class="nv">your</span> <span class="nv">trap</span>, <span class="nv">save</span> <span class="nv">it</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">bitches</span>
+<span class="nv">Mmm</span>, <span class="nv">delicious</span>, <span class="nv">rapp</span> <span class="nv">snitch</span> <span class="nv">knishes</span>
+<span class="nv">Perpetrator</span>? <span class="nv">Yeah</span>, <span class="nv">I</span><span class="s1">'</span><span class="s">m right here...</span>
 </pre></div>
 <p>If you're running this as a script on windows I recommend creating un-commenting the two top lines, creating a folder called text and using that structure to save all .txt files to that folder. </p>
 <div class="highlight"><pre><span></span><span class="c1"># import os</span>

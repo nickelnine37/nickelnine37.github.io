@@ -7,3 +7,10 @@ This is a blog for me to publish some of the random bits and bobs I've worked on
 If you want to get in touch, drop me an email at <edward.antonian1@gmail.com>.
 
 My CV can be found [here](CV.pdf).
+
+I am a human male, this is what I look like on a good day
+
+<img src="../images/Ed_2_edited_resized.JPG" height="300px" />
+
+Yes, I have crows feet. 
+

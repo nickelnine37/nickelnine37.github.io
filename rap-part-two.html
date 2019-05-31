@@ -35,9 +35,9 @@
 <meta content="rap" name="tags"/>
 <meta content="hip hop" name="tags"/>
 <meta content="" property="og:locale">
-<meta content="It's a blog, dummy" property="og:site_name">
+<meta content="But is it Data Science?" property="og:site_name">
 <meta content="website" property="og:type">
-<meta content="It's a blog, dummy" property="og:title">
+<meta content="But is it Data Science?" property="og:title">
 <meta content="View the blog." property="og:description">
 <meta content="" property="og:url">
 <meta content="/static/images/contact-bg.jpg" property="og:image">
@@ -149,13 +149,13 @@
 <span class="k">print</span><span class="p">(</span><span class="s1">'Original line: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">'Phonetic Version: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line_phonetic</span><span class="p">)</span>
 </pre></div>
-<div class="highlight"><pre><span></span>Original line: 
- I'm still not a player but you still a hater,
-Elevator to the top hah see you later
+<div class="highlight"><pre><span></span><span class="n">Original</span> <span class="n">line</span><span class="p">:</span> 
+ <span class="n">I</span><span class="err">'</span><span class="n">m</span> <span class="n">still</span> <span class="k">not</span> <span class="n">a</span> <span class="n">player</span> <span class="n">but</span> <span class="n">you</span> <span class="n">still</span> <span class="n">a</span> <span class="n">hater</span><span class="p">,</span>
+<span class="n">Elevator</span> <span class="k">to</span> <span class="n">the</span> <span class="n">top</span> <span class="n">hah</span> <span class="n">see</span> <span class="n">you</span> <span class="n">later</span>
 
-Phonetic Version: 
-  aɪm stˈɪl nˌɑːɾə plˈeɪɚ bˌʌt juː stˈɪl ɐ hˈeɪɾɚ
- ˈɛlɪvˌeɪɾɚ tə ðə tˈɑːp hˈɑː sˈiː juː lˈeɪɾɚ
+<span class="n">Phonetic</span> <span class="k">Version</span><span class="p">:</span> 
+  <span class="n">aɪm</span> <span class="n">stˈɪl</span> <span class="n">nˌɑːɾə</span> <span class="n">plˈeɪɚ</span> <span class="n">bˌʌt</span> <span class="n">juː</span> <span class="n">stˈɪl</span> <span class="err">ɐ</span> <span class="n">hˈeɪɾɚ</span>
+ <span class="err">ˈɛ</span><span class="n">lɪvˌeɪɾɚ</span> <span class="n">tə</span> <span class="err">ðə</span> <span class="n">tˈɑːp</span> <span class="n">hˈɑː</span> <span class="n">sˈiː</span> <span class="n">juː</span> <span class="n">lˈeɪɾɚ</span>
 </pre></div>
 <p>Since we are interested in rhyming sounds (and are going to be lenient about half-rhymes) we're really only interested in the vowel sounds. So the first thing we want to do is take our lyrics, and convert it into a list of ordered vowel sounds, stripped of their consonants. An exhaustive list of all the possible English vowel sounds is shown below.</p>
 <div class="highlight"><pre><span></span><span class="n">vowels_sounds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'aɪ'</span><span class="p">,</span><span class="s1">'aʊ'</span><span class="p">,</span><span class="s1">'eɪ'</span><span class="p">,</span><span class="s1">'i'</span><span class="p">,</span><span class="s1">'oʊ'</span><span class="p">,</span><span class="s1">'oː'</span><span class="p">,</span><span class="s1">'uː'</span><span class="p">,</span><span class="s1">'æ'</span><span class="p">,</span> <span class="s1">'ɑː'</span><span class="p">,</span>
@@ -192,13 +192,13 @@ Phonetic Version:
 <span class="n">vowel_list</span> <span class="o">=</span> <span class="n">extract_vowels</span><span class="p">(</span><span class="n">line_phonetic</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line_phonetic</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">vowel_list</span><span class="p">)</span>
 </pre></div>
-<div class="highlight"><pre><span></span>I'm still not a player but you still a hater,
-Elevator to the top hah see you later
+<div class="highlight"><pre><span></span><span class="n">I</span><span class="s1">'m still not a player but you still a hater,</span>
+<span class="s1">Elevator to the top hah see you later</span>
 
-  aɪm stˈɪl nˌɑːɾə plˈeɪɚ bˌʌt juː stˈɪl ɐ hˈeɪɾɚ
- ˈɛlɪvˌeɪɾɚ tə ðə tˈɑːp hˈɑː sˈiː juː lˈeɪɾɚ
+<span class="s1">  aɪm stˈɪl nˌɑːɾə plˈeɪɚ bˌʌt juː stˈɪl ɐ hˈeɪɾɚ</span>
+<span class="s1"> ˈɛlɪvˌeɪɾɚ tə ðə tˈɑːp hˈɑː sˈiː juː lˈeɪɾɚ</span>
 
- ['aɪ', 'ɪ', 'ɑː', 'ə', 'eɪ', 'ɚ', 'ʌ', 'uː', 'ɪ', 'ɐ', 'eɪ', 'ɚ', 'ɛ', 'ɪ', 'eɪ', 'ɚ', 'ə', 'ə', 'ɑː', 'ɑː', 'iː', 'uː', 'eɪ', 'ɚ']
+<span class="s1"> ['</span><span class="n">aɪ</span><span class="s1">', '</span><span class="err">ɪ</span><span class="s1">', '</span><span class="err">ɑː</span><span class="s1">', '</span><span class="err">ə</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ</span><span class="s1">', '</span><span class="err">ʌ</span><span class="s1">', '</span><span class="n">uː</span><span class="s1">', '</span><span class="err">ɪ</span><span class="s1">', '</span><span class="err">ɐ</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ</span><span class="s1">', '</span><span class="err">ɛ</span><span class="s1">', '</span><span class="err">ɪ</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ</span><span class="s1">', '</span><span class="err">ə</span><span class="s1">', '</span><span class="err">ə</span><span class="s1">', '</span><span class="err">ɑː</span><span class="s1">', '</span><span class="err">ɑː</span><span class="s1">', '</span><span class="n">iː</span><span class="s1">', '</span><span class="n">uː</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ'</span><span class="p">]</span>
 </pre></div>
 <p>We now want a function to go through our lyrics and output a vowel list. However, this function allows only a limited number of characters to be sent to the command line. Thus, the text file has to be split up into chunks. My function is as below</p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_phonetic_vowels</span><span class="p">(</span><span class="n">text_file</span><span class="p">):</span>
@@ -270,7 +270,7 @@ Elevator to the top hah see you later
 <div class="highlight"><pre><span></span><span class="n">rhymes</span> <span class="o">=</span> <span class="n">find_rhymes</span><span class="p">(</span><span class="n">vowel_list</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">rhymes</span><span class="p">)</span>
 </pre></div>
-<div class="highlight"><pre><span></span>[['ɪ'], ['eɪ', 'ɚ'], ['ɪ'], ['eɪ', 'ɚ'], ['ə'], ['ə'], ['ɑː'], ['ɑː'], ['uː'], ['eɪ', 'ɚ']]
+<div class="highlight"><pre><span></span><span class="p">[[</span><span class="s1">'ɪ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'eɪ'</span><span class="p">,</span> <span class="s1">'ɚ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ɪ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'eɪ'</span><span class="p">,</span> <span class="s1">'ɚ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ə'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ə'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ɑː'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ɑː'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'uː'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'eɪ'</span><span class="p">,</span> <span class="s1">'ɚ'</span><span class="p">]]</span>
 </pre></div>
 <p>Finally, I want some function to designate points based on this output list of lists of rhyme sounds. The function that I decided on allocates more points to longer multis quadratically by </p>
 <div class="math">$$ f(\text{length}) = \text{length} \times (1 + \frac{\text{length} - 1}{10} \, ) $$</div>
@@ -283,7 +283,7 @@ Elevator to the top hah see you later
 
 <span class="k">print</span><span class="p">(</span><span class="n">points</span><span class="p">(</span><span class="n">rhymes</span><span class="p">))</span>
 </pre></div>
-<div class="highlight"><pre><span></span>13.600000000000001
+<div class="highlight"><pre><span></span><span class="mi">13</span><span class="p">.</span><span class="mi">600000000000001</span>
 </pre></div>
 <p>And there we have it. The final step is simply to loop over all the saved text files and save the scores to a pandas dataframe. See my next post for the results!</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
