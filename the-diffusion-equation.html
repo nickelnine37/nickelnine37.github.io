@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta charset="utf-8" content="text/html" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<title>Solving the Diffusion Equation for a Continuous Point Source</title>
+<meta content="True" name="HandheldFriendly"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="origin" name="referrer"/>
+<meta content="Pelican" name="generator"/>
+<link href="" rel="canonical"/>
+<!-- Feed -->
+<link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+<!-- Code highlight color scheme -->
+<link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+<!-- CSS specified by the user -->
+<link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css">
+<!-- Custom fonts -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<link href="/the-diffusion-equation.html" rel="canonical"/>
+<meta content="A little mathematical modelling treat for a tiny fraction of humans that care." name="description"/>
+<meta content="Edward Antonian" name="author"/>
+<meta content="pelican" name="tags"/>
+<meta content="Biology" name="tags"/>
+<meta content="Maths" name="tags"/>
+<meta content="Python" name="tags"/>
+<meta content="" property="og:locale">
+<meta content="But is it Data Science?" property="og:site_name">
+<meta content="website" property="og:type">
+<meta content="But is it Data Science?" property="og:title">
+<meta content="View the blog." property="og:description">
+<meta content="" property="og:url">
+<meta content="/static/images/contact-bg.jpg" property="og:image"/>
+<meta content="https://facebook.com/myprofile" property="article:publisher"/>
+<meta content="article" property="og:type"/>
+<meta content="/author/edward-antonian.html" property="article:author"/>
+<meta content="/the-diffusion-equation.html" property="og:url"/>
+<meta content="Solving the Diffusion Equation for a Continuous Point Source" property="og:title"/>
+<meta content="2019-06-02 00:00:00+01:00" property="article:published_time"/>
+<meta content="A little mathematical modelling treat for a tiny fraction of humans that care." property="og:description"/>
+<meta content="/static/images/contact-bg.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@myprofile" name="twitter:site"/>
+<meta content="Solving the Diffusion Equation for a Continuous Point Source" name="twitter:title"/>
+<meta content="/the-diffusion-equation.html" name="twitter:url"/>
+<meta content="/static/images/contact-bg.jpg" name="twitter:image:src"/>
+<meta content="A little mathematical modelling treat for a tiny fraction of humans that care." name="twitter:description"/>
+</meta></meta></meta></meta></meta></meta></link></meta></head>
+<!-- TODO : Body class -->
+<body class="home-template">
+<nav id="menu">
+<a class="close-button">Close</a>
+<div class="nav-wrapper">
+<p class="nav-label">Menu</p>
+<ul><li role="presentation"><a href="pages/about.html">About</a></li><li role="presentation"><a href="archives.html">Archive</a></li>
+</ul>
+</div>
+</nav>
+<!-- Progressbar -->
+<div class="progress-container">
+<span class="progress-bar"></span>
+</div>
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="has-cover" id="post-header">
+<div class="inner">
+<nav id="navigation">
+<span class="nav-button" id="home-button">
+<a class="home-button" href="index.html" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+</span>
+<span class="nav-button" id="menu-button">
+<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+</span>
+</nav>
+<h1 class="post-title">Solving the Diffusion Equation for a Continuous Point Source</h1>
+<!-- TODO : Proper class for headline -->
+<span class="post-meta">
+<a href="/author/edward-antonian.html">Edward antonian</a>
+            | <time datetime="Sun 02 June 2019">Sun 02 June 2019</time>
+</span>
+<!-- TODO : Modified check -->
+<span class="post-meta"> | Updated on Sun 02 June 2019</span>
+<div class="post-cover cover" style="background-image: url('static/images/contact-bg.jpg')">
+</div>
+</div></header>
+<section id="wrapper">
+<a class="hidden-close"></a>
+<!-- Post content -->
+<main class="content" role="main">
+<article class="post">
+<div class="inner">
+<section class="post-content">
+<h1>Solving the Diffusion Equation for a Continuous Point Source</h1>
+<h2>Can you handle the heat?</h2>
+<p>What up y'all. It's now very much dissertation time and I am planning to post stuff on here more regularly to keep a log of interesting stuff that I come across, mainly just so I have a nice place to chart its progress. The next few posts are therefore likely to  be of a more technical nature, which means probably more useless and boring for most people. So, sorry about that. </p>
+<p>My advice would be, only read on if two or more of the following apply:</p>
+<ol>
+<li>You have way to much time on your hands. </li>
+<li>You really care about mathematical modelling of microbiological phenomenon. </li>
+<li>You happen to be exactly looking for a solution to the diffusion equation for a continuous point source for your application. </li>
+<li>You are are a member of my close friends or family and you're trying to pretend you care about this shit. </li>
+</ol>
+<p>If you just want to see some pretty animations, skip to the end ;) </p>
+<p>YOU HAVE BEEN WARNED</p>
+<h2>The Diffusion Equation</h2>
+<p>The diffusion equation (which is technically different but often used interchangeably with the heat equation) is a partial differential equation that describes how a substance spreads out over space and time. It can be used to model lots of different things including (obviously) how heat moves through a medium or how (also obviously) stuff diffuses. In my specific case, I'm using it to model how a cell releases an attractant signal, after it's been damaged, to make white blood cells migrate towards it. </p>
+<p>The diffusion equation, when the rate of diffusion is independent of the local density of the diffusing substance, can be written as
+</p>
+<div class="math">$$
+\frac{\partial \, A(\mathbf{r}, t)}{\partial \, t} = D\, \nabla^{2} \, [ A\,(\mathbf{r}, t) \, ]
+$$</div>
+<p>
+where <span class="math">\(A(\mathbf{r}, t)\)</span> is a scalar field representing the concentration of the diffusing substance at any vector position <span class="math">\(\mathbf{r}\)</span> and time <span class="math">\(t\)</span>. <span class="math">\(\nabla^{2}\)</span> is the Laplacian, a differential operator defined as
+</p>
+<div class="math">$$
+\nabla^{2} f = \sum_{i=1}^n \frac {\partial^2 f}{\partial x^2_i}
+$$</div>
+<p>
+and <span class="math">\(D\)</span> is the diffusion constant. So for example, in two dimensions, it becomes
+</p>
+<div class="math">$$
+\frac{\partial \, A(\mathbf{r}, t)}{\partial \, t} = D\, \big(  \frac{\partial^2 \, A(\mathbf{r}, t)}{\partial \, x^2} + \frac{\partial^2 \, A(\mathbf{r}, t)}{\partial \, y^2} \, \big)
+$$</div>
+<p>
+To solve this equation we need an initial condition and a set of boundary conditions. In our case, we will be considering an infinite line, plane, volume, so our boundary conditions will always just be that the concentration is zero at infinity. </p>
+<h2>An Instantaneous Point Source</h2>
+<p>What would happen if we introduced a finite quantity, <span class="math">\(Q_0\)</span>, of heat/substance at a single point <span class="math">\(\mathbf{r'}\)</span>, and then left it to diffuse away? It turns out this has a neat closed-form solution in any number of dimensions. To properly solve it rigorously you need to dive into Green's functions and the like. No one has time for that. I'm just going to state the answer, as given in this paper from 1959 by Pattle <a href="https://academic.oup.com/qjmam/article-abstract/12/4/407/1851084">[1]</a>. 
+</p>
+<div class="math">$$
+A(\mathbf{r}, t) = \frac{Q_0}{(4\pi Dt)^{d/2}} \exp\big(-\frac{|\mathbf{r} - \mathbf{r'}|^{2}}{4Dt}\big)
+$$</div>
+<p>
+where <span class="math">\(d\)</span> is the number of dimensions. Whilst I'm not going to/can't really prove this, one thing we can see is that the amount of heat present in the system is always conserved. If we integrate the concentration over all space at any time <span class="math">\(t\)</span>, we find
+</p>
+<div class="math">$$
+\begin{align}
+Q &amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} \int_{-\infty}^{\infty} \exp\big(-\frac{|\mathbf{r} - \mathbf{r'}|^{2}}{4Dt}\big) \, \mathrm{d}\mathbf{r} \\
+&amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} \int_{-\infty}^{\infty}  \exp\big(-\frac{(x_1-x_1')^{2} + (x_2-x_2')^{2} + \, ... \, + (x_d-x_d')^{2}}{4Dt}\big) \,  \mathrm{d}x_1 \mathrm{d}x_2 ...\mathrm{d}x_d \\
+&amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} \int_{-\infty}^{\infty} \exp\big(-\frac{(x_1-x_1')^{2}}{4Dt}\big) \, \mathrm{d}x_1 \int_{-\infty}^{\infty} \exp\big(-\frac{(x_2-x_2')^{2}}{4Dt}\big) \, \mathrm{d}x_2 \, ... \,  \int_{-\infty}^{\infty} \exp\big(-\frac{(x_d-x_d')^{2}}{4Dt}\big) \, \mathrm{d}x_d \\
+&amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} (\sqrt{4\pi Dt}\, )^{d} \\
+&amp;= Q_0
+\end{align}
+$$</div>
+<p>
+Groovy. So in the case of two dimensions (which is what I'm primarily interested in) we get
+</p>
+<div class="math">$$
+A(x, y, t) = \frac{Q_0}{4\pi Dt} \exp \Big[ \frac{(x-x')^2 + (y - y')^2}{4Dt}\Big]
+$$</div>
+<p>
+We can code this up in python super easily. </p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">D</span><span class="p">,</span> <span class="n">Q_0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">x_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">y_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_space</span><span class="p">,</span> <span class="n">y_space</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">A_inst_ps</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="p">,</span> <span class="n">x_0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_0</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">'''</span>
+<span class="sd">    Returns the concentration of a diffusing substance for an </span>
+<span class="sd">    instantaneous point-source at (x, y) at time t. </span>
+<span class="sd">    '''</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Q_0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">r_squared</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_squared</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>
+</pre></div>
+<p><img alt="" src="images/inst_point_source.gif"/></p>
+<h2>A Continuous Point Source</h2>
+<p>But I'm actually interested in a continuous point source. You can find the solution to the above by a quick google - it's not a very well-kept secret. But actually, a continuous point source is a bit harder to solve. I couldn't find it anywhere which is why I think this warrants a blog post. </p>
+<p>If  a substance is liberated at a rate <span class="math">\(\phi(t)\)</span> per unit time from <span class="math">\(t=0\)</span> to <span class="math">\(t=\tau\)</span>,  then we have to integrate over time.<br/>
+</p>
+<div class="math">$$
+A(\mathbf{r}, t) = \frac{1}{(4\pi D)^{d/2}} \int_{0}^{\min(\tau, t)} \phi(t') \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')^{d/2}}
+$$</div>
+<p>
+(using <span class="math">\(r^2\)</span> as a shorthand for <span class="math">\(|\mathbf{r} - \mathbf{r'}|^{2}\)</span>). In the case where the substance is released at a constant rate <span class="math">\(q\)</span>, this simplifies to
+</p>
+<div class="math">$$
+A(\mathbf{r}, t) = \frac{q}{(4\pi D)^{d/2}} \int_{0}^{\min(\tau, t)} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')^{d/2}}
+$$</div>
+<p>
+In <span class="math">\(d\neq2\)</span>, this is made easier by substitution
+</p>
+<div class="math">$$
+\mathrm{d}u = \frac{\mathrm{d}t'}{(t-t')^{d/2}} \\
+\frac{\mathrm{d}u}{\mathrm{d}t'} = (t-t')^{-\frac{d}{2}} \\
+u = \frac{2}{d - 2}(t-t')^{1-\frac{d}{2}}
+$$</div>
+<p>
+Then the integral simplifies down a lot and can be written in terms of the error function <span class="math">\(\text{erf(x)}\)</span>. Carslaw and Jaeger show an example of this in three dimensions in section 10.2 of the book <em>Conduction of heat in solids</em> <a href="https://books.google.co.uk/books/about/Conduction_of_Heat_in_Solids.html?id=y20sAAAAYAAJ&amp;redir_esc=y">[2]</a>.  But, as you can see from the denominator, this substitution fails for the case of <span class="math">\(d=2\)</span>. Here we have
+</p>
+<div class="math">$$
+A(\mathbf{r}, t) = \frac{q}{(4\pi D)} \int_{0}^{\min(\tau, t)} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')}
+$$</div>
+<p>
+The solution to this integral can be found by looking at another one. According to Wolfram Alpha (lol) the following indefinite integral has the following answer
+</p>
+<div class="math">$$
+\int \frac{1}{(b-x)} \exp \big(- \frac{a^{2}}{b-x}\big) \, \mathrm{d}x = \text{Ei}\big(-\frac{a^2}{b-x}\big) + \text{const}
+$$</div>
+<p>
+where <span class="math">\(\text{Ei}(x)\)</span> is the <a href="https://en.wikipedia.org/wiki/Exponential_integral">exponential integral</a>. That's the function defined as
+</p>
+<div class="math">$$
+\text{Ei}(x) = - \int_{-x}^{\infty} \frac{\text{e}^{-t}}{t} \, \mathrm{d}t \, \, =  \, \, - \int_{-x}^{\infty} \frac{\text{e}^{-t}}{t} \, \mathrm{d}t
+$$</div>
+<p>
+Note that it's just the same as our integral but with 
+</p>
+<div class="math">$$
+a^2 = \frac{r^2}{4D} \quad \text{and} \quad b = t
+$$</div>
+<p>
+which is an OK substitution, because <span class="math">\(D\)</span> is always positive. Therefore, we can conclude that
+</p>
+<div class="math">$$
+\begin{align}
+A(\mathbf{r}, t) &amp;= \frac{q}{(4\pi D)} \int_{0}^{\min(\tau, t)} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')} \\[0.5cm]
+&amp;= \begin{cases}\frac{q}{(4\pi D)} \int_{0}^{t} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')} &amp; \text{if} \, \,  t &lt; \tau \\[0.2cm] 
+\frac{q}{(4\pi D)} \int_{0}^{\tau} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')} &amp; \text{if} \,\, t &gt; \tau \\ \end{cases} \\[0.5cm]
+&amp;= \begin{cases}\frac{q}{(4\pi D)} \Big( \text{Ei}(-\infty) - \text{Ei}\big(-\frac{r^2}{4Dt}\big) \Big) &amp; \text{if} \, \,  t &lt; \tau \\[0.2cm] 
+\frac{q}{(4\pi D)} \Big( \text{Ei}\big(-\frac{r^2}{4D(t-\tau)}\big) - \text{Ei}\big(-\frac{r^2}{4Dt}\big) \Big) &amp; \text{if} \,\, t &gt; \tau \\ \end{cases} \\[0.5cm]
+&amp;= \begin{cases} -\frac{q}{(4\pi D)} \text{Ei}\big(-\frac{r^2}{4Dt}\big)  &amp; \text{if} \, \,  t &lt; \tau \\[0.2cm] 
+\frac{q}{(4\pi D)} \Big( \text{Ei}\big(-\frac{r^2}{4D(t-\tau)}\big) - \text{Ei}\big(-\frac{r^2}{4Dt}\big) \Big) &amp; \text{if} \,\, t &gt; \tau \\ \end{cases} \\
+\end{align}
+$$</div>
+<p>
+Cool! We're also massively helped out by the fact that Scipy has the exponential integral as one of its special function. Let's code it up. </p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expi</span> <span class="c1"># The exponential integral function</span>
+<span class="n">q</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span>
+
+<span class="k">def</span> <span class="nf">A_cont_ps</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">x_0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_0</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">'''</span>
+<span class="sd">    The concentration of a substance which was continuously released</span>
+<span class="sd">    from a point (x_0, y_0) from t=0 to t=tau. </span>
+<span class="sd">    '''</span>
+    <span class="n">q_on_4piD</span> <span class="o">=</span> <span class="n">q</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span><span class="p">)</span>
+    <span class="n">r_squared_on_4D</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span><span class="p">)</span>
+    <span class="n">ei2</span> <span class="o">=</span> <span class="n">expi</span><span class="p">(</span><span class="o">-</span><span class="n">r_squared_on_4D</span> <span class="o">/</span> <span class="n">t</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">tau</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">q_on_4piD</span> <span class="o">*</span> <span class="n">ei2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">q_on_4piD</span> <span class="o">*</span> <span class="p">(</span><span class="n">expi</span><span class="p">(</span><span class="o">-</span><span class="n">r_squared_on_4D</span> <span class="o">/</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">tau</span><span class="p">))</span> <span class="o">-</span> <span class="n">ei2</span><span class="p">)</span>
+</pre></div>
+<p><img alt="" src="images/cont_point_source.gif"/></p>
+<p>How pretty. Finally, for my application, I'm looking at how a ring of cells on the outside of a wound release the attractant. So here we just sum up a bunch of independent continuous point sources. </p>
+<p><img alt="" src="images/circular_cont_point_sources.gif"/></p>
+<p>Beautiful. That's all folks!</p>
+<h2>References</h2>
+<p>[1] R. E Pattle, 1959, <em>Diffusion from an instantaneous point source with a concentration-dependant coefficient</em>. The Quarterly Journal of Mechanics and Applied Mathematics</p>
+<p>[2] Carslaw, Jaeger. 1959, <em>Conduction of heat in solids</em>. Section 10.2</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+</section>
+<section class="post-info">
+<div class="post-share">
+<a class="twitter" href="https://twitter.com/share?text=Solving the Diffusion Equation for a Continuous Point Source&amp;url=/the-diffusion-equation.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+<i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+</a>
+<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/the-diffusion-equation.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+<i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+</a>
+<a class="googleplus" href="https://plus.google.com/share?url=/the-diffusion-equation.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+<i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+</a>
+<div class="clear"></div>
+</div>
+<aside class="post-tags">
+<a href="/tag/pelican.html">pelican</a><a href="/tag/biology.html">Biology</a><a href="/tag/maths.html">Maths</a><a href="/tag/python.html">Python</a> </aside>
+<div class="clear"></div>
+</section>
+<aside class="post-nav">
+<div class="clear"></div>
+</aside>
+</div>
+</article>
+</main>
+<!-- TODO : Body class -->
+<div class="" id="body-class" style="display: none;"></div>
+<footer id="footer">
+<div class="inner">
+<section class="credits">
+<span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+<span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+</section>
+</div>
+</footer>
+</section>
+<script src="/theme/js/script.js" type="text/javascript"></script>
+</body>
+</html>
