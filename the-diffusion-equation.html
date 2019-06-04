@@ -106,20 +106,20 @@
 <ol>
 <li>You have way to much time on your hands. </li>
 <li>You really care about mathematical modelling of microbiological phenomenon. </li>
-<li>You happen to be exactly looking for a solution to the diffusion equation for a continuous point source for your application. </li>
-<li>You are are a member of my close friends or family and you're trying to pretend you care about this shit. </li>
+<li>You happen to be exactly looking for a solution to the diffusion equation for a continuous point source. </li>
+<li>You are are a member of my close friends or family and you're trying to pretend you care. </li>
 </ol>
 <p>If you just want to see some pretty animations, skip to the end ;) </p>
 <p>YOU HAVE BEEN WARNED</p>
 <h2>The Diffusion Equation</h2>
-<p>The diffusion equation (which is technically different but often used interchangeably with the heat equation) is a partial differential equation that describes how a substance spreads out over space and time. It can be used to model lots of different things including (obviously) how heat moves through a medium or how (also obviously) stuff diffuses. In my specific case, I'm using it to model how a cell releases an attractant signal, after it's been damaged, to make white blood cells migrate towards it. </p>
+<p>The diffusion equation (which is technically different but often used interchangeably with the heat equation) is a partial differential equation that describes how a substance spreads out over space and time. It can be used to model lots of different things including how heat moves through a medium or how uhh .. how stuff diffuses. In my specific case, I'm using it to model how a cell releases an attractant signal, after it's been damaged, to make white blood cells migrate towards it. But that's not really that relevant for the purpose of this post, other than I'm mostly interested in the two-dimensional case. </p>
 <p>The diffusion equation, when the rate of diffusion is independent of the local density of the diffusing substance, can be written as
 </p>
 <div class="math">$$
 \frac{\partial \, A(\mathbf{r}, t)}{\partial \, t} = D\, \nabla^{2} \, [ A\,(\mathbf{r}, t) \, ]
 $$</div>
 <p>
-where <span class="math">\(A(\mathbf{r}, t)\)</span> is a scalar field representing the concentration of the diffusing substance at any vector position <span class="math">\(\mathbf{r}\)</span> and time <span class="math">\(t\)</span>. <span class="math">\(\nabla^{2}\)</span> is the Laplacian, a differential operator defined as
+where <span class="math">\(A(\mathbf{r}, t)\)</span> is a scalar field representing the concentration of the diffusing substance at any vector position <span class="math">\(\mathbf{r}\)</span> and time <span class="math">\(t\)</span>. <span class="math">\(\nabla^{2}\)</span> is the Laplacian, the differential operator defined as
 </p>
 <div class="math">$$
 \nabla^{2} f = \sum_{i=1}^n \frac {\partial^2 f}{\partial x^2_i}
@@ -133,13 +133,13 @@ $$</div>
 <p>
 To solve this equation we need an initial condition and a set of boundary conditions. In our case, we will be considering an infinite line, plane, volume, so our boundary conditions will always just be that the concentration is zero at infinity. </p>
 <h2>An Instantaneous Point Source</h2>
-<p>What would happen if we introduced a finite quantity, <span class="math">\(Q_0\)</span>, of heat/substance at a single point <span class="math">\(\mathbf{r'}\)</span>, and then left it to diffuse away? It turns out this has a neat closed-form solution in any number of dimensions. To properly solve it rigorously you need to dive into Green's functions and the like. No one has time for that. I'm just going to state the answer, as given in this paper from 1959 by Pattle <a href="https://academic.oup.com/qjmam/article-abstract/12/4/407/1851084">[1]</a>. 
+<p>This describes the process of a finite quantity  <span class="math">\(Q_0\)</span> of the diffusing substance being releated at a single point <span class="math">\(\mathbf{r'}\)</span> at <span class="math">\(t=0\)</span>.  It turns out this has a neat closed-form solution in any number of dimensions, <span class="math">\(d\)</span>. To derive this solution rigorously you need to dive into the dreaded realm of Green's functions, which is solely understood by hardcore maths folk. No one has time for that. I'm just going to state the answer, as given in this paper from 1959 by Pattle <a href="https://academic.oup.com/qjmam/article-abstract/12/4/407/1851084">[1]</a>. 
 </p>
 <div class="math">$$
 A(\mathbf{r}, t) = \frac{Q_0}{(4\pi Dt)^{d/2}} \exp\big(-\frac{|\mathbf{r} - \mathbf{r'}|^{2}}{4Dt}\big)
 $$</div>
 <p>
-where <span class="math">\(d\)</span> is the number of dimensions. Whilst I'm not going to/can't really prove this, one thing we can see is that the amount of heat present in the system is always conserved. If we integrate the concentration over all space at any time <span class="math">\(t\)</span>, we find
+where <span class="math">\(d\)</span> is the number of dimensions. You can however test this is a solution by plugging it in if you really want to. But one thing we can fairly quickly see is that the amount of heat present in the system is always conserved. If we integrate the concentration over all space at any time <span class="math">\(t\)</span>, we find
 </p>
 <div class="math">$$
 \begin{align}
@@ -151,15 +151,20 @@ Q &amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} \int_{-\infty}^{\infty} \exp\big(-\frac{|\m
 \end{align}
 $$</div>
 <p>
-Groovy. So in the case of two dimensions (which is what I'm primarily interested in) we get
+Because
+</p>
+<div class="math">$$
+\int_{-\infty}^{\infty} \exp\big(-\frac{u^2}{k}\big) \, \mathrm{d}u = \sqrt{\pi k}
+$$</div>
+<p>
+Groovy. So in the case of two dimensions you get
 </p>
 <div class="math">$$
 A(x, y, t) = \frac{Q_0}{4\pi Dt} \exp \Big[ \frac{(x-x')^2 + (y - y')^2}{4Dt}\Big]
 $$</div>
 <p>
-We can code this up in python super easily. </p>
+Which you can code up in python fairly easily. </p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 <span class="n">D</span><span class="p">,</span> <span class="n">Q_0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
 <span class="n">x_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -178,7 +183,7 @@ We can code this up in python super easily. </p>
 <p><img alt="" src="images/inst_point_source.gif"/></p>
 <h2>A Continuous Point Source</h2>
 <p>But I'm actually interested in a continuous point source. You can find the solution to the above by a quick google - it's not a very well-kept secret. But actually, a continuous point source is a bit harder to solve. I couldn't find it anywhere which is why I think this warrants a blog post. </p>
-<p>If  a substance is liberated at a rate <span class="math">\(\phi(t)\)</span> per unit time from <span class="math">\(t=0\)</span> to <span class="math">\(t=\tau\)</span>,  then we have to integrate over time.<br/>
+<p>If  a substance is liberated at a rate <span class="math">\(\phi(t)\)</span> per unit time from <span class="math">\(t=0\)</span> to <span class="math">\(t=\tau\)</span>,  then we have to integrate over time. <br/>
 </p>
 <div class="math">$$
 A(\mathbf{r}, t) = \frac{1}{(4\pi D)^{d/2}} \int_{0}^{\min(\tau, t)} \phi(t') \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')^{d/2}}
@@ -198,7 +203,7 @@ In <span class="math">\(d\neq2\)</span>, this is made easier by substitution
 u = \frac{2}{d - 2}(t-t')^{1-\frac{d}{2}}
 $$</div>
 <p>
-Then the integral simplifies down a lot and can be written in terms of the error function <span class="math">\(\text{erf(x)}\)</span>. Carslaw and Jaeger show an example of this in three dimensions in section 10.2 of the book <em>Conduction of heat in solids</em> <a href="https://books.google.co.uk/books/about/Conduction_of_Heat_in_Solids.html?id=y20sAAAAYAAJ&amp;redir_esc=y">[2]</a>.  But, as you can see from the denominator, this substitution fails for the case of <span class="math">\(d=2\)</span>. Here we have
+Then the integral simplifies down a lot and can be written in terms of the error function <span class="math">\(\text{erf(x)}\)</span>. Carslaw and Jaeger show an example of this in three dimensions in section 10.2 of the book <em>Conduction of heat in solids</em> <a href="https://books.google.co.uk/books/about/Conduction_of_Heat_in_Solids.html?id=y20sAAAAYAAJ&amp;redir_esc=y">[2]</a>.  But, because the denominator blows up, this substitution fails for the case of <span class="math">\(d=2\)</span>. Here we have
 </p>
 <div class="math">$$
 A(\mathbf{r}, t) = \frac{q}{(4\pi D)} \int_{0}^{\min(\tau, t)} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')}
@@ -261,6 +266,58 @@ Cool! We're also massively helped out by the fact that Scipy has the exponential
 <h2>References</h2>
 <p>[1] R. E Pattle, 1959, <em>Diffusion from an instantaneous point source with a concentration-dependant coefficient</em>. The Quarterly Journal of Mechanics and Applied Mathematics</p>
 <p>[2] Carslaw, Jaeger. 1959, <em>Conduction of heat in solids</em>. Section 10.2</p>
+<h2>Added extra - how to make the animations</h2>
+<p>I just made the animations by plugging in the formula, as written in the code above, over the <span class="math">\(x\)</span>-<span class="math">\(y\)</span> plane, for a bunch of different times. For each time, you save a <code>matplotlib imshow</code> and then string them altogether into a gif. </p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot_field</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+   <span class="sd">'''</span>
+<span class="sd">   Given a concentration field, imshow it</span>
+<span class="sd">   '''</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'t={:.2f}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'{:.2f}.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">save_gifs</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">'''</span>
+<span class="sd">    Go through the directory and save all the pngs into a gif</span>
+<span class="sd">    (this may only work on linux sorry for being a nerd)</span>
+<span class="sd">    '''</span>
+
+    <span class="n">check_output</span><span class="p">([</span><span class="s1">'convert'</span><span class="p">,</span> <span class="s1">'-delay'</span><span class="p">,</span> <span class="s1">'100'</span><span class="p">,</span> <span class="s1">'*.png'</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">'.gif'</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'.png'</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_gif1</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">A_inst_ps</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">plot_field</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">save_gifs</span><span class="p">(</span><span class="s1">'gif1'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_gif2</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">A_cont_ps</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">plot_field</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">save_gifs</span><span class="p">(</span><span class="s1">'gif2'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">make_gif4</span><span class="p">(</span><span class="n">n_cells</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mf">2.5</span><span class="p">):</span>
+
+    <span class="n">d_theta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">n_cells</span>
+    <span class="n">centres</span> <span class="o">=</span> <span class="p">[(</span><span class="n">R</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">R</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n_cells</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.51</span><span class="p">,</span> <span class="mi">151</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">A_cont_ps</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span> <span class="ow">in</span> <span class="n">centres</span><span class="p">])</span>
+        <span class="n">plot_field</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">save_gifs</span><span class="p">(</span><span class="s1">'gif3'</span><span class="p">)</span>
+
+<span class="n">make_gif1</span><span class="p">()</span>
+<span class="n">make_gif2</span><span class="p">()</span>
+<span class="n">make_gif3</span><span class="p">()</span>
+</pre></div>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
