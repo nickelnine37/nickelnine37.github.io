@@ -27,7 +27,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 <link href="/the-diffusion-equation.html" rel="canonical"/>
-<meta content="A little mathematical modelling treat for a tiny fraction of humans that care." name="description"/>
+<meta content="A little mathematical modelling treat." name="description"/>
 <meta content="Edward Antonian" name="author"/>
 <meta content="pelican" name="tags"/>
 <meta content="Biology" name="tags"/>
@@ -39,21 +39,14 @@
 <meta content="But is it Data Science?" property="og:title">
 <meta content="View the blog." property="og:description">
 <meta content="" property="og:url">
-<meta content="/static/images/contact-bg.jpg" property="og:image"/>
-<meta content="https://facebook.com/myprofile" property="article:publisher"/>
+<meta content="/images/covers/chaos.gif" property="og:image"/>
 <meta content="article" property="og:type"/>
 <meta content="/author/edward-antonian.html" property="article:author"/>
 <meta content="/the-diffusion-equation.html" property="og:url"/>
 <meta content="Solving the Diffusion Equation for a Continuous Point Source" property="og:title"/>
 <meta content="2019-06-02 00:00:00+01:00" property="article:published_time"/>
-<meta content="A little mathematical modelling treat for a tiny fraction of humans that care." property="og:description"/>
-<meta content="/static/images/contact-bg.jpg" property="og:image"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="@myprofile" name="twitter:site"/>
-<meta content="Solving the Diffusion Equation for a Continuous Point Source" name="twitter:title"/>
-<meta content="/the-diffusion-equation.html" name="twitter:url"/>
-<meta content="/static/images/contact-bg.jpg" name="twitter:image:src"/>
-<meta content="A little mathematical modelling treat for a tiny fraction of humans that care." name="twitter:description"/>
+<meta content="A little mathematical modelling treat." property="og:description"/>
+<meta content="/images/covers/chaos.gif" property="og:image"/>
 </meta></meta></meta></meta></meta></meta></link></meta></head>
 <!-- TODO : Body class -->
 <body class="home-template">
@@ -89,7 +82,7 @@
 </span>
 <!-- TODO : Modified check -->
 <span class="post-meta"> | Updated on Tue 04 June 2019</span>
-<div class="post-cover cover" style="background-image: url('static/images/contact-bg.jpg')">
+<div class="post-cover cover" style="background-image: url('images/covers/heq.png')">
 </div>
 </div></header>
 <section id="wrapper">
@@ -181,7 +174,7 @@ Which you can code up in python fairly easily. </p>
     <span class="n">r_squared</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_squared</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>
 </pre></div>
-<p><img alt="" src="images/inst_point_source.gif"/></p>
+<p><img alt="failed" src="images/inst_point_source.gif"/></p>
 <h2>A Continuous Point Source</h2>
 <p>But I'm actually interested in a continuous point source. You can find the solution to the above by a quick google - it's not a very well-kept secret. But actually, a continuous point source is a bit harder to solve. I couldn't find it anywhere which is why I think this warrants a blog post. </p>
 <p>If  a substance is liberated at a rate <span class="math">\(\phi(t)\)</span> per unit time from <span class="math">\(t=0\)</span> to <span class="math">\(t=\tau\)</span>,  then we have to integrate over time. <br/>
@@ -260,9 +253,9 @@ Cool! We're also massively helped out by the fact that Scipy has the exponential
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">q_on_4piD</span> <span class="o">*</span> <span class="p">(</span><span class="n">expi</span><span class="p">(</span><span class="o">-</span><span class="n">r_squared_on_4D</span> <span class="o">/</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">tau</span><span class="p">))</span> <span class="o">-</span> <span class="n">ei2</span><span class="p">)</span>
 </pre></div>
-<p><img alt="" src="images/cont_point_source.gif"/></p>
+<p><img alt="failed" src="images/cont_point_source.gif"/></p>
 <p>How pretty. Finally, for my application, I'm looking at how a ring of cells on the outside of a wound release the attractant. So here we just sum up a bunch of independent continuous point sources. </p>
-<p><img alt="" src="images/circular_cont_point_sources.gif"/></p>
+<p><img alt="failed" src="images/circular_cont_point_sources.gif"/></p>
 <p>Beautiful. That's all folks!</p>
 <h2>References</h2>
 <p>[1] R. E Pattle, 1959, <em>Diffusion from an instantaneous point source with a concentration-dependant coefficient</em>. The Quarterly Journal of Mechanics and Applied Mathematics</p>
