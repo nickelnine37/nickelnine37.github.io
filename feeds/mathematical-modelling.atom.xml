@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>But is it Data Science? - Mathematical Modelling</title><link href="/" rel="alternate"></link><link href="/feeds/mathematical-modelling.atom.xml" rel="self"></link><id>/</id><updated>2019-06-04T00:00:00+01:00</updated><entry><title>Solving the Diffusion Equation for a Continuous Point Source</title><link href="/the-diffusion-equation.html" rel="alternate"></link><published>2019-06-02T00:00:00+01:00</published><updated>2019-06-04T00:00:00+01:00</updated><author><name>Edward Antonian</name></author><id>tag:None,2019-06-02:/the-diffusion-equation.html</id><summary type="html">&lt;p&gt;A little mathematical modelling treat.&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Solving the Diffusion Equation for a Continuous Point Source&lt;/h1&gt;
+&lt;h2&gt;Coming up with funny headers is getting more difficult&lt;/h2&gt;
+&lt;p&gt;Hello! It's now very much dissertation time and I am planning to post stuff on here more regularly to keep a log of interesting stuff that I come across, mainly just so I have a nice place to chart its progress. The next few posts will therefore probably be a be a bit more mathsy... Sorry. &lt;/p&gt;
+&lt;p&gt;If you prefer programming stuff, check out my previous post on automatically stealing the Bing photo of the day for your desktop background. &lt;/p&gt;
+&lt;p&gt;My advice would be, only read on if two or more of the following apply:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;You have a bit too much time on your hands. &lt;/li&gt;
+&lt;li&gt;You really care about mathematical modelling of microbiological phenomenon. &lt;/li&gt;
+&lt;li&gt;You happen to be exactly looking for a solution to the diffusion equation for a continuous point source.&lt;/li&gt;
+&lt;li&gt;You are are a member of my close friends or family and you're pretending it's interesting. &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you just want to see some pretty animations, skip to the end ;) &lt;/p&gt;
+&lt;p&gt;YOU HAVE BEEN WARNED&lt;/p&gt;
+&lt;h2&gt;The Diffusion Equation&lt;/h2&gt;
+&lt;p&gt;The diffusion equation (which is technically different but often used interchangeably with the heat equation) is a partial differential equation that describes how a substance spreads out over space and time. It can be used to model lots of different things including how heat moves through a medium or how uhh .. how stuff diffuses. In my specific case, I'm using it to model how a cell releases an attractant signal, after it's been damaged, to make white blood cells migrate towards it. But that's not really that relevant for the purpose of this post, other than I'm mostly interested in the two-dimensional case. &lt;/p&gt;
+&lt;p&gt;The diffusion equation, when the rate of diffusion is independent of the local density of the diffusing substance, can be written as
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\frac{\partial \, A(\mathbf{r}, t)}{\partial \, t} = D\, \nabla^{2} \, [ A\,(\mathbf{r}, t) \, ]
+$$&lt;/div&gt;
+&lt;p&gt;
+where &lt;span class="math"&gt;\(A(\mathbf{r}, t)\)&lt;/span&gt; is a scalar field representing the concentration of the diffusing substance at any vector position &lt;span class="math"&gt;\(\mathbf{r}\)&lt;/span&gt; and time &lt;span class="math"&gt;\(t\)&lt;/span&gt;. &lt;span class="math"&gt;\(\nabla^{2}\)&lt;/span&gt; is the Laplacian, the differential operator defined as
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\nabla^{2} f = \sum_{i=1}^n \frac {\partial^2 f}{\partial x^2_i}
+$$&lt;/div&gt;
+&lt;p&gt;
+and &lt;span class="math"&gt;\(D\)&lt;/span&gt; is the diffusion constant. So for example, in two dimensions, it becomes
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\frac{\partial \, A(\mathbf{r}, t)}{\partial \, t} = D\, \big(  \frac{\partial^2 \, A(\mathbf{r}, t)}{\partial \, x^2} + \frac{\partial^2 \, A(\mathbf{r}, t)}{\partial \, y^2} \, \big)
+$$&lt;/div&gt;
+&lt;p&gt;
+To solve this equation we need an initial condition and a set of boundary conditions. In our case, we will be considering an infinite line, plane, volume, so our boundary conditions will always just be that the concentration is zero at infinity. &lt;/p&gt;
+&lt;h2&gt;An Instantaneous Point Source&lt;/h2&gt;
+&lt;p&gt;This describes the process of a finite quantity  &lt;span class="math"&gt;\(Q_0\)&lt;/span&gt; of the diffusing substance being releated at a single point &lt;span class="math"&gt;\(\mathbf{r'}\)&lt;/span&gt; at &lt;span class="math"&gt;\(t=0\)&lt;/span&gt;.  It turns out this has a neat closed-form solution in any number of dimensions, &lt;span class="math"&gt;\(d\)&lt;/span&gt;. To derive this solution rigorously you need to dive into the dreaded realm of Green's functions, which is solely understood by hardcore maths folk. No one has time for that. I'm just going to state the answer, as given in this paper from 1959 by Pattle &lt;a href="https://academic.oup.com/qjmam/article-abstract/12/4/407/1851084"&gt;[1]&lt;/a&gt;. 
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A(\mathbf{r}, t) = \frac{Q_0}{(4\pi Dt)^{d/2}} \exp\big(-\frac{|\mathbf{r} - \mathbf{r'}|^{2}}{4Dt}\big)
+$$&lt;/div&gt;
+&lt;p&gt;
+where &lt;span class="math"&gt;\(d\)&lt;/span&gt; is the number of dimensions. You can however test this is a solution by plugging it in if you really want to. But one thing we can fairly quickly see is that the amount of heat present in the system is always conserved. If we integrate the concentration over all space at any time &lt;span class="math"&gt;\(t\)&lt;/span&gt;, we find
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{align}
+Q &amp;amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} \int_{-\infty}^{\infty} \exp\big(-\frac{|\mathbf{r} - \mathbf{r'}|^{2}}{4Dt}\big) \, \mathrm{d}\mathbf{r} \\
+&amp;amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} \int_{-\infty}^{\infty}  \exp\big(-\frac{(x_1-x_1')^{2} + (x_2-x_2')^{2} + \, ... \, + (x_d-x_d')^{2}}{4Dt}\big) \,  \mathrm{d}x_1 \mathrm{d}x_2 ...\mathrm{d}x_d \\
+&amp;amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} \int_{-\infty}^{\infty} \exp\big(-\frac{(x_1-x_1')^{2}}{4Dt}\big) \, \mathrm{d}x_1 \int_{-\infty}^{\infty} \exp\big(-\frac{(x_2-x_2')^{2}}{4Dt}\big) \, \mathrm{d}x_2 \, ... \,  \int_{-\infty}^{\infty} \exp\big(-\frac{(x_d-x_d')^{2}}{4Dt}\big) \, \mathrm{d}x_d \\
+&amp;amp;= \frac{Q_0}{(4\pi Dt)^{d/2}} (\sqrt{4\pi Dt}\, )^{d} \\
+&amp;amp;= Q_0
+\end{align}
+$$&lt;/div&gt;
+&lt;p&gt;
+Because
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\int_{-\infty}^{\infty} \exp\big(-\frac{u^2}{k}\big) \, \mathrm{d}u = \sqrt{\pi k}
+$$&lt;/div&gt;
+&lt;p&gt;
+Groovy. So in the case of two dimensions you get
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A(x, y, t) = \frac{Q_0}{4\pi Dt} \exp \Big[ \frac{(x-x')^2 + (y - y')^2}{4Dt}\Big]
+$$&lt;/div&gt;
+&lt;p&gt;
+Which you can code up in python fairly easily. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="n"&gt;D&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Q_0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;x_space&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;y_space&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;meshgrid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x_space&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_space&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;A_inst_ps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x_0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="sd"&gt;    Returns the concentration of a diffusing substance for an &lt;/span&gt;
+&lt;span class="sd"&gt;    instantaneous point-source at (x, y) at time t. &lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Q_0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;D&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;r_squared&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;x_0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;y_0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r_squared&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;D&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="failed" src="images/inst_point_source.gif"&gt;&lt;/p&gt;
+&lt;h2&gt;A Continuous Point Source&lt;/h2&gt;
+&lt;p&gt;But I'm actually interested in a continuous point source. You can find the solution to the above by a quick google - it's not a very well-kept secret. But actually, a continuous point source is a bit harder to solve. I couldn't find it anywhere which is why I think this warrants a blog post. &lt;/p&gt;
+&lt;p&gt;If  a substance is liberated at a rate &lt;span class="math"&gt;\(\phi(t)\)&lt;/span&gt; per unit time from &lt;span class="math"&gt;\(t=0\)&lt;/span&gt; to &lt;span class="math"&gt;\(t=\tau\)&lt;/span&gt;,  then we have to integrate over time. &lt;br&gt;
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A(\mathbf{r}, t) = \frac{1}{(4\pi D)^{d/2}} \int_{0}^{\min(\tau, t)} \phi(t') \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')^{d/2}}
+$$&lt;/div&gt;
+&lt;p&gt;
+(using &lt;span class="math"&gt;\(r^2\)&lt;/span&gt; as a shorthand for &lt;span class="math"&gt;\(|\mathbf{r} - \mathbf{r'}|^{2}\)&lt;/span&gt;). In the case where the substance is released at a constant rate &lt;span class="math"&gt;\(q\)&lt;/span&gt;, this simplifies to
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A(\mathbf{r}, t) = \frac{q}{(4\pi D)^{d/2}} \int_{0}^{\min(\tau, t)} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')^{d/2}}
+$$&lt;/div&gt;
+&lt;p&gt;
+In &lt;span class="math"&gt;\(d\neq2\)&lt;/span&gt;, this is made easier by substitution
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\mathrm{d}u = \frac{\mathrm{d}t'}{(t-t')^{d/2}} \\
+\frac{\mathrm{d}u}{\mathrm{d}t'} = (t-t')^{-\frac{d}{2}} \\
+u = \frac{2}{d - 2}(t-t')^{1-\frac{d}{2}}
+$$&lt;/div&gt;
+&lt;p&gt;
+Then the integral simplifies down a lot and can be written in terms of the error function &lt;span class="math"&gt;\(\text{erf(x)}\)&lt;/span&gt;. Carslaw and Jaeger show an example of this in three dimensions in section 10.2 of the book &lt;em&gt;Conduction of heat in solids&lt;/em&gt; &lt;a href="https://books.google.co.uk/books/about/Conduction_of_Heat_in_Solids.html?id=y20sAAAAYAAJ&amp;amp;redir_esc=y"&gt;[2]&lt;/a&gt;.  But, because the denominator blows up, this substitution fails for the case of &lt;span class="math"&gt;\(d=2\)&lt;/span&gt;. Here we have
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+A(\mathbf{r}, t) = \frac{q}{(4\pi D)} \int_{0}^{\min(\tau, t)} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')}
+$$&lt;/div&gt;
+&lt;p&gt;
+The solution to this integral can be found by looking at another one. According to Wolfram Alpha (lol) the following indefinite integral has the following answer
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\int \frac{1}{(b-x)} \exp \big(- \frac{a^{2}}{b-x}\big) \, \mathrm{d}x = \text{Ei}\big(-\frac{a^2}{b-x}\big) + \text{const}
+$$&lt;/div&gt;
+&lt;p&gt;
+where &lt;span class="math"&gt;\(\text{Ei}(x)\)&lt;/span&gt; is the &lt;a href="https://en.wikipedia.org/wiki/Exponential_integral"&gt;exponential integral&lt;/a&gt;. That's the function defined as
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\text{Ei}(x) = - \int_{-x}^{\infty} \frac{\text{e}^{-t}}{t} \, \mathrm{d}t \, \, =  \, \, \int_{-\infty}^{x} \frac{\text{e}^{t}}{t} \, \mathrm{d}t
+$$&lt;/div&gt;
+&lt;p&gt;
+Note that it's just the same as our integral but with 
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+a^2 = \frac{r^2}{4D} \quad \text{and} \quad b = t
+$$&lt;/div&gt;
+&lt;p&gt;
+which is an OK substitution, because &lt;span class="math"&gt;\(D\)&lt;/span&gt; is always positive. Therefore, we can conclude that
+&lt;/p&gt;
+&lt;div class="math"&gt;$$
+\begin{align}
+A(\mathbf{r}, t) &amp;amp;= \frac{q}{(4\pi D)} \int_{0}^{\min(\tau, t)} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')} \\[0.5cm]
+&amp;amp;= \begin{cases}\frac{q}{(4\pi D)} \int_{0}^{t} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')} &amp;amp; \text{if} \, \,  t &amp;lt; \tau \\[0.2cm] 
+\frac{q}{(4\pi D)} \int_{0}^{\tau} \exp\Big[-\frac{r^2}{4D(t-t')}\Big] \frac{\mathrm{d}t'}{(t-t')} &amp;amp; \text{if} \,\, t &amp;gt; \tau \\ \end{cases} \\[0.5cm]
+&amp;amp;= \begin{cases}\frac{q}{(4\pi D)} \Big( \text{Ei}(-\infty) - \text{Ei}\big(-\frac{r^2}{4Dt}\big) \Big) &amp;amp; \text{if} \, \,  t &amp;lt; \tau \\[0.2cm] 
+\frac{q}{(4\pi D)} \Big( \text{Ei}\big(-\frac{r^2}{4D(t-\tau)}\big) - \text{Ei}\big(-\frac{r^2}{4Dt}\big) \Big) &amp;amp; \text{if} \,\, t &amp;gt; \tau \\ \end{cases} \\[0.5cm]
+&amp;amp;= \begin{cases} -\frac{q}{(4\pi D)} \text{Ei}\big(-\frac{r^2}{4Dt}\big)  &amp;amp; \text{if} \, \,  t &amp;lt; \tau \\[0.2cm] 
+\frac{q}{(4\pi D)} \Big( \text{Ei}\big(-\frac{r^2}{4D(t-\tau)}\big) - \text{Ei}\big(-\frac{r^2}{4Dt}\big) \Big) &amp;amp; \text{if} \,\, t &amp;gt; \tau \\ \end{cases} \\
+\end{align}
+$$&lt;/div&gt;
+&lt;p&gt;
+Cool! We're also massively helped out by the fact that Scipy has the exponential integral as one of its special function. Let's code it up. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.special&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;expi&lt;/span&gt; &lt;span class="c1"&gt;# The exponential integral function&lt;/span&gt;
+&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tau&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;A_cont_ps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x_0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="sd"&gt;    The concentration of a substance which was continuously released&lt;/span&gt;
+&lt;span class="sd"&gt;    from a point (x_0, y_0) from t=0 to t=tau. &lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;q_on_4piD&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;D&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;r_squared_on_4D&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;x_0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;y_0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;D&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;ei2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;expi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r_squared_on_4D&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;tau&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q_on_4piD&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ei2&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;q_on_4piD&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;expi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r_squared_on_4D&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;tau&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;ei2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="failed" src="images/cont_point_source.gif"&gt;&lt;/p&gt;
+&lt;p&gt;How pretty. Finally, for my application, I'm looking at how a ring of cells on the outside of a wound release the attractant. So here we just sum up a bunch of independent continuous point sources. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="failed" src="images/circular_cont_point_sources.gif"&gt;&lt;/p&gt;
+&lt;p&gt;Beautiful. That's all folks!&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;[1] R. E Pattle, 1959, &lt;em&gt;Diffusion from an instantaneous point source with a concentration-dependant coefficient&lt;/em&gt;. The Quarterly Journal of Mechanics and Applied Mathematics&lt;/p&gt;
+&lt;p&gt;[2] Carslaw, Jaeger. 1959, &lt;em&gt;Conduction of heat in solids&lt;/em&gt;. Section 10.2&lt;/p&gt;
+&lt;h2&gt;Added extra - how to make the animations&lt;/h2&gt;
+&lt;p&gt;I just made the animations by plugging in the formula, as written in the code above, over the &lt;span class="math"&gt;\(x\)&lt;/span&gt;-&lt;span class="math"&gt;\(y\)&lt;/span&gt; plane, for a bunch of different times. For each time, you save a &lt;code&gt;matplotlib imshow&lt;/code&gt; and then string them altogether into a gif. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;plot_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;field&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+   &lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="sd"&gt;   Given a concentration field, imshow it&lt;/span&gt;
+&lt;span class="sd"&gt;   &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+
+        &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;figure&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;field&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;extent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;vmin&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;vmax&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;t={:.2f}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;{:.2f}.png&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;save_gifs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="sd"&gt;    Go through the directory and save all the pngs into a gif&lt;/span&gt;
+&lt;span class="sd"&gt;    (this may only work on linux sorry for being a nerd)&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+
+    &lt;span class="n"&gt;check_output&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;convert&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;-delay&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;100&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;*.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;.gif&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listdir&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;.png&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;remove&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;make_gif1&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;101&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;A_inst_ps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;plot_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;save_gifs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gif1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;make_gif2&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;101&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;A_cont_ps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;plot_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;save_gifs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gif2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;make_gif4&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n_cells&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;2.5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="n"&gt;d_theta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;n_cells&lt;/span&gt;
+    &lt;span class="n"&gt;centres&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cos&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theta&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;theta&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n_cells&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)[:&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.51&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;151&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;A_cont_ps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x_0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x_0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_0&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;centres&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;plot_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;save_gifs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gif3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;make_gif1&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;make_gif2&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;make_gif3&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="pelican"></category><category term="Biology"></category><category term="Maths"></category><category term="Python"></category></entry></feed>

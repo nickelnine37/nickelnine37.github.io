@@ -511,6 +511,27 @@
 <p>I've added in some debugging print lines so help identify the source of the problem if the download fails. This may be because the code failed to find the artist's page (for example, Tupac Shakur fails since the Genius page has the artist written as 2Pac). There are a number of artists that fail to meet the 20,000 word threshold. Sometimes, this is because there really aren't enough words in their entire discography. Other times it's because the six listed albums don't have enough words. In this case, the only way you can solve the problem is by manually adding more lyrics. </p>
 <p>Hooray! We finally have a complete function for gathering lyrics. Part one complete. Now for the fun stuff: lyric analysis. </p>
 </section>
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <section class="post-info">
 <div class="post-share">
 <a class="twitter" href="https://twitter.com/share?text=Rap Skills Analysis: A Computational Approach part 1&amp;url=/rap-part-one.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
