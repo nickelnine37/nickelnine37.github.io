@@ -1,110 +1,206 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta charset="utf-8" content="text/html" http-equiv="Content-Type">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
-<title>Tracking cell movement with Scikit-image and Scipy</title>
-<meta content="True" name="HandheldFriendly"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="origin" name="referrer"/>
-<meta content="Pelican" name="generator"/>
-<link href="" rel="canonical"/>
-<!-- Feed -->
-<link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
-<!-- Code highlight color scheme -->
-<link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
-<!-- CSS specified by the user -->
-<link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css">
-<!-- Custom fonts -->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css"/>
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+ <head>
+  <meta charset="utf-8"/>
+  <meta charset="utf-8" content="text/html" http-equiv="Content-Type"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+   <title>
+    Tracking cell movement with Scikit-image and Scipy
+   </title>
+   <meta content="True" name="HandheldFriendly"/>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+   <meta content="origin" name="referrer"/>
+   <meta content="Pelican" name="generator"/>
+   <link href="" rel="canonical"/>
+   <!-- Feed -->
+   <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+   <!-- Code highlight color scheme -->
+   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <!-- CSS specified by the user -->
+   <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
+   <!-- Custom fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-<link href="/cell-tracking-with-scipy.html" rel="canonical"/>
-<meta content="How to track cell movement from video files" name="description"/>
-<meta content="Edward Antonian" name="author"/>
-<meta content="pelican" name="tags"/>
-<meta content="Biology" name="tags"/>
-<meta content="Maths" name="tags"/>
-<meta content="Python" name="tags"/>
-<meta content="cells" name="tags"/>
-<meta content="tracking" name="tags"/>
-<meta content="image" name="tags"/>
-<meta content="" property="og:locale">
-<meta content="But is it Data Science?" property="og:site_name">
-<meta content="website" property="og:type">
-<meta content="But is it Data Science?" property="og:title">
-<meta content="View the blog." property="og:description">
-<meta content="" property="og:url">
-<meta content="/images/covers/chaos.gif" property="og:image">
-<meta content="article" property="og:type"/>
-<meta content="/author/edward-antonian.html" property="article:author"/>
-<meta content="/cell-tracking-with-scipy.html" property="og:url"/>
-<meta content="Tracking cell movement with Scikit-image and Scipy" property="og:title"/>
-<meta content="2019-09-02 00:00:00+01:00" property="article:published_time"/>
-<meta content="How to track cell movement from video files" property="og:description"/>
-<meta content="/images/covers/chaos.gif" property="og:image"/>
-</meta></meta></meta></meta></meta></meta></meta></link></meta></head>
-<!-- TODO : Body class -->
-<body class="home-template">
-<nav id="menu">
-<a class="close-button">Close</a>
-<div class="nav-wrapper">
-<p class="nav-label">Menu</p>
-<ul><li role="presentation"><a href="pages/about.html">About</a></li><li role="presentation"><a href="archives.html">Archive</a></li><li role="presentation"><a href="pages/but-is-it-data-science.html">But is it?</a></li>
-</ul>
-</div>
-</nav>
-<!-- Progressbar -->
-<div class="progress-container">
-<span class="progress-bar"></span>
-</div>
-<!-- Page Header -->
-<!-- Set your background image for this header on the line below. -->
-<header class="has-cover" id="post-header">
-<div class="inner">
-<nav id="navigation">
-<span class="nav-button" id="home-button">
-<a class="home-button" href="index.html" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
-</span>
-<span class="nav-button" id="menu-button">
-<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
-</span>
-</nav>
-<h1 class="post-title">Tracking cell movement with Scikit-image and Scipy</h1>
-<!-- TODO : Proper class for headline -->
-<span class="post-meta">
-<a href="/author/edward-antonian.html">Edward antonian</a>
-            | <time datetime="Mon 02 September 2019">Mon 02 September 2019</time>
-</span>
-<!-- TODO : Modified check -->
-<span class="post-meta"> | Updated on Mon 02 September 2019</span>
-<div class="post-cover cover" style="background-image: url('images/covers/cells.png')">
-</div>
-</div></header>
-<section id="wrapper">
-<a class="hidden-close"></a>
-<!-- Post content -->
-<main class="content" role="main">
-<article class="post">
-<div class="inner">
-<section class="post-content">
-<h1>Tracking cell movement with Scikit-image and Scipy</h1>
-<h2>Cell tracking, no NSA</h2>
-<p>So my masters dissertation is finally over. And while part of me never wants to hear the word fruit fly again, I thought I may as well get some of this down while it's still fresh. </p>
-<p>Basically, my dissertation was looking into how <em>Drosophila</em> (fruit fly) white blood cells change their motion when you make a small wound with a laser. Kind of harsh on the poor flies, I know. If there's one thing I've learnt from this dissertation its that fruit flies really pulled the short straw when it comes to biological research. But anyway, one key part of this was looking at videos of these blood cells moving under a microscope, and tracking their position over time. This blog post is going to look at how you can do all that in Python without any fancy packages like OpenCV. All we're going to need is <a href="https://scikit-image.org/">scikit-image</a> and <a href="https://www.scipy.org/">scipy</a> (and I suppose numpy and matplotlib but who's counting). </p>
-<p>Tracking multiple objects in time has two basic stages. First, you need to identify the positions of each object in each frame. Then you need to link the same object across frames. </p>
-<h2>Cell detection</h2>
-<p>When you look into the subject of detecting simple areas of interest in a picture, the three techniques that come up are the <em>Laplacian of Gaussian</em> (LoG), the <em>Difference of Gaussian</em> (DoG) and the <em>Determinant of Hessian</em> (DoH).  Each works in a fairly similar way. The input image is convolved with a filter, or set of filters, and then a threshold is used to identify the coordinates of interest. I'm not going to go into any major details here because actually scikit image has some ready-made functions that implement these methods, but if you're interested you can read more about the techniques <a href="https://en.wikipedia.org/wiki/Blob_detection#The_Laplacian_of_Gaussian">here</a>. </p>
-<p>Experimentation reveals that LoG and DoG are the most effective methods on this data set. Here's how you can implement that. </p>
-<p>First lets read-in the data, which is stored as a tif file, and take a look at a single frame.  </p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span>
+    <link href="/cell-tracking-with-scipy.html" rel="canonical"/>
+    <meta content="How to track cell movement from video files" name="description"/>
+    <meta content="Edward Antonian" name="author"/>
+    <meta content="pelican" name="tags"/>
+    <meta content="Biology" name="tags"/>
+    <meta content="Maths" name="tags"/>
+    <meta content="Python" name="tags"/>
+    <meta content="cells" name="tags"/>
+    <meta content="tracking" name="tags"/>
+    <meta content="image" name="tags"/>
+    <meta content="" property="og:locale"/>
+    <meta content="But is it Data Science?" property="og:site_name"/>
+    <meta content="website" property="og:type"/>
+    <meta content="But is it Data Science?" property="og:title"/>
+    <meta content="View the blog." property="og:description"/>
+    <meta content="" property="og:url"/>
+    <meta content="/images/covers/chaos.gif" property="og:image"/>
+    <meta content="article" property="og:type">
+     <meta content="/author/edward-antonian.html" property="article:author">
+      <meta content="/cell-tracking-with-scipy.html" property="og:url">
+       <meta content="Tracking cell movement with Scikit-image and Scipy" property="og:title">
+        <meta content="2019-09-02 00:00:00+01:00" property="article:published_time">
+         <meta content="How to track cell movement from video files" property="og:description">
+          <meta content="/images/covers/chaos.gif" property="og:image">
+          </meta>
+         </meta>
+        </meta>
+       </meta>
+      </meta>
+     </meta>
+    </meta>
+   </link>
+  </meta>
+ </head>
+ <!-- TODO : Body class -->
+ <body class="home-template">
+  <nav id="menu">
+   <a class="close-button">
+    Close
+   </a>
+   <div class="nav-wrapper">
+    <p class="nav-label">
+     Menu
+    </p>
+    <ul>
+     <li role="presentation">
+      <a href="pages/about.html">
+       About
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="archives.html">
+       Archive
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="pages/but-is-it-data-science.html">
+       But is it?
+      </a>
+     </li>
+    </ul>
+   </div>
+  </nav>
+  <!-- Progressbar -->
+  <div class="progress-container">
+   <span class="progress-bar">
+   </span>
+  </div>
+  <!-- Page Header -->
+  <!-- Set your background image for this header on the line below. -->
+  <header class="has-cover" id="post-header">
+   <div class="inner">
+    <nav id="navigation">
+     <span class="nav-button" id="home-button">
+      <a class="home-button" href="index.html" title="Home">
+       <i class="ic ic-arrow-left">
+       </i>
+       Home
+      </a>
+     </span>
+     <span class="nav-button" id="menu-button">
+      <a class="menu-button">
+       <i class="ic ic-menu">
+       </i>
+       Menu
+      </a>
+     </span>
+    </nav>
+    <h1 class="post-title">
+     Tracking cell movement with Scikit-image and Scipy
+    </h1>
+    <!-- TODO : Proper class for headline -->
+    <span class="post-meta">
+     <a href="/author/edward-antonian.html">
+      Edward antonian
+     </a>
+     |
+     <time datetime="Mon 02 September 2019">
+      Mon 02 September 2019
+     </time>
+    </span>
+    <!-- TODO : Modified check -->
+    <span class="post-meta">
+     | Updated on Mon 02 September 2019
+    </span>
+    <div class="post-cover cover" style="background-image: url('images/covers/cells.png')">
+    </div>
+   </div>
+  </header>
+  <section id="wrapper">
+   <a class="hidden-close">
+   </a>
+   <!-- Post content -->
+   <main class="content" role="main">
+    <article class="post">
+     <div class="inner">
+      <section class="post-content">
+       <h1>
+        Tracking cell movement with Scikit-image and Scipy
+       </h1>
+       <h2>
+        Cell tracking, no NSA
+       </h2>
+       <p>
+        So my masters dissertation is finally over. And while part of me never wants to hear the word fruit fly again, I thought I may as well get some of this down while it's still fresh.
+       </p>
+       <p>
+        Basically, my dissertation was looking into how
+        <em>
+         Drosophila
+        </em>
+        (fruit fly) white blood cells change their motion when you make a small wound with a laser. Kind of harsh on the poor flies, I know. If there's one thing I've learnt from this dissertation its that fruit flies really pulled the short straw when it comes to biological research. But anyway, one key part of this was looking at videos of these blood cells moving under a microscope, and tracking their position over time. This blog post is going to look at how you can do all that in Python without any fancy packages like OpenCV. All we're going to need is
+        <a href="https://scikit-image.org/">
+         scikit-image
+        </a>
+        and
+        <a href="https://www.scipy.org/">
+         scipy
+        </a>
+        (and I suppose numpy and matplotlib but who's counting).
+       </p>
+       <p>
+        Tracking multiple objects in time has two basic stages. First, you need to identify the positions of each object in each frame. Then you need to link the same object across frames.
+       </p>
+       <h2>
+        Cell detection
+       </h2>
+       <p>
+        When you look into the subject of detecting simple areas of interest in a picture, the three techniques that come up are the
+        <em>
+         Laplacian of Gaussian
+        </em>
+        (LoG), the
+        <em>
+         Difference of Gaussian
+        </em>
+        (DoG) and the
+        <em>
+         Determinant of Hessian
+        </em>
+        (DoH).  Each works in a fairly similar way. The input image is convolved with a filter, or set of filters, and then a threshold is used to identify the coordinates of interest. I'm not going to go into any major details here because actually scikit image has some ready-made functions that implement these methods, but if you're interested you can read more about the techniques
+        <a href="https://en.wikipedia.org/wiki/Blob_detection#The_Laplacian_of_Gaussian">
+         here
+        </a>
+        .
+       </p>
+       <p>
+        Experimentation reveals that LoG and DoG are the most effective methods on this data set. Here's how you can implement that.
+       </p>
+       <p>
+        First lets read-in the data, which is stored as a tif file, and take a look at a single frame.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 <span class="c1"># set the color channel and read in the frames</span>
@@ -118,11 +214,19 @@
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-<p><img alt="failed" src="images/cells_raw.png"/></p>
-<p>What you can see here is the nuclei of the white blood cells. This is because they have been genetically modified to contain a certain protein that emits light at a known frequency when illuminated with light of another frequency. </p>
-<p>Next we can run the skimage function to output the coordinates of the detected blobs and plot them. We'll test both LoG and DoG. </p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">blob_log</span><span class="p">,</span> <span class="n">blob_dog</span>
+</pre>
+       </div>
+       <p>
+        <img alt="failed" src="images/cells_raw.png"/>
+       </p>
+       <p>
+        What you can see here is the nuclei of the white blood cells. This is because they have been genetically modified to contain a certain protein that emits light at a known frequency when illuminated with light of another frequency.
+       </p>
+       <p>
+        Next we can run the skimage function to output the coordinates of the detected blobs and plot them. We'll test both LoG and DoG.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">blob_log</span><span class="p">,</span> <span class="n">blob_dog</span>
 
 <span class="c1"># use skimage functions to detect cell positions</span>
 <span class="n">LoG_cells</span> <span class="o">=</span> <span class="n">blob_log</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">min_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
@@ -142,19 +246,116 @@
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</pre></div>
-<p><img alt="failed" src="images/cells_detected.png"/></p>
-<p>Sweet. We can do this for each frame in the video file to get a list of cell coordinates in each frame. </p>
-<h2>Linking positions to form trajectories</h2>
-<p>Having detected the coordinates of each cell in each frame, the next stage is to link cells together across frames to form trajectories.  In my project we implemented a modified version of the Linear Assignment Problem (LAP) approach of Jaqaman <em>et al</em> (2008) <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2747604/">[1]</a> , which has been used in cell-specific contexts with success in projects such as <a href="https://imagej.net/TrackMate">TrackMate</a>. This approach formulates the task in terms of a series of particle linking problems between consecutive frames by constructing a square 'cost matrix', where the objective is to choose a single element from each column where no two elements are chosen from the same row, such that the sum of the elements is minimised. </p>
-<p>Ok let me explain...</p>
-<p>Consider two consecutive frames <span class="math">\(A\)</span> and <span class="math">\(B\)</span> for which <span class="math">\(n_A\)</span> and <span class="math">\(n_B\)</span> cell have been detected at 2D coordinates <span class="math">\([\mathbf{x}^A_1, \mathbf{x}^A_2, \dots, \mathbf{x}^{A}_{n_{A}}]\)</span> and <span class="math">\([\mathbf{x}^B_1, \mathbf{x}^B_2, \dots, \mathbf{x}^{B}_{n_{B}}]\)</span> respectively. First consider a simplified case in which <span class="math">\(n_A = n_B = n\)</span> and we are certain that no cells have entered or exited the camera view, i.e. there is a one-to-one correspondence between cells in the two frames (we also exclude the possibility of splitting and merging events). For a given motion model, a cell located at position <span class="math">\(\mathbf{x}_{0} = (x_0, y_0)\)</span> in frame <span class="math">\(A\)</span> has a well-defined probability distribution over where it will be in the next frame, <span class="math">\(p(\mathbf{x}; \mathbf{x}_0)\)</span>. One could, in principle, use any probability distribution here however one can assume simple two-dimensional Brownian motion. This means</p>
-<div class="math">$$
+</pre>
+       </div>
+       <p>
+        <img alt="failed" src="images/cells_detected.png"/>
+       </p>
+       <p>
+        Sweet. We can do this for each frame in the video file to get a list of cell coordinates in each frame.
+       </p>
+       <h2>
+        Linking positions to form trajectories
+       </h2>
+       <p>
+        Having detected the coordinates of each cell in each frame, the next stage is to link cells together across frames to form trajectories.  In my project we implemented a modified version of the Linear Assignment Problem (LAP) approach of Jaqaman
+        <em>
+         et al
+        </em>
+        (2008)
+        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2747604/">
+         [1]
+        </a>
+        , which has been used in cell-specific contexts with success in projects such as
+        <a href="https://imagej.net/TrackMate">
+         TrackMate
+        </a>
+        . This approach formulates the task in terms of a series of particle linking problems between consecutive frames by constructing a square 'cost matrix', where the objective is to choose a single element from each column where no two elements are chosen from the same row, such that the sum of the elements is minimised.
+       </p>
+       <p>
+        Ok let me explain...
+       </p>
+       <p>
+        Consider two consecutive frames
+        <span class="math">
+         \(A\)
+        </span>
+        and
+        <span class="math">
+         \(B\)
+        </span>
+        for which
+        <span class="math">
+         \(n_A\)
+        </span>
+        and
+        <span class="math">
+         \(n_B\)
+        </span>
+        cell have been detected at 2D coordinates
+        <span class="math">
+         \([\mathbf{x}^A_1, \mathbf{x}^A_2, \dots, \mathbf{x}^{A}_{n_{A}}]\)
+        </span>
+        and
+        <span class="math">
+         \([\mathbf{x}^B_1, \mathbf{x}^B_2, \dots, \mathbf{x}^{B}_{n_{B}}]\)
+        </span>
+        respectively. First consider a simplified case in which
+        <span class="math">
+         \(n_A = n_B = n\)
+        </span>
+        and we are certain that no cells have entered or exited the camera view, i.e. there is a one-to-one correspondence between cells in the two frames (we also exclude the possibility of splitting and merging events). For a given motion model, a cell located at position
+        <span class="math">
+         \(\mathbf{x}_{0} = (x_0, y_0)\)
+        </span>
+        in frame
+        <span class="math">
+         \(A\)
+        </span>
+        has a well-defined probability distribution over where it will be in the next frame,
+        <span class="math">
+         \(p(\mathbf{x}; \mathbf{x}_0)\)
+        </span>
+        . One could, in principle, use any probability distribution here however one can assume simple two-dimensional Brownian motion. This means
+       </p>
+       <div class="math">
+        $$
 p(\mathbf{x}; \mathbf{x}_0) = \mathcal{N}(\,|\mathbf{x} - \mathbf{x}_0|; \, \sigma_s)
-$$</div>
-<p>
-From this we construct a square matrix <span class="math">\(P\)</span>, where each element <span class="math">\(P_{ij}\)</span> is the value of the probability density function for cell <span class="math">\(i\)</span> from frame <span class="math">\(A\)</span> moving to the position of cell <span class="math">\(j\)</span> in frame <span class="math">\(B\)</span>, <span class="math">\(p(\mathbf{x}^{B}_{j}; \mathbf{x}^{A}_i)\)</span>. </p>
-<div class="math">$$
+$$
+       </div>
+       <p>
+        From this we construct a square matrix
+        <span class="math">
+         \(P\)
+        </span>
+        , where each element
+        <span class="math">
+         \(P_{ij}\)
+        </span>
+        is the value of the probability density function for cell
+        <span class="math">
+         \(i\)
+        </span>
+        from frame
+        <span class="math">
+         \(A\)
+        </span>
+        moving to the position of cell
+        <span class="math">
+         \(j\)
+        </span>
+        in frame
+        <span class="math">
+         \(B\)
+        </span>
+        ,
+        <span class="math">
+         \(p(\mathbf{x}^{B}_{j}; \mathbf{x}^{A}_i)\)
+        </span>
+        .
+       </p>
+       <div class="math">
+        $$
 P = \begin{bmatrix}
     p(\mathbf{x}^{B}_{1}; \mathbf{x}^{A}_1) &amp; p(\mathbf{x}^{B}_{2}; \mathbf{x}^{A}_1) &amp; \dots  &amp; p(\mathbf{x}^{B}_{n}; \mathbf{x}^{A}_1) \\
     p(\mathbf{x}^{B}_{1}; \mathbf{x}^{A}_2) &amp; p(\mathbf{x}^{B}_{2}; \mathbf{x}^{A}_2)  &amp; \dots  &amp; p(\mathbf{x}^{B}_{n}; \mathbf{x}^{A}_2) \\
@@ -167,18 +368,50 @@ P = \begin{bmatrix}
     \vdots &amp; \vdots  &amp; \ddots &amp; \vdots \\
     p_{n\rightarrow 1} &amp; p_{n\rightarrow 2}  &amp; \dots  &amp; p_{n\rightarrow n}
 \end{bmatrix}
-$$</div>
-<p>Under the assumption that all cells move independently, the total probability of any cell link configuration will then be the product of <span class="math">\(n\)</span> elements, under the condition that no column or row is selected twice. Thererfore, the most likely configuration will be the one, out of all <span class="math">\(n!\)</span> possibilities, which maximises this product. This is, in essence, the linear assignment problem. The only differing detail is that the LAP is typically formulated as a sum minimisation rather than product maximisation problem, but this can be adjusted for by taking a negative element-wise logarithm of this probability matrix. Thus, the cost matrix is </p>
-<div class="math">$$
+$$
+       </div>
+       <p>
+        Under the assumption that all cells move independently, the total probability of any cell link configuration will then be the product of
+        <span class="math">
+         \(n\)
+        </span>
+        elements, under the condition that no column or row is selected twice. Thererfore, the most likely configuration will be the one, out of all
+        <span class="math">
+         \(n!\)
+        </span>
+        possibilities, which maximises this product. This is, in essence, the linear assignment problem. The only differing detail is that the LAP is typically formulated as a sum minimisation rather than product maximisation problem, but this can be adjusted for by taking a negative element-wise logarithm of this probability matrix. Thus, the cost matrix is
+       </p>
+       <div class="math">
+        $$
 C = -\log P =  \begin{bmatrix}
     -\log p_{1\rightarrow 1} &amp; -\log p_{1\rightarrow 2} &amp; \dots  &amp; -\log p_{1\rightarrow n} \\
     -\log p_{2\rightarrow 1} &amp; -\log p_{2\rightarrow 2} &amp; \dots  &amp; -\log p_{2\rightarrow n} \\
     \vdots &amp; \vdots  &amp; \ddots &amp; \vdots \\
     -\log p_{n\rightarrow 1} &amp; -\log p_{n\rightarrow 2}  &amp; \dots  &amp; -\log p_{n\rightarrow n}
 \end{bmatrix}
-$$</div>
-<p>However, in any two frames there are unlikely to be the exact same number of cell detections. The detection method may fail for a given cell on either frame, or a cell may move in or out of the camera's field of vision. Jaqaman <em>et al</em> (2008) resolve this issue by expanding the cost matrix in both directions, appending an <span class="math">\(n_A \times n_A\)</span> matrix as an upper right quadrant and an <span class="math">\(n_B \times n_B\)</span> matrix as a lower left quadrant, where, in both cases, the off-diagonal elements are infinite. The lower right quadrant is then the transpose of the upper left quadrant, resulting in a square <span class="math">\((n_A + n_B) \times (n_A + n_B)\)</span> cost matrix. </p>
-<div class="math">$$
+$$
+       </div>
+       <p>
+        However, in any two frames there are unlikely to be the exact same number of cell detections. The detection method may fail for a given cell on either frame, or a cell may move in or out of the camera's field of vision. Jaqaman
+        <em>
+         et al
+        </em>
+        (2008) resolve this issue by expanding the cost matrix in both directions, appending an
+        <span class="math">
+         \(n_A \times n_A\)
+        </span>
+        matrix as an upper right quadrant and an
+        <span class="math">
+         \(n_B \times n_B\)
+        </span>
+        matrix as a lower left quadrant, where, in both cases, the off-diagonal elements are infinite. The lower right quadrant is then the transpose of the upper left quadrant, resulting in a square
+        <span class="math">
+         \((n_A + n_B) \times (n_A + n_B)\)
+        </span>
+        cost matrix.
+       </p>
+       <div class="math">
+        $$
 C' =  \left[ 
 \begin{array}{c|c}
 -\log P &amp; \begin{matrix}b &amp; \infty &amp; \dots &amp; \infty\\\infty &amp; b &amp; \dots &amp; \infty\\\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ \infty &amp; \infty &amp; \dots &amp; b\end{matrix} \\
@@ -186,13 +419,117 @@ C' =  \left[
 \begin{matrix}d &amp; \infty &amp; \dots &amp; \infty\\\infty &amp; d &amp; \dots &amp; \infty\\\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ \infty &amp; \infty &amp; \dots &amp; d\end{matrix} &amp; -\log P^{\top}\\
 \end{array}
 \right]
-$$</div>
-<p>Consider the meaning of the new LAP problem on cost matrix <span class="math">\(C'\)</span>. Since the off-diagonal elements in the upper right and lower left quadrants are infinite, they cannot be chosen since this would result in infinite cost. However, selecting the diagonal element in row <span class="math">\(i\)</span> from the upper right quadrant indicates that the <span class="math">\(i\)</span>th cell from frame <span class="math">\(A\)</span> has disappeared (due to either detection failure or moving out of the camera's field of view). Similarly, selecting the diagonal element from the lower left quadrant in column <span class="math">\(j\)</span> indicates that the <span class="math">\(j\)</span>th particle in frame <span class="math">\(B\)</span> has just appeared, and was not present in frame <span class="math">\(A\)</span>. As before, selecting element <span class="math">\(C'_{ij}\)</span> in the upper left quadrant indicates that cell <span class="math">\(i\)</span> from frame <span class="math">\(A\)</span> has transitioned to cell <span class="math">\(j\)</span> from frame <span class="math">\(B\)</span>, however we no longer have the restraint that <span class="math">\(n_A = n_B\)</span>. The effect of setting the lower right quadrant to the transpose of the upper left quadrant is that, by symmetry, the same transition will be selected (i.e. selections in this quadrant can be ignored). </p>
-<h3>Correcting for chain breaks</h3>
-<p>However, on any given frame the detection method may fail to identify a particular cell. This could occur for several reasons. Firstly, cells will have some small motion in the <span class="math">\(z\)</span>-direction and thus may fall out of the focal range of the microscope. Additionally, during genetic modification stage, cells may have different uptakes of the Red Fluorescent Protein and thus certain cells may sit on the borderline between being detectable and undetectable. The result is that, since the previous linking procedure only considered adjacent frames, breaks may occur in the trajectories. </p>
-<p>We can attempt to correct for this by linking trajectory stops and starts across multiple frames. This too can be achieved in terms of the LAP, by introducing a slight modification. Consider the points <span class="math">\(\mathbf{x}^{d}_{t}\)</span> and <span class="math">\(\mathbf{x}^{b}_{t}\)</span> representing the set of coordinates where trajectories end and begin respectively, indexed by the frame number <span class="math">\(t\)</span>. We can again construct a matrix of pairwise distances in space, and also a matrix of the same shape holding the pairwise time separations, some of which will be negative. Since the standard deviation of a Brownian motion distribution scales with the square root of time, we can modify the probability density function at position <span class="math">\(ij\)</span> such that it accounts for the temporal difference between stop <span class="math">\(i\)</span> and start <span class="math">\(j\)</span>, by multiplying <span class="math">\(\sigma_{s}\)</span> by <span class="math">\(\sqrt{\Delta t}\)</span>. If this difference is negative, the corresponding element of the cost matrix is automatically infinite. We can thus construct a full cost matrix as before and perform the LAP. </p>
-<h2>Putting it all together</h2>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+$$
+       </div>
+       <p>
+        Consider the meaning of the new LAP problem on cost matrix
+        <span class="math">
+         \(C'\)
+        </span>
+        . Since the off-diagonal elements in the upper right and lower left quadrants are infinite, they cannot be chosen since this would result in infinite cost. However, selecting the diagonal element in row
+        <span class="math">
+         \(i\)
+        </span>
+        from the upper right quadrant indicates that the
+        <span class="math">
+         \(i\)
+        </span>
+        th cell from frame
+        <span class="math">
+         \(A\)
+        </span>
+        has disappeared (due to either detection failure or moving out of the camera's field of view). Similarly, selecting the diagonal element from the lower left quadrant in column
+        <span class="math">
+         \(j\)
+        </span>
+        indicates that the
+        <span class="math">
+         \(j\)
+        </span>
+        th particle in frame
+        <span class="math">
+         \(B\)
+        </span>
+        has just appeared, and was not present in frame
+        <span class="math">
+         \(A\)
+        </span>
+        . As before, selecting element
+        <span class="math">
+         \(C'_{ij}\)
+        </span>
+        in the upper left quadrant indicates that cell
+        <span class="math">
+         \(i\)
+        </span>
+        from frame
+        <span class="math">
+         \(A\)
+        </span>
+        has transitioned to cell
+        <span class="math">
+         \(j\)
+        </span>
+        from frame
+        <span class="math">
+         \(B\)
+        </span>
+        , however we no longer have the restraint that
+        <span class="math">
+         \(n_A = n_B\)
+        </span>
+        . The effect of setting the lower right quadrant to the transpose of the upper left quadrant is that, by symmetry, the same transition will be selected (i.e. selections in this quadrant can be ignored).
+       </p>
+       <h3>
+        Correcting for chain breaks
+       </h3>
+       <p>
+        However, on any given frame the detection method may fail to identify a particular cell. This could occur for several reasons. Firstly, cells will have some small motion in the
+        <span class="math">
+         \(z\)
+        </span>
+        -direction and thus may fall out of the focal range of the microscope. Additionally, during genetic modification stage, cells may have different uptakes of the Red Fluorescent Protein and thus certain cells may sit on the borderline between being detectable and undetectable. The result is that, since the previous linking procedure only considered adjacent frames, breaks may occur in the trajectories.
+       </p>
+       <p>
+        We can attempt to correct for this by linking trajectory stops and starts across multiple frames. This too can be achieved in terms of the LAP, by introducing a slight modification. Consider the points
+        <span class="math">
+         \(\mathbf{x}^{d}_{t}\)
+        </span>
+        and
+        <span class="math">
+         \(\mathbf{x}^{b}_{t}\)
+        </span>
+        representing the set of coordinates where trajectories end and begin respectively, indexed by the frame number
+        <span class="math">
+         \(t\)
+        </span>
+        . We can again construct a matrix of pairwise distances in space, and also a matrix of the same shape holding the pairwise time separations, some of which will be negative. Since the standard deviation of a Brownian motion distribution scales with the square root of time, we can modify the probability density function at position
+        <span class="math">
+         \(ij\)
+        </span>
+        such that it accounts for the temporal difference between stop
+        <span class="math">
+         \(i\)
+        </span>
+        and start
+        <span class="math">
+         \(j\)
+        </span>
+        , by multiplying
+        <span class="math">
+         \(\sigma_{s}\)
+        </span>
+        by
+        <span class="math">
+         \(\sqrt{\Delta t}\)
+        </span>
+        . If this difference is negative, the corresponding element of the cost matrix is automatically infinite. We can thus construct a full cost matrix as before and perform the LAP.
+       </p>
+       <h2>
+        Putting it all together
+       </h2>
+       <div class="highlight">
+        <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">truncnorm</span>
 <span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">cdist</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">linear_sum_assignment</span>
@@ -236,8 +573,10 @@ $$</div>
     <span class="n">out</span> <span class="o">=</span> <span class="n">detected_cells</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])]</span>  <span class="c1"># reorder columns so it's x-y-r</span>
     <span class="n">out</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="mf">0.5</span>
     <span class="k">return</span> <span class="n">out</span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">detector</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'LoG'</span><span class="p">,</span> <span class="n">min_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">detector</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'LoG'</span><span class="p">,</span> <span class="n">min_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
                      <span class="n">max_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">"""</span>
 
@@ -278,8 +617,10 @@ $$</div>
         <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s1">'Detecting cells using {}. Found {} cells.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
     <span class="k">return</span> <span class="n">all_cells</span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_transitions</span><span class="p">(</span><span class="n">cells1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cells2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t_sep</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">find_transitions</span><span class="p">(</span><span class="n">cells1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cells2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t_sep</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">"""</span>
 
 <span class="sd">    Use the Hungarian (Munkres) algorithm to output the transitions between cell </span>
@@ -366,8 +707,10 @@ $$</div>
             <span class="n">transitions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">frame1_cell_no</span><span class="p">,</span> <span class="n">frame2_cell_no</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">transitions</span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_paths</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">find_paths</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">"""</span>
 <span class="sd">    Given a disctionary which contains numpy arrays, indexed by frame number t,</span>
 <span class="sd">    which represent the x-y-r coordinates of the cells detected in each of T frames, </span>
@@ -443,16 +786,24 @@ $$</div>
                     <span class="k">break</span>
 
     <span class="k">return</span> <span class="n">paths</span>
-</pre></div>
-<p>Ok let's run it</p>
-<div class="highlight"><pre><span></span><span class="n">cells</span> <span class="o">=</span> <span class="n">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+</pre>
+       </div>
+       <p>
+        Ok let's run it
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">cells</span> <span class="o">=</span> <span class="n">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
 <span class="n">paths</span> <span class="o">=</span> <span class="n">find_paths</span><span class="p">(</span><span class="n">cells</span><span class="p">)</span>
-</pre></div>
-<video controls="" height="480" width="640">
-<source src="images/test.mp4" type="video/mp4"/>
-</video>
-<p>Whoopie!</p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+</pre>
+       </div>
+       <video controls="" height="480" width="640">
+        <source src="images/test.mp4" type="video/mp4"/>
+       </video>
+       <p>
+        Whoopie!
+       </p>
+       <script type="text/javascript">
+        if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
         linebreak = "false";
@@ -506,63 +857,115 @@ $$</div>
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-</script>
-</section>
-
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<section class="post-info">
-<div class="post-share">
-<a class="twitter" href="https://twitter.com/share?text=Tracking cell movement with Scikit-image and Scipy&amp;url=/cell-tracking-with-scipy.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-<i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
-</a>
-<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/cell-tracking-with-scipy.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-<i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
-</a>
-<a class="googleplus" href="https://plus.google.com/share?url=/cell-tracking-with-scipy.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-<i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
-</a>
-<div class="clear"></div>
-</div>
-<aside class="post-tags">
-<a href="/tag/pelican.html">pelican</a><a href="/tag/biology.html">Biology</a><a href="/tag/maths.html">Maths</a><a href="/tag/python.html">Python</a><a href="/tag/cells.html">cells</a><a href="/tag/tracking.html">tracking</a><a href="/tag/image.html">image</a> </aside>
-<div class="clear"></div>
-</section>
-<aside class="post-nav">
-<div class="clear"></div>
-</aside>
-</div>
-</article>
-</main>
-<!-- TODO : Body class -->
-<div class="" id="body-class" style="display: none;"></div>
-<footer id="footer">
-<div class="inner">
-<section class="credits">
-<span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
-<span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
-</section>
-</div>
-</footer>
-</section>
-<script src="/theme/js/script.js" type="text/javascript"></script>
-</body>
+       </script>
+      </section>
+      <div id="disqus_thread">
+      </div>
+      <script>
+       /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+      </script>
+      <noscript>
+       Please enable JavaScript to view the
+       <a href="https://disqus.com/?ref_noscript">
+        comments powered by Disqus.
+       </a>
+      </noscript>
+      <section class="post-info">
+       <div class="post-share">
+        <a class="twitter" href="https://twitter.com/share?text=Tracking cell movement with Scikit-image and Scipy&amp;url=/cell-tracking-with-scipy.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+         <i class="ic ic-twitter">
+         </i>
+         <span class="hidden">
+          Twitter
+         </span>
+        </a>
+        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/cell-tracking-with-scipy.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+         <i class="ic ic-facebook">
+         </i>
+         <span class="hidden">
+          Facebook
+         </span>
+        </a>
+        <a class="googleplus" href="https://plus.google.com/share?url=/cell-tracking-with-scipy.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+         <i class="ic ic-googleplus">
+         </i>
+         <span class="hidden">
+          Google+
+         </span>
+        </a>
+        <div class="clear">
+        </div>
+       </div>
+       <aside class="post-tags">
+        <a href="/tag/pelican.html">
+         pelican
+        </a>
+        <a href="/tag/biology.html">
+         Biology
+        </a>
+        <a href="/tag/maths.html">
+         Maths
+        </a>
+        <a href="/tag/python.html">
+         Python
+        </a>
+        <a href="/tag/cells.html">
+         cells
+        </a>
+        <a href="/tag/tracking.html">
+         tracking
+        </a>
+        <a href="/tag/image.html">
+         image
+        </a>
+       </aside>
+       <div class="clear">
+       </div>
+      </section>
+      <aside class="post-nav">
+       <div class="clear">
+       </div>
+      </aside>
+     </div>
+    </article>
+   </main>
+   <!-- TODO : Body class -->
+   <div class="" id="body-class" style="display: none;">
+   </div>
+   <footer id="footer">
+    <div class="inner">
+     <section class="credits">
+      <span class="credits-theme">
+       Theme
+       <a href="https://github.com/arulrajnet/attila" rel="nofollow">
+        Attila
+       </a>
+      </span>
+      <span class="credits-software">
+       Published with
+       <a href="https://github.com/getpelican/pelican" rel="nofollow">
+        Pelican
+       </a>
+      </span>
+     </section>
+    </div>
+   </footer>
+  </section>
+  <script src="/theme/js/script.js" type="text/javascript">
+  </script>
+ </body>
 </html>

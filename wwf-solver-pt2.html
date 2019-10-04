@@ -1,128 +1,243 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta charset="utf-8" content="text/html" http-equiv="Content-Type">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
-<title>A Quick and Dirty Words With Friends Solver: Part 2</title>
-<meta content="True" name="HandheldFriendly"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="origin" name="referrer"/>
-<meta content="Pelican" name="generator"/>
-<link href="" rel="canonical"/>
-<!-- Feed -->
-<link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
-<!-- Code highlight color scheme -->
-<link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
-<!-- CSS specified by the user -->
-<link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css">
-<!-- Custom fonts -->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css"/>
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+ <head>
+  <meta charset="utf-8"/>
+  <meta charset="utf-8" content="text/html" http-equiv="Content-Type"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+   <title>
+    A Quick and Dirty Words With Friends Solver: Part 2
+   </title>
+   <meta content="True" name="HandheldFriendly"/>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+   <meta content="origin" name="referrer"/>
+   <meta content="Pelican" name="generator"/>
+   <link href="" rel="canonical"/>
+   <!-- Feed -->
+   <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+   <!-- Code highlight color scheme -->
+   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <!-- CSS specified by the user -->
+   <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
+   <!-- Custom fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-<link href="/wwf-solver-pt2.html" rel="canonical"/>
-<meta content="A quick and dirty solver for all your words with friends woes. Part 2." name="description"/>
-<meta content="Edward Antonian" name="author"/>
-<meta content="words with friends" name="tags"/>
-<meta content="solver" name="tags"/>
-<meta content="scrabble" name="tags"/>
-<meta content="python" name="tags"/>
-<meta content="" property="og:locale">
-<meta content="But is it Data Science?" property="og:site_name">
-<meta content="website" property="og:type">
-<meta content="But is it Data Science?" property="og:title">
-<meta content="View the blog." property="og:description">
-<meta content="" property="og:url">
-<meta content="/images/covers/chaos.gif" property="og:image"/>
-<meta content="article" property="og:type"/>
-<meta content="/author/edward-antonian.html" property="article:author"/>
-<meta content="/wwf-solver-pt2.html" property="og:url"/>
-<meta content="A Quick and Dirty Words With Friends Solver: Part 2" property="og:title"/>
-<meta content="2018-05-31 00:00:00+01:00" property="article:published_time"/>
-<meta content="A quick and dirty solver for all your words with friends woes. Part 2." property="og:description"/>
-<meta content="/images/covers/chaos.gif" property="og:image"/>
-</meta></meta></meta></meta></meta></meta></link></meta></head>
-<!-- TODO : Body class -->
-<body class="home-template">
-<nav id="menu">
-<a class="close-button">Close</a>
-<div class="nav-wrapper">
-<p class="nav-label">Menu</p>
-<ul><li role="presentation"><a href="pages/about.html">About</a></li><li role="presentation"><a href="archives.html">Archive</a></li><li role="presentation"><a href="pages/but-is-it-data-science.html">But is it?</a></li>
-</ul>
-</div>
-</nav>
-<!-- Progressbar -->
-<div class="progress-container">
-<span class="progress-bar"></span>
-</div>
-<!-- Page Header -->
-<!-- Set your background image for this header on the line below. -->
-<header class="has-cover" id="post-header">
-<div class="inner">
-<nav id="navigation">
-<span class="nav-button" id="home-button">
-<a class="home-button" href="index.html" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
-</span>
-<span class="nav-button" id="menu-button">
-<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
-</span>
-</nav>
-<h1 class="post-title">A Quick and Dirty Words With Friends Solver: Part 2</h1>
-<!-- TODO : Proper class for headline -->
-<span class="post-meta">
-<a href="/author/edward-antonian.html">Edward antonian</a>
-            | <time datetime="Thu 31 May 2018">Thu 31 May 2018</time>
-</span>
-<!-- TODO : Modified check -->
-<span class="post-meta"> | Updated on Thu 31 May 2018</span>
-<div class="post-cover cover" style="background-image: url('images/covers/wwf.jpg')">
-</div>
-</div></header>
-<section id="wrapper">
-<a class="hidden-close"></a>
-<!-- Post content -->
-<main class="content" role="main">
-<article class="post">
-<div class="inner">
-<section class="post-content">
-<h1>A Quick and Dirty Words With Friends Solver: Part 2</h1>
-<h2>2.1 The Solver class</h2>
-<p>We are now going to create a solver class to perform the next calculations. This needs to intake the current state of the board and the letters you have in your rack. I'm not very experienced with OOP and I suspect there's a more 'proper' way to do this with inheritance. But I'm just going to pass an instance of the board class as an argument to the solver class.  </p>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solver</span><span class="p">:</span>
+    <link href="/wwf-solver-pt2.html" rel="canonical"/>
+    <meta content="A quick and dirty solver for all your words with friends woes. Part 2." name="description"/>
+    <meta content="Edward Antonian" name="author"/>
+    <meta content="words with friends" name="tags"/>
+    <meta content="solver" name="tags"/>
+    <meta content="scrabble" name="tags"/>
+    <meta content="python" name="tags"/>
+    <meta content="" property="og:locale"/>
+    <meta content="But is it Data Science?" property="og:site_name"/>
+    <meta content="website" property="og:type"/>
+    <meta content="But is it Data Science?" property="og:title"/>
+    <meta content="View the blog." property="og:description"/>
+    <meta content="" property="og:url"/>
+    <meta content="/images/covers/chaos.gif" property="og:image">
+     <meta content="article" property="og:type">
+      <meta content="/author/edward-antonian.html" property="article:author">
+       <meta content="/wwf-solver-pt2.html" property="og:url">
+        <meta content="A Quick and Dirty Words With Friends Solver: Part 2" property="og:title">
+         <meta content="2018-05-31 00:00:00+01:00" property="article:published_time">
+          <meta content="A quick and dirty solver for all your words with friends woes. Part 2." property="og:description"/>
+          <meta content="/images/covers/chaos.gif" property="og:image"/>
+         </meta>
+        </meta>
+       </meta>
+      </meta>
+     </meta>
+    </meta>
+   </link>
+  </meta>
+ </head>
+ <!-- TODO : Body class -->
+ <body class="home-template">
+  <nav id="menu">
+   <a class="close-button">
+    Close
+   </a>
+   <div class="nav-wrapper">
+    <p class="nav-label">
+     Menu
+    </p>
+    <ul>
+     <li role="presentation">
+      <a href="pages/about.html">
+       About
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="archives.html">
+       Archive
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="pages/but-is-it-data-science.html">
+       But is it?
+      </a>
+     </li>
+    </ul>
+   </div>
+  </nav>
+  <!-- Progressbar -->
+  <div class="progress-container">
+   <span class="progress-bar">
+   </span>
+  </div>
+  <!-- Page Header -->
+  <!-- Set your background image for this header on the line below. -->
+  <header class="has-cover" id="post-header">
+   <div class="inner">
+    <nav id="navigation">
+     <span class="nav-button" id="home-button">
+      <a class="home-button" href="index.html" title="Home">
+       <i class="ic ic-arrow-left">
+       </i>
+       Home
+      </a>
+     </span>
+     <span class="nav-button" id="menu-button">
+      <a class="menu-button">
+       <i class="ic ic-menu">
+       </i>
+       Menu
+      </a>
+     </span>
+    </nav>
+    <h1 class="post-title">
+     A Quick and Dirty Words With Friends Solver: Part 2
+    </h1>
+    <!-- TODO : Proper class for headline -->
+    <span class="post-meta">
+     <a href="/author/edward-antonian.html">
+      Edward antonian
+     </a>
+     |
+     <time datetime="Thu 31 May 2018">
+      Thu 31 May 2018
+     </time>
+    </span>
+    <!-- TODO : Modified check -->
+    <span class="post-meta">
+     | Updated on Thu 31 May 2018
+    </span>
+    <div class="post-cover cover" style="background-image: url('images/covers/wwf.jpg')">
+    </div>
+   </div>
+  </header>
+  <section id="wrapper">
+   <a class="hidden-close">
+   </a>
+   <!-- Post content -->
+   <main class="content" role="main">
+    <article class="post">
+     <div class="inner">
+      <section class="post-content">
+       <h1>
+        A Quick and Dirty Words With Friends Solver: Part 2
+       </h1>
+       <h2>
+        2.1 The Solver class
+       </h2>
+       <p>
+        We are now going to create a solver class to perform the next calculations. This needs to intake the current state of the board and the letters you have in your rack. I'm not very experienced with OOP and I suspect there's a more 'proper' way to do this with inheritance. But I'm just going to pass an instance of the board class as an argument to the solver class.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">class</span> <span class="nc">Solver</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Board</span><span class="p">,</span> <span class="n">rack</span><span class="p">):</span>
         <span class="sd">'''Simple init. Add variables'''</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">rack</span> <span class="o">=</span> <span class="n">rack</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Board</span> <span class="o">=</span> <span class="n">Board</span>
-</pre></div>
-<h2>2.1 Where am I allowed to place letters?</h2>
-<p>At this point, how do we proceed? The most basic possible brute force solver might do something like this: There are 11x11 = 121 (minus the number of occupied squares) possible places to put tiles. We could just find every single possbile configuration (of which there are around 100 trillion) that we could drop the <span class="math">\(n\)</span> tiles from our rack and see which ones happen to form lined up, valid words. </p>
-<p>But this is clearly very inefficient. We already have some knowledge about where we can legally place tiles based on the rules, so what's the point in trying tiles in illegal configurations. What we need is a way of listing every single possible place we could <em>legally</em> place tiles, even if it makes an invalid word. </p>
-<p>The rules about where you can place tiles can be summarised by the following:</p>
-<ol>
-<li>Tiles must all be placed in a single row or column.</li>
-<li>Apart from the first move, tiles must be connected to a word already on the board .</li>
-<li>Tiles do not have to all be adjacent, however they must form one and only one fully connected word per row/column. </li>
-</ol>
-<p>To find the full set of valid tile placements we need two functions: <code>find_valid_placements</code> and <code>identify_starters</code>. For the function <code>find_valid_placements</code>, you must pass an index ranging from 0 to 10, and either 'row' or 'col'. This identifies a single row or column on the board. It then seeks to return the set of indicies where one <em>could</em> place letters in that particular row or column.  </p>
-<p>The algorithm goes something like this: </p>
-<ol>
-<li>Find all the squares in the row that are adjacent to an occupieid square.</li>
-<li>For each of these squares, start here and keep stepping right. If you find a square that is unoccupied add all the unoccupied squares from your starting square to this one to a master list. </li>
-<li>If there are unconnected, unoccupied squares to the left of the starting square, then for each of the set of indices you've just added, add each one again including these squares. </li>
-</ol>
-<p>That's kind of hard to explain, so here's a pictorial representation of what's happening there: </p>
-<p><img alt="Image" src="images/algo.jpg"/></p>
-<p>The other function, <code>identify_starters</code> just finds which squares are occupied, next to an occupied square, and other. Note that it also has to be passed the two adjacent columns in order to know whether a square is adjacent to an occupied square. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">identify_starters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">adjacent1</span><span class="p">,</span> <span class="n">adjacent2</span><span class="p">):</span>
+</pre>
+       </div>
+       <h2>
+        2.1 Where am I allowed to place letters?
+       </h2>
+       <p>
+        At this point, how do we proceed? The most basic possible brute force solver might do something like this: There are 11x11 = 121 (minus the number of occupied squares) possible places to put tiles. We could just find every single possbile configuration (of which there are around 100 trillion) that we could drop the
+        <span class="math">
+         \(n\)
+        </span>
+        tiles from our rack and see which ones happen to form lined up, valid words.
+       </p>
+       <p>
+        But this is clearly very inefficient. We already have some knowledge about where we can legally place tiles based on the rules, so what's the point in trying tiles in illegal configurations. What we need is a way of listing every single possible place we could
+        <em>
+         legally
+        </em>
+        place tiles, even if it makes an invalid word.
+       </p>
+       <p>
+        The rules about where you can place tiles can be summarised by the following:
+       </p>
+       <ol>
+        <li>
+         Tiles must all be placed in a single row or column.
+        </li>
+        <li>
+         Apart from the first move, tiles must be connected to a word already on the board .
+        </li>
+        <li>
+         Tiles do not have to all be adjacent, however they must form one and only one fully connected word per row/column.
+        </li>
+       </ol>
+       <p>
+        To find the full set of valid tile placements we need two functions:
+        <code>
+         find_valid_placements
+        </code>
+        and
+        <code>
+         identify_starters
+        </code>
+        . For the function
+        <code>
+         find_valid_placements
+        </code>
+        , you must pass an index ranging from 0 to 10, and either 'row' or 'col'. This identifies a single row or column on the board. It then seeks to return the set of indicies where one
+        <em>
+         could
+        </em>
+        place letters in that particular row or column.
+       </p>
+       <p>
+        The algorithm goes something like this:
+       </p>
+       <ol>
+        <li>
+         Find all the squares in the row that are adjacent to an occupieid square.
+        </li>
+        <li>
+         For each of these squares, start here and keep stepping right. If you find a square that is unoccupied add all the unoccupied squares from your starting square to this one to a master list.
+        </li>
+        <li>
+         If there are unconnected, unoccupied squares to the left of the starting square, then for each of the set of indices you've just added, add each one again including these squares.
+        </li>
+       </ol>
+       <p>
+        That's kind of hard to explain, so here's a pictorial representation of what's happening there:
+       </p>
+       <p>
+        <img alt="Image" src="images/algo.jpg"/>
+       </p>
+       <p>
+        The other function,
+        <code>
+         identify_starters
+        </code>
+        just finds which squares are occupied, next to an occupied square, and other. Note that it also has to be passed the two adjacent columns in order to know whether a square is adjacent to an occupied square.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">identify_starters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">adjacent1</span><span class="p">,</span> <span class="n">adjacent2</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    given a row, in the form of a list, identify the indicies</span>
 <span class="sd">    where you can 'start' the algorithm below (which amounts</span>
@@ -237,39 +352,75 @@
             <span class="n">grouped</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">grouped</span>
-</pre></div>
-<p>Granted, these two functions are UGLY. Especially that nested if statement. Yuk. In fact just looking at them now is making me feel sick. Think I'll have to come back and improve this at some point. They do work but please let me know if you can find a neater way. I'm very certain there is one. </p>
-<p>Here's a simple helper function that extracts the words from a given column or row. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        Granted, these two functions are UGLY. Especially that nested if statement. Yuk. In fact just looking at them now is making me feel sick. Think I'll have to come back and improve this at some point. They do work but please let me know if you can find a neater way. I'm very certain there is one.
+       </p>
+       <p>
+        Here's a simple helper function that extracts the words from a given column or row.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">extract_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
     <span class="sd">'''Extracts the words from a given row '''</span>
 
     <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s1">' '</span> <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">''</span> <span class="k">else</span> <span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
-</pre></div>
-<p>This next function is the final complex one. It seeks to find every <em>valid</em> placement of letters in a single row. I.e, the previous functions show the set of indicies letters could collectively be placed in that are consistent with the rules of the game; and this function runs through every permutation and combination of your letters and returns those which form valid words for that row. This does not guarantee that this will be valid however, as we still need to check for conflicts in the perpendicular direction. </p>
-<p>Perhaps at this point, it is best explained by an example. Let's say you're looking at the following row</p>
-<div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'o'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">,</span><span class="s1">'d'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">]</span>
-</pre></div>
-<p>for which the two adjacent parallel rows are empty and you have the following letters in your hand</p>
-<div class="highlight"><pre><span></span><span class="n">letters</span> <span class="o">=</span> <span class="s1">'sdafkso'</span>
-</pre></div>
-<p>The function find_valid_placements acting on this row will return the following set of indicies</p>
-<div class="highlight"><pre><span></span><span class="n">possible_placements</span> <span class="o">=</span><span class="p">[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> 
+</pre>
+       </div>
+       <p>
+        This next function is the final complex one. It seeks to find every
+        <em>
+         valid
+        </em>
+        placement of letters in a single row. I.e, the previous functions show the set of indicies letters could collectively be placed in that are consistent with the rules of the game; and this function runs through every permutation and combination of your letters and returns those which form valid words for that row. This does not guarantee that this will be valid however, as we still need to check for conflicts in the perpendicular direction.
+       </p>
+       <p>
+        Perhaps at this point, it is best explained by an example. Let's say you're looking at the following row
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'o'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">,</span><span class="s1">'d'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="s1">''</span><span class="p">]</span>
+</pre>
+       </div>
+       <p>
+        for which the two adjacent parallel rows are empty and you have the following letters in your hand
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">letters</span> <span class="o">=</span> <span class="s1">'sdafkso'</span>
+</pre>
+       </div>
+       <p>
+        The function find_valid_placements acting on this row will return the following set of indicies
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">possible_placements</span> <span class="o">=</span><span class="p">[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> 
                       <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> 
                       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> 
                       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> 
                       <span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]]</span>
-</pre></div>
-<p>The function <code>find_words</code> will then sort these possible placements into groups based on length. It will also list every possible permutation of you letters and group them by length</p>
-<div class="highlight"><pre><span></span><span class="n">placements_grouped</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">]],</span>
+</pre>
+       </div>
+       <p>
+        The function
+        <code>
+         find_words
+        </code>
+        will then sort these possible placements into groups based on length. It will also list every possible permutation of you letters and group them by length
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">placements_grouped</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">]],</span>
                       <span class="mi">2</span><span class="p">:</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span> 
                       <span class="o">...</span><span class="p">}</span>
 <span class="n">letters_grouped</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="s1">'s'</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">,</span> <span class="s1">'k'</span><span class="p">,</span> <span class="s1">'s'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">],</span>
                    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="s1">'sd'</span><span class="p">,</span> <span class="s1">'sa'</span><span class="p">,</span> <span class="s1">'sf'</span><span class="p">,</span> <span class="s1">'sk'</span><span class="p">,</span> <span class="s1">'ss'</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
                    <span class="o">...</span><span class="p">}</span>
-</pre></div>
-<p>Then for each length, the function matches each set of letters with each set of indicies, inserts them into the row, and uses the extract words function to check if this is a valid word in the dictionary. It then passes all of these valid rows on to the next function to check that they do not cause conflicts in the other direction. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rtype</span><span class="o">=</span><span class="s1">'row'</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        Then for each length, the function matches each set of letters with each set of indicies, inserts them into the row, and uses the extract words function to check if this is a valid word in the dictionary. It then passes all of these valid rows on to the next function to check that they do not cause conflicts in the other direction.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">find_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rtype</span><span class="o">=</span><span class="s1">'row'</span><span class="p">):</span>
     <span class="sd">'''Find the placements which give valid words</span>
 <span class="sd">    on that row'''</span>
 
@@ -315,9 +466,13 @@
                     <span class="n">new_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">new_rows</span>
-</pre></div>
-<p>The next function then does this validation process. If we just suggested some word placements for a row, it will then check all 11 columns to see whether the placement creates invalid words in that direction. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">new_row</span><span class="p">,</span> <span class="n">rtype</span><span class="o">=</span><span class="s1">'row'</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        The next function then does this validation process. If we just suggested some word placements for a row, it will then check all 11 columns to see whether the placement creates invalid words in that direction.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">new_row</span><span class="p">,</span> <span class="n">rtype</span><span class="o">=</span><span class="s1">'row'</span><span class="p">):</span>
     <span class="sd">'''Check whether a new row insertion creates</span>
 <span class="sd">    confilcts with other rows/columns'''</span>
 
@@ -342,9 +497,13 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
                     <span class="k">return</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">None</span>
         <span class="k">return</span> <span class="bp">True</span><span class="p">,</span> <span class="n">test_board</span>
-</pre></div>
-<p>So now we are left with a set of truly valid placements. Notice that this function returns the whole board if it is valid. Now we need to score the word. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_word_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        So now we are left with a set of truly valid placements. Notice that this function returns the whole board if it is valid. Now we need to score the word.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">extract_word_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
     <span class="sd">'''Find every word on the board, listing the word,</span>
 <span class="sd">    it's starting square and whether it's in a row or column'''</span>
 
@@ -447,9 +606,13 @@
         <span class="n">total_score</span> <span class="o">+=</span> <span class="n">word_score</span>
 
     <span class="k">return</span> <span class="n">total_score</span>
-</pre></div>
-<p>Finally we put all of these together into a solve and print function</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_solutions</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        Finally we put all of these together into a solve and print function
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_solutions</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
 
     <span class="n">board</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Board</span><span class="o">.</span><span class="n">letters</span>
     <span class="n">options</span> <span class="o">=</span> <span class="p">[]</span>
@@ -503,9 +666,13 @@
         <span class="n">to_print</span> <span class="o">=</span> <span class="n">Board</span><span class="p">()</span>
         <span class="n">to_print</span><span class="o">.</span><span class="n">letters</span> <span class="o">=</span> <span class="n">new_board</span>
         <span class="n">to_print</span><span class="o">.</span><span class="n">print_board</span><span class="p">()</span>
-</pre></div>
-<p>Done! Let's take it for a test drive</p>
-<div class="highlight"><pre><span></span><span class="n">board_string</span> <span class="o">=</span> <span class="s1">'''</span>
+</pre>
+       </div>
+       <p>
+        Done! Let's take it for a test drive
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">board_string</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">  A   B   C   D   E   F   G   H   I   J   K </span>
 <span class="s1"> --------------------------------------------</span>
 <span class="s1">|   |   |   |   |   |   |   |   |   |   |   | 1 </span>
@@ -539,8 +706,10 @@
 
 <span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">(</span><span class="n">MyBoard</span><span class="p">,</span> <span class="n">my_letters</span><span class="p">)</span>
 <span class="n">solver</span><span class="o">.</span><span class="n">print_solutions</span><span class="p">(</span><span class="n">n_solutions</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-<div class="highlight"><pre><span></span> <span class="nv">Solution</span> <span class="mi">10</span>: <span class="nv">play</span> <span class="s2">"</span><span class="s">spay</span><span class="s2">"</span> <span class="nv">across</span> <span class="k">for</span> <span class="mi">51</span> <span class="nv">points</span>
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span> <span class="nv">Solution</span> <span class="mi">10</span>: <span class="nv">play</span> <span class="s2">"</span><span class="s">spay</span><span class="s2">"</span> <span class="nv">across</span> <span class="k">for</span> <span class="mi">51</span> <span class="nv">points</span>
   <span class="nv">A</span>   <span class="nv">B</span>   <span class="nv">C</span>   <span class="nv">D</span>   <span class="nv">E</span>   <span class="nv">F</span>   <span class="nv">G</span>   <span class="nv">H</span>   <span class="nv">I</span>   <span class="nv">J</span>   <span class="nv">K</span>  
  <span class="o">--------------------------------------------</span>
 <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span> <span class="mi">1</span> 
@@ -617,8 +786,10 @@
  <span class="o">--------------------------------------------</span>
 <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span> <span class="mi">11</span> 
  <span class="o">--------------------------------------------</span>
-</pre></div>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+</pre>
+       </div>
+       <script type="text/javascript">
+        if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
         linebreak = "false";
@@ -672,63 +843,106 @@
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-</script>
-</section>
-
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<section class="post-info">
-<div class="post-share">
-<a class="twitter" href="https://twitter.com/share?text=A Quick and Dirty Words With Friends Solver: Part 2&amp;url=/wwf-solver-pt2.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-<i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
-</a>
-<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/wwf-solver-pt2.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-<i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
-</a>
-<a class="googleplus" href="https://plus.google.com/share?url=/wwf-solver-pt2.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-<i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
-</a>
-<div class="clear"></div>
-</div>
-<aside class="post-tags">
-<a href="/tag/words-with-friends.html">words with friends</a><a href="/tag/solver.html">solver</a><a href="/tag/scrabble.html">scrabble</a><a href="/tag/python.html">python</a> </aside>
-<div class="clear"></div>
-</section>
-<aside class="post-nav">
-<div class="clear"></div>
-</aside>
-</div>
-</article>
-</main>
-<!-- TODO : Body class -->
-<div class="" id="body-class" style="display: none;"></div>
-<footer id="footer">
-<div class="inner">
-<section class="credits">
-<span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
-<span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
-</section>
-</div>
-</footer>
-</section>
-<script src="/theme/js/script.js" type="text/javascript"></script>
-</body>
+       </script>
+      </section>
+      <div id="disqus_thread">
+      </div>
+      <script>
+       /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+      </script>
+      <noscript>
+       Please enable JavaScript to view the
+       <a href="https://disqus.com/?ref_noscript">
+        comments powered by Disqus.
+       </a>
+      </noscript>
+      <section class="post-info">
+       <div class="post-share">
+        <a class="twitter" href="https://twitter.com/share?text=A Quick and Dirty Words With Friends Solver: Part 2&amp;url=/wwf-solver-pt2.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+         <i class="ic ic-twitter">
+         </i>
+         <span class="hidden">
+          Twitter
+         </span>
+        </a>
+        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/wwf-solver-pt2.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+         <i class="ic ic-facebook">
+         </i>
+         <span class="hidden">
+          Facebook
+         </span>
+        </a>
+        <a class="googleplus" href="https://plus.google.com/share?url=/wwf-solver-pt2.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+         <i class="ic ic-googleplus">
+         </i>
+         <span class="hidden">
+          Google+
+         </span>
+        </a>
+        <div class="clear">
+        </div>
+       </div>
+       <aside class="post-tags">
+        <a href="/tag/words-with-friends.html">
+         words with friends
+        </a>
+        <a href="/tag/solver.html">
+         solver
+        </a>
+        <a href="/tag/scrabble.html">
+         scrabble
+        </a>
+        <a href="/tag/python.html">
+         python
+        </a>
+       </aside>
+       <div class="clear">
+       </div>
+      </section>
+      <aside class="post-nav">
+       <div class="clear">
+       </div>
+      </aside>
+     </div>
+    </article>
+   </main>
+   <!-- TODO : Body class -->
+   <div class="" id="body-class" style="display: none;">
+   </div>
+   <footer id="footer">
+    <div class="inner">
+     <section class="credits">
+      <span class="credits-theme">
+       Theme
+       <a href="https://github.com/arulrajnet/attila" rel="nofollow">
+        Attila
+       </a>
+      </span>
+      <span class="credits-software">
+       Published with
+       <a href="https://github.com/getpelican/pelican" rel="nofollow">
+        Pelican
+       </a>
+      </span>
+     </section>
+    </div>
+   </footer>
+  </section>
+  <script src="/theme/js/script.js" type="text/javascript">
+  </script>
+ </body>
 </html>

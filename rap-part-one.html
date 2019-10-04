@@ -1,115 +1,195 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta charset="utf-8" content="text/html" http-equiv="Content-Type">
-<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
-<title>Rap Skills Analysis: A Computational Approach part 1</title>
-<meta content="True" name="HandheldFriendly"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="origin" name="referrer"/>
-<meta content="Pelican" name="generator"/>
-<link href="" rel="canonical"/>
-<!-- Feed -->
-<link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
-<!-- Code highlight color scheme -->
-<link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
-<!-- CSS specified by the user -->
-<link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css">
-<!-- Custom fonts -->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css"/>
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+ <head>
+  <meta charset="utf-8"/>
+  <meta charset="utf-8" content="text/html" http-equiv="Content-Type"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+   <title>
+    Rap Skills Analysis: A Computational Approach part 1
+   </title>
+   <meta content="True" name="HandheldFriendly"/>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+   <meta content="origin" name="referrer"/>
+   <meta content="Pelican" name="generator"/>
+   <link href="" rel="canonical"/>
+   <!-- Feed -->
+   <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+   <!-- Code highlight color scheme -->
+   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <!-- CSS specified by the user -->
+   <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
+   <!-- Custom fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-<link href="/rap-part-one.html" rel="canonical"/>
-<meta content="The first entry in a series on some data analysis into rap lyrics." name="description"/>
-<meta content="Edward Antonian" name="author"/>
-<meta content="data science" name="tags"/>
-<meta content="python" name="tags"/>
-<meta content="natural language processing" name="tags"/>
-<meta content="rap" name="tags"/>
-<meta content="hip hop" name="tags"/>
-<meta content="" property="og:locale">
-<meta content="But is it Data Science?" property="og:site_name">
-<meta content="website" property="og:type">
-<meta content="But is it Data Science?" property="og:title">
-<meta content="View the blog." property="og:description">
-<meta content="" property="og:url">
-<meta content="/images/covers/chaos.gif" property="og:image">
-<meta content="article" property="og:type"/>
-<meta content="/author/edward-antonian.html" property="article:author"/>
-<meta content="/rap-part-one.html" property="og:url"/>
-<meta content="Rap Skills Analysis: A Computational Approach part 1" property="og:title"/>
-<meta content="2017-10-10 00:00:00+01:00" property="article:published_time"/>
-<meta content="The first entry in a series on some data analysis into rap lyrics." property="og:description"/>
-<meta content="/images/covers/chaos.gif" property="og:image"/>
-</meta></meta></meta></meta></meta></meta></meta></link></meta></head>
-<!-- TODO : Body class -->
-<body class="home-template">
-<nav id="menu">
-<a class="close-button">Close</a>
-<div class="nav-wrapper">
-<p class="nav-label">Menu</p>
-<ul><li role="presentation"><a href="pages/about.html">About</a></li><li role="presentation"><a href="archives.html">Archive</a></li><li role="presentation"><a href="pages/but-is-it-data-science.html">But is it?</a></li>
-</ul>
-</div>
-</nav>
-<!-- Progressbar -->
-<div class="progress-container">
-<span class="progress-bar"></span>
-</div>
-<!-- Page Header -->
-<!-- Set your background image for this header on the line below. -->
-<header class="has-cover" id="post-header">
-<div class="inner">
-<nav id="navigation">
-<span class="nav-button" id="home-button">
-<a class="home-button" href="index.html" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
-</span>
-<span class="nav-button" id="menu-button">
-<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
-</span>
-</nav>
-<h1 class="post-title">Rap Skills Analysis: A Computational Approach part 1</h1>
-<!-- TODO : Proper class for headline -->
-<span class="post-meta">
-<a href="/author/edward-antonian.html">Edward antonian</a>
-            | <time datetime="Tue 10 October 2017">Tue 10 October 2017</time>
-</span>
-<!-- TODO : Modified check -->
-<span class="post-meta"> | Updated on Mon 18 December 2017</span>
-<div class="post-cover cover" style="background-image: url('images/covers/MF-Doom-2.jpg')">
-</div>
-</div></header>
-<section id="wrapper">
-<a class="hidden-close"></a>
-<!-- Post content -->
-<main class="content" role="main">
-<article class="post">
-<div class="inner">
-<section class="post-content">
-<h1>Rap Skills Analysis, a Computational Approach</h1>
-<h2><em>Get Rich or Die Pying</em></h2>
-<h2>Introduction</h2>
-<p>I am a self-confessed rap fan. I say self-confessed because part of me dreads mentioning this fact to people. I’ve been through enough awkward half-laughs on first dates to understand one thing: as a young person from suburban Britain it’s difficult to tell people you’re in to hip hop without sounding like a tosser. Trying to follow up with “well actually I think hip hop is a really expressive art-form drawing on a long line of blues, soul and African oral tradition, giving a means for the disenfranchised to express frustration and drive political and social change” hardly helps your case.  </p>
-<p>Nevertheless, in this post I want to try marry two seemingly disconnected worlds, that of hip hop and computer programming, in an attempt to gain some interesting data insights. The question I want to answer is this: what computational processes could you use to rank rappers’ ability? Of course, art is fundamentally subjective in nature so individuals are likely to disagree on what constitutes ‘ability’. Also, the complexities of language and sound and the impact that may or may not have on a listener is difficult the analyse computationally. </p>
-<p>With these limitations in consideration, I chose two relatively simple data points to get a sense of a rap artist’s skill. These are:</p>
-<ol>
-<li>The number of unique words used in a block of 20,000 words taken from the rap artist’s lyrics</li>
-<li>The density of rhyming sounds the rap artist uses in the same 20,000 words</li>
-</ol>
-<p>These both have the benefit of being quantifiable and directly comparable across artists. I will walk you through my process of extracting and displaying this data with the programming language python 3 and thus assume some knowledge of python syntax and functionality, as well as basic command line and system know-how. Despite this, I am an intermediate programmer myself so there will doubtlessly be many many areas for improvement and optimisation. All suggestions and comments in this regard would be greatly appreciated. </p>
-<p>However, if, like most normal people, you neither know nor care about programming you can skip straight to the end where the results are displayed. </p>
-<h2>Part 1: Finding lyrics</h2>
-<h3>1.1 Creating a master list of rappers</h3>
-<p>The first task in this process is to select the list of rappers you want to consider and download their lyrics en-mass. I wanted to have a fairly comprehensive list of well-known rappers without having to recall every one by name. So, the first place I looked was the Wikipedia page ‘List of hip hop musicians’[link]. This has a pretty exhaustive list of over 1000 rap artists with Wikipedia pages. The first function I wrote simply goes to this page, downloads this data and outputs a list of all the rap artists’ names using the requests and BeautifulSoup modules to parse the HTML webpage. (Note, all packages I use are either in-built to python can be added easily with a simple pip install).  </p>
-<p>We start by obtaining the Wikipedia URL, using requests to grab the HTML, then using BeautifulSoup to create a BS object, using the key "a" to get the titles. If you're not familiar with BeautifulSoup don't worry - neither was I. It basically takes a lump of raw HTML data and converts it into a nice custom object that allows you to access things quickly within it. They have some nice docs online which I suggest you read if you are unsure. Next, we loop through the titles, extracting all the artist names and appending them to a list. The code I have was just a bit of trial and error. It's not the most pretty, but it gets the job done. Our function outputs a nice python list containing strings with all the artist names in. </p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+    <link href="/rap-part-one.html" rel="canonical"/>
+    <meta content="The first entry in a series on some data analysis into rap lyrics." name="description"/>
+    <meta content="Edward Antonian" name="author"/>
+    <meta content="data science" name="tags"/>
+    <meta content="python" name="tags"/>
+    <meta content="natural language processing" name="tags"/>
+    <meta content="rap" name="tags"/>
+    <meta content="hip hop" name="tags"/>
+    <meta content="" property="og:locale"/>
+    <meta content="But is it Data Science?" property="og:site_name"/>
+    <meta content="website" property="og:type"/>
+    <meta content="But is it Data Science?" property="og:title"/>
+    <meta content="View the blog." property="og:description"/>
+    <meta content="" property="og:url"/>
+    <meta content="/images/covers/chaos.gif" property="og:image"/>
+    <meta content="article" property="og:type">
+     <meta content="/author/edward-antonian.html" property="article:author">
+      <meta content="/rap-part-one.html" property="og:url">
+       <meta content="Rap Skills Analysis: A Computational Approach part 1" property="og:title">
+        <meta content="2017-10-10 00:00:00+01:00" property="article:published_time">
+         <meta content="The first entry in a series on some data analysis into rap lyrics." property="og:description">
+          <meta content="/images/covers/chaos.gif" property="og:image">
+          </meta>
+         </meta>
+        </meta>
+       </meta>
+      </meta>
+     </meta>
+    </meta>
+   </link>
+  </meta>
+ </head>
+ <!-- TODO : Body class -->
+ <body class="home-template">
+  <nav id="menu">
+   <a class="close-button">
+    Close
+   </a>
+   <div class="nav-wrapper">
+    <p class="nav-label">
+     Menu
+    </p>
+    <ul>
+     <li role="presentation">
+      <a href="pages/about.html">
+       About
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="archives.html">
+       Archive
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="pages/but-is-it-data-science.html">
+       But is it?
+      </a>
+     </li>
+    </ul>
+   </div>
+  </nav>
+  <!-- Progressbar -->
+  <div class="progress-container">
+   <span class="progress-bar">
+   </span>
+  </div>
+  <!-- Page Header -->
+  <!-- Set your background image for this header on the line below. -->
+  <header class="has-cover" id="post-header">
+   <div class="inner">
+    <nav id="navigation">
+     <span class="nav-button" id="home-button">
+      <a class="home-button" href="index.html" title="Home">
+       <i class="ic ic-arrow-left">
+       </i>
+       Home
+      </a>
+     </span>
+     <span class="nav-button" id="menu-button">
+      <a class="menu-button">
+       <i class="ic ic-menu">
+       </i>
+       Menu
+      </a>
+     </span>
+    </nav>
+    <h1 class="post-title">
+     Rap Skills Analysis: A Computational Approach part 1
+    </h1>
+    <!-- TODO : Proper class for headline -->
+    <span class="post-meta">
+     <a href="/author/edward-antonian.html">
+      Edward antonian
+     </a>
+     |
+     <time datetime="Tue 10 October 2017">
+      Tue 10 October 2017
+     </time>
+    </span>
+    <!-- TODO : Modified check -->
+    <span class="post-meta">
+     | Updated on Mon 18 December 2017
+    </span>
+    <div class="post-cover cover" style="background-image: url('images/covers/MF-Doom-2.jpg')">
+    </div>
+   </div>
+  </header>
+  <section id="wrapper">
+   <a class="hidden-close">
+   </a>
+   <!-- Post content -->
+   <main class="content" role="main">
+    <article class="post">
+     <div class="inner">
+      <section class="post-content">
+       <h1>
+        Rap Skills Analysis, a Computational Approach
+       </h1>
+       <h2>
+        <em>
+         Get Rich or Die Pying
+        </em>
+       </h2>
+       <h2>
+        Introduction
+       </h2>
+       <p>
+        I am a self-confessed rap fan. I say self-confessed because part of me dreads mentioning this fact to people. I’ve been through enough awkward half-laughs on first dates to understand one thing: as a young person from suburban Britain it’s difficult to tell people you’re in to hip hop without sounding like a tosser. Trying to follow up with “well actually I think hip hop is a really expressive art-form drawing on a long line of blues, soul and African oral tradition, giving a means for the disenfranchised to express frustration and drive political and social change” hardly helps your case.
+       </p>
+       <p>
+        Nevertheless, in this post I want to try marry two seemingly disconnected worlds, that of hip hop and computer programming, in an attempt to gain some interesting data insights. The question I want to answer is this: what computational processes could you use to rank rappers’ ability? Of course, art is fundamentally subjective in nature so individuals are likely to disagree on what constitutes ‘ability’. Also, the complexities of language and sound and the impact that may or may not have on a listener is difficult the analyse computationally.
+       </p>
+       <p>
+        With these limitations in consideration, I chose two relatively simple data points to get a sense of a rap artist’s skill. These are:
+       </p>
+       <ol>
+        <li>
+         The number of unique words used in a block of 20,000 words taken from the rap artist’s lyrics
+        </li>
+        <li>
+         The density of rhyming sounds the rap artist uses in the same 20,000 words
+        </li>
+       </ol>
+       <p>
+        These both have the benefit of being quantifiable and directly comparable across artists. I will walk you through my process of extracting and displaying this data with the programming language python 3 and thus assume some knowledge of python syntax and functionality, as well as basic command line and system know-how. Despite this, I am an intermediate programmer myself so there will doubtlessly be many many areas for improvement and optimisation. All suggestions and comments in this regard would be greatly appreciated.
+       </p>
+       <p>
+        However, if, like most normal people, you neither know nor care about programming you can skip straight to the end where the results are displayed.
+       </p>
+       <h2>
+        Part 1: Finding lyrics
+       </h2>
+       <h3>
+        1.1 Creating a master list of rappers
+       </h3>
+       <p>
+        The first task in this process is to select the list of rappers you want to consider and download their lyrics en-mass. I wanted to have a fairly comprehensive list of well-known rappers without having to recall every one by name. So, the first place I looked was the Wikipedia page ‘List of hip hop musicians’[link]. This has a pretty exhaustive list of over 1000 rap artists with Wikipedia pages. The first function I wrote simply goes to this page, downloads this data and outputs a list of all the rap artists’ names using the requests and BeautifulSoup modules to parse the HTML webpage. (Note, all packages I use are either in-built to python can be added easily with a simple pip install).
+       </p>
+       <p>
+        We start by obtaining the Wikipedia URL, using requests to grab the HTML, then using BeautifulSoup to create a BS object, using the key "a" to get the titles. If you're not familiar with BeautifulSoup don't worry - neither was I. It basically takes a lump of raw HTML data and converts it into a nice custom object that allows you to access things quickly within it. They have some nice docs online which I suggest you read if you are unsure. Next, we loop through the titles, extracting all the artist names and appending them to a list. The code I have was just a bit of trial and error. It's not the most pretty, but it gets the job done. Our function outputs a nice python list containing strings with all the artist names in.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="k">def</span> <span class="nf">master_list</span><span class="p">():</span>
@@ -139,9 +219,13 @@
             <span class="k">pass</span>
 
     <span class="k">return</span> <span class="n">artists</span>
-</pre></div>
-<p>From this list, I chose a selection of rappers that I knew personally and thought were worth including. Please forgive me if I have omitted any big names! I did this manually, copying and pasting the master list, then removing rappers I didn't want to include. Laborious maybe, but I wanted to have control over each rapper in the list, making sure all my personal favourites made it on. This left the following</p>
-<div class="highlight"><pre><span></span><span class="n">my_artist_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2 Chainz'</span><span class="p">,</span><span class="s1">'21 Savage'</span><span class="p">,</span><span class="s1">'50 Cent'</span><span class="p">,</span><span class="s1">'Andre 3000'</span><span class="p">,</span><span class="s1">'Big Boi'</span><span class="p">,</span><span class="s1">'Ab-Soul'</span><span class="p">,</span><span class="s1">'Abstract Rude'</span><span class="p">,</span><span class="s1">'Ace Hood'</span><span class="p">,</span><span class="s1">'Action Bronson'</span><span class="p">,</span>
+</pre>
+       </div>
+       <p>
+        From this list, I chose a selection of rappers that I knew personally and thought were worth including. Please forgive me if I have omitted any big names! I did this manually, copying and pasting the master list, then removing rappers I didn't want to include. Laborious maybe, but I wanted to have control over each rapper in the list, making sure all my personal favourites made it on. This left the following
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">my_artist_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2 Chainz'</span><span class="p">,</span><span class="s1">'21 Savage'</span><span class="p">,</span><span class="s1">'50 Cent'</span><span class="p">,</span><span class="s1">'Andre 3000'</span><span class="p">,</span><span class="s1">'Big Boi'</span><span class="p">,</span><span class="s1">'Ab-Soul'</span><span class="p">,</span><span class="s1">'Abstract Rude'</span><span class="p">,</span><span class="s1">'Ace Hood'</span><span class="p">,</span><span class="s1">'Action Bronson'</span><span class="p">,</span>
 <span class="s1">'Aesop Rock'</span><span class="p">,</span><span class="s1">'Afrika Bambaataa'</span><span class="p">,</span><span class="s1">'Afroman'</span><span class="p">,</span><span class="s1">'Akala'</span><span class="p">,</span><span class="s1">'Akon'</span><span class="p">,</span><span class="s1">'Anderson .Paak'</span><span class="p">,</span><span class="s1">'Andre 3000'</span><span class="p">,</span><span class="s1">'Angel Haze'</span><span class="p">,</span><span class="s1">'A$AP Ferg'</span><span class="p">,</span><span class="s1">'A$AP Rocky'</span><span class="p">,</span>
 <span class="s1">'Asher Roth'</span><span class="p">,</span><span class="s1">'Astronautalis'</span><span class="p">,</span><span class="s1">'Awol One'</span><span class="p">,</span><span class="s1">'Awkwafina'</span><span class="p">,</span><span class="s1">'Azealia Banks'</span><span class="p">,</span><span class="s1">'Big Daddy Kane'</span><span class="p">,</span><span class="s1">'B-Real'</span><span class="p">,</span><span class="s1">'B.o.B'</span><span class="p">,</span><span class="s1">'Benzino'</span><span class="p">,</span><span class="s1">'Beastie Boys'</span><span class="p">,</span>
 <span class="s1">'Big Boi'</span><span class="p">,</span><span class="s1">'Big K.R.I.T.'</span><span class="p">,</span><span class="s1">'Big L'</span><span class="p">,</span><span class="s1">'Big Pun'</span><span class="p">,</span><span class="s1">'Big Scoob'</span><span class="p">,</span><span class="s1">'Big Sean'</span><span class="p">,</span><span class="s1">'Billy Woods'</span><span class="p">,</span><span class="s1">'Birdman'</span><span class="p">,</span><span class="s1">'Bishop Nehru'</span><span class="p">,</span><span class="s1">'Bizarre'</span><span class="p">,</span><span class="s1">'Bizzy Bone'</span><span class="p">,</span>
@@ -172,17 +256,33 @@
 <span class="s1">'Vast Aire'</span><span class="p">,</span><span class="s1">'Vic Mensa'</span><span class="p">,</span><span class="s1">'Vince Staples'</span><span class="p">,</span><span class="s1">'Violent J'</span><span class="p">,</span><span class="s1">'Xzibit'</span><span class="p">,</span><span class="s1">'Waka Flocka Flame'</span><span class="p">,</span><span class="s1">'Wale'</span><span class="p">,</span><span class="s1">'Watsky'</span><span class="p">,</span><span class="s1">'Will Smith'</span><span class="p">,</span><span class="s1">'Will.i.am'</span><span class="p">,</span>
 <span class="s1">'Wiz Khalifa'</span><span class="p">,</span><span class="s1">'Wrekonize'</span><span class="p">,</span><span class="s1">'XXXTENTACION'</span><span class="p">,</span><span class="s1">'Young Jeezy'</span><span class="p">,</span><span class="s1">'Yelawolf'</span><span class="p">,</span><span class="s1">'Young Buck'</span><span class="p">,</span><span class="s1">'Young Thug'</span><span class="p">,</span><span class="s1">'Your Old Droog'</span><span class="p">,</span><span class="s1">'Yukmouth'</span><span class="p">,</span>
 <span class="s1">'Yung Lean'</span><span class="p">,</span><span class="s1">'Zebra Katz'</span><span class="p">]</span>
-</pre></div>
-<h3>1.2 Accessing lyrics</h3>
-<p>Now comes the slightly more complex task of downloading lyrics for every artist listed. To do this we're going to use the website Genius.com, by far the largest lyric database online. They actually have an API which you can use, however it looked like it was more trouble than it was worth and I couldn't get hold of a developer's authentication token. The benefit of Genius is that it is very extensive and fairly standardised. The draw back is it's a flashy website with a lot of javascript increasing load times and making it a little difficult to navigate in python. It is a bit slow, but using just requests and BeautifulSoup it's possible to access each artist's page and download their lyrics. </p>
-<p>The first step then is to find the correct URL for each artist. With genius, this is relatively simple since the artist page URL tends to follow a very simple formula: https://genius.com/artists/Artist-name where the first letter of the artist's name is always capitalised and the rest is lower-case, multiple words are joined with a hyphen, and any apostrophes and full stops are removed. Examples would be:</p>
-<ul>
-<li>https://genius.com/artists/Meek-mill</li>
-<li>https://genius.com/artists/Method-man</li>
-<li>https://genius.com/artists/Mf-doom</li>
-</ul>
-<p>Our first function therefore converts the names as written in the above list into the correct artist URLs on Genius. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</pre>
+       </div>
+       <h3>
+        1.2 Accessing lyrics
+       </h3>
+       <p>
+        Now comes the slightly more complex task of downloading lyrics for every artist listed. To do this we're going to use the website Genius.com, by far the largest lyric database online. They actually have an API which you can use, however it looked like it was more trouble than it was worth and I couldn't get hold of a developer's authentication token. The benefit of Genius is that it is very extensive and fairly standardised. The draw back is it's a flashy website with a lot of javascript increasing load times and making it a little difficult to navigate in python. It is a bit slow, but using just requests and BeautifulSoup it's possible to access each artist's page and download their lyrics.
+       </p>
+       <p>
+        The first step then is to find the correct URL for each artist. With genius, this is relatively simple since the artist page URL tends to follow a very simple formula: https://genius.com/artists/Artist-name where the first letter of the artist's name is always capitalised and the rest is lower-case, multiple words are joined with a hyphen, and any apostrophes and full stops are removed. Examples would be:
+       </p>
+       <ul>
+        <li>
+         https://genius.com/artists/Meek-mill
+        </li>
+        <li>
+         https://genius.com/artists/Method-man
+        </li>
+        <li>
+         https://genius.com/artists/Mf-doom
+        </li>
+       </ul>
+       <p>
+        Our first function therefore converts the names as written in the above list into the correct artist URLs on Genius.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">'''Take an artists name and output the link to their genius page'''</span>
 
     <span class="n">base_url</span> <span class="o">=</span> <span class="s1">'https://genius.com/artists/'</span>
@@ -197,13 +297,19 @@
     <span class="k">return</span> <span class="n">base_url</span><span class="o">+</span><span class="n">name_new</span>
 
 <span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="k">print</span><span class="p">(</span><span class="n">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'KRS-One'</span><span class="p">,</span><span class="s1">'LL Cool J'</span><span class="p">,</span><span class="s1">'MF Doom'</span><span class="p">]</span> <span class="p">]</span> 
-</pre></div>
-<div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Krs</span><span class="o">-</span><span class="n">one</span>
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Krs</span><span class="o">-</span><span class="n">one</span>
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Ll</span><span class="o">-</span><span class="n">cool</span><span class="o">-</span><span class="n">j</span>
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span>
-</pre></div>
-<p>I found the best way to access individual songs from here was through the albums linked from this page. This is because unfortunately, without messing around with the javascript, you only have access to a few songs directly from this page, whereas you can directly access six albums, where you can link directly to all the songs. So my next step was to find links to all albums possible. </p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</pre>
+       </div>
+       <p>
+        I found the best way to access individual songs from here was through the albums linked from this page. This is because unfortunately, without messing around with the javascript, you only have access to a few songs directly from this page, whereas you can directly access six albums, where you can link directly to all the songs. So my next step was to find links to all albums possible.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="k">def</span> <span class="nf">get_albums</span><span class="p">(</span><span class="n">artist_url</span><span class="p">):</span>
@@ -218,16 +324,22 @@
 <span class="n">MF_Doom_albums</span> <span class="o">=</span> <span class="n">get_albums</span><span class="p">(</span><span class="n">name_to_url</span><span class="p">(</span><span class="s1">'MF Doom'</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">album_link</span> <span class="ow">in</span> <span class="n">MF_Doom_albums</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="n">album_link</span><span class="p">)</span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Born</span><span class="o">-</span><span class="k">like</span><span class="o">-</span><span class="n">this</span>
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Born</span><span class="o">-</span><span class="k">like</span><span class="o">-</span><span class="n">this</span>
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Metalfingers</span><span class="o">-</span><span class="n">presents</span><span class="o">-</span><span class="n">special</span><span class="o">-</span><span class="n">herbs</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="k">set</span><span class="o">-</span><span class="n">vol</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="n">disc</span><span class="o">-</span><span class="mi">2</span>
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Metal</span><span class="o">-</span><span class="n">fingers</span><span class="o">-</span><span class="n">presents</span><span class="o">-</span><span class="n">special</span><span class="o">-</span><span class="n">herbs</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="k">set</span><span class="o">-</span><span class="n">vol</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="n">disc</span><span class="o">-</span><span class="mi">1</span>
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Mm</span><span class="o">-</span><span class="n">food</span>
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Special</span><span class="o">-</span><span class="n">blends</span><span class="o">-</span><span class="n">volume</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span>
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Dead</span><span class="o">-</span><span class="n">bent</span><span class="o">-</span><span class="n">doomsday</span>
-</pre></div>
-<p>Next, given an album url we want to extract the urls and titles of all the songs on that album</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_songs</span><span class="p">(</span><span class="n">album_url</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        Next, given an album url we want to extract the urls and titles of all the songs on that album
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">get_songs</span><span class="p">(</span><span class="n">album_url</span><span class="p">):</span>
     <span class="sd">'''Take an album URL link and find all the song titles and their related URLs'''</span>
     <span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">album_url</span><span class="p">)</span>
     <span class="n">html_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
@@ -240,8 +352,10 @@
 <span class="n">doom_urls</span><span class="p">,</span> <span class="n">doom_titles</span> <span class="o">=</span> <span class="n">get_songs</span><span class="p">(</span><span class="n">MF_Doom_albums</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">doom_urls</span><span class="p">,</span> <span class="n">doom_titles</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">title</span><span class="p">[:</span><span class="n">title</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'Lyrics'</span><span class="p">)])</span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">beef</span><span class="o">-</span><span class="n">rapp</span><span class="o">-</span><span class="n">lyrics</span> 
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">beef</span><span class="o">-</span><span class="n">rapp</span><span class="o">-</span><span class="n">lyrics</span> 
               <span class="n">Beef</span> <span class="n">Rapp</span>
 
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">hoe</span><span class="o">-</span><span class="n">cakes</span><span class="o">-</span><span class="n">lyrics</span> 
@@ -288,9 +402,13 @@
 
 <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">mm</span><span class="o">-</span><span class="n">food</span><span class="o">-</span><span class="n">tracklist</span><span class="o">-</span><span class="n">album</span><span class="o">-</span><span class="n">artwork</span><span class="o">-</span><span class="n">annotated</span> 
               <span class="n">MM</span><span class="p">..</span> <span class="n">FOOD</span> <span class="p">[</span><span class="n">Tracklist</span> <span class="o">+</span> <span class="n">Album</span> <span class="n">Artwork</span><span class="p">]</span>
-</pre></div>
-<p>The next step is to get the raw text of the lyrics for each song. One thing to note here is that you must be running python3 for the following to work as expected. This is because of python3's handling of unicode strings. It's possible to do in python2 but you will have to play around with converting the text from unicode to ASCII.</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_lyrics</span><span class="p">(</span><span class="n">song_url</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        The next step is to get the raw text of the lyrics for each song. One thing to note here is that you must be running python3 for the following to work as expected. This is because of python3's handling of unicode strings. It's possible to do in python2 but you will have to play around with converting the text from unicode to ASCII.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">get_lyrics</span><span class="p">(</span><span class="n">song_url</span><span class="p">):</span>
     <span class="sd">'''take a song url and gather the raw text containg the lyrics for that song'''</span>
     <span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">song_url</span><span class="p">)</span>
     <span class="n">html_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
@@ -301,9 +419,12 @@
 <span class="c1"># Test: Find the lyrics to the first track on the latest Doom album on Genius</span>
 <span class="n">doom_lyrics</span> <span class="o">=</span> <span class="n">get_lyrics</span><span class="p">(</span><span class="n">doom_urls</span><span class="p">[</span><span class="mi">12</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="n">doom_lyrics</span><span class="p">)</span>
-</pre></div>
-<p>​  <br/>
-    [Intro: MF DOOM &amp; (Mr. Fantastik)]
+</pre>
+       </div>
+       <p>
+        ​
+        <br/>
+        [Intro: MF DOOM &amp; (Mr. Fantastik)]
     (Yo!) Yo!
     (MF DOOM) Mr. Fantastik
     (Mr. Fantastik) Villain
@@ -313,8 +434,10 @@
     (These rap snitches, man...
     Shit is bugged out, man. What the fuck, man?)
     Shit, you telling me. (Niggas running their mouth
-    Telling e'rything, e'rything)</p>
-<div class="highlight"><pre><span></span><span class="k">[Hook 2X: Mr. Fantastik ]</span>
+    Telling e'rything, e'rything)
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">[Hook 2X: Mr. Fantastik ]</span>
 <span class="na">Rap snitches, telling all their business</span>
 <span class="na">Sit in the court and be their own star witness</span>
 <span class="na">Do you see the perpetrator? - Yeah, I'm right here</span>
@@ -376,14 +499,28 @@
 <span class="na">Fake hustling nigga</span>
 
 <span class="na">Perpetrator? Yeah, I'm right here...</span>
-</pre></div>
-<p>​    </p>
-<h2>1.3 Cleaning Lyrics</h2>
-<p>The next step is to clean up these raw lyrics, and unfortunately by clean I don't mean remove the expletives (sorry mum).</p>
-<p>One thing you might notice from the above example is that there are a number of songs on the album that have other artists featuring on. This is problematic as we want to analyse the lyrics of a single artist. One simple solution would be to simply discard any song that has another artist featuring on it. However this seems unnecessarily wasteful and for artists that typically have a lot of other people featuring on the album, it may prevent the artist from reaching the 20,000 word threshold. </p>
-<p>Luckily, genius neatly formats featured verses in its lyrics in the following way; a verse by a featuring artist almost always has the name in square brackets like so [featuring artist]. This means, if we are expecting a featuring artist, we can write code to eliminate their verse from the song. The problem is this: the guest rapper may have one or more verses starting with [Artist Name] and ending with a double new line character. We want to return the lyrics text with these sections removed. </p>
-<p>My function identifies each verse, determines whether the featuring artist's name is in the first section of each verse, and removes each verse identified as not the main artist's. This is by no means perfect. Although genius is relatively standardised, there will be exceptions, and bits of lyrical content not belonging to the main artist may sneak through. However, the simple rule in general gives relatively good results. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">remove_guest_verse</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        ​
+       </p>
+       <h2>
+        1.3 Cleaning Lyrics
+       </h2>
+       <p>
+        The next step is to clean up these raw lyrics, and unfortunately by clean I don't mean remove the expletives (sorry mum).
+       </p>
+       <p>
+        One thing you might notice from the above example is that there are a number of songs on the album that have other artists featuring on. This is problematic as we want to analyse the lyrics of a single artist. One simple solution would be to simply discard any song that has another artist featuring on it. However this seems unnecessarily wasteful and for artists that typically have a lot of other people featuring on the album, it may prevent the artist from reaching the 20,000 word threshold.
+       </p>
+       <p>
+        Luckily, genius neatly formats featured verses in its lyrics in the following way; a verse by a featuring artist almost always has the name in square brackets like so [featuring artist]. This means, if we are expecting a featuring artist, we can write code to eliminate their verse from the song. The problem is this: the guest rapper may have one or more verses starting with [Artist Name] and ending with a double new line character. We want to return the lyrics text with these sections removed.
+       </p>
+       <p>
+        My function identifies each verse, determines whether the featuring artist's name is in the first section of each verse, and removes each verse identified as not the main artist's. This is by no means perfect. Although genius is relatively standardised, there will be exceptions, and bits of lyrical content not belonging to the main artist may sneak through. However, the simple rule in general gives relatively good results.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">remove_guest_verse</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="n">lyrics</span> <span class="o">+=</span> <span class="s1">'</span><span class="se">\n\n</span><span class="s1">'</span>
     <span class="n">verses_listed</span> <span class="o">=</span> <span class="n">lyrics</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n\n</span><span class="s1">'</span><span class="p">)</span>
     <span class="n">new_verses</span> <span class="o">=</span> <span class="p">[]</span>
@@ -400,9 +537,12 @@
 
 <span class="n">song_doom_only</span> <span class="o">=</span> <span class="n">remove_guest_verse</span><span class="p">(</span><span class="n">doom_lyrics</span><span class="p">,</span> <span class="s1">'Mr. Fantastik'</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">song_doom_only</span><span class="p">)</span>
-</pre></div>
-<p>​  <br/>
-    [Verse 2: MF DOOM]
+</pre>
+       </div>
+       <p>
+        ​
+        <br/>
+        [Verse 2: MF DOOM]
     True, there's rules to this shit, fools dare care
     Everybody wanna rule the world with tears for fear
     Yeah, yeah, tell 'em tell it on the mountain hill
@@ -418,24 +558,38 @@
     Where no brains but gum flap
     He said his gun clap, then he fled after one slap (Pap!)
     Son, shut your trap, save it for the bitches
-    Mmm, delicious, rapp snitch knishes</p>
-<div class="highlight"><pre><span></span><span class="n">Perpetrator</span><span class="o">?</span> <span class="n">Yeah</span><span class="p">,</span> <span class="n">I</span><span class="err">'</span><span class="n">m</span> <span class="k">right</span> <span class="n">here</span><span class="p">...</span>
-</pre></div>
-<p>​  <br/>
-​  <br/>
-​  <br/>
-​  <br/>
-​    </p>
-<p>The last two helper functions we will write before creating the main function to put this all together. The first is a cleaner function. It removes all lines starting with useless words like [chorus] and all repeated lines. Then, a small (perhaps unnecessary, but I like it) function to save our lyrics to a .txt file. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">lyrics</span><span class="p">):</span>
+    Mmm, delicious, rapp snitch knishes
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="n">Perpetrator</span><span class="o">?</span> <span class="n">Yeah</span><span class="p">,</span> <span class="n">I</span><span class="err">'</span><span class="n">m</span> <span class="k">right</span> <span class="n">here</span><span class="p">...</span>
+</pre>
+       </div>
+       <p>
+        ​
+        <br/>
+        ​
+        <br/>
+        ​
+        <br/>
+        ​
+        <br/>
+        ​
+       </p>
+       <p>
+        The last two helper functions we will write before creating the main function to put this all together. The first is a cleaner function. It removes all lines starting with useless words like [chorus] and all repeated lines. Then, a small (perhaps unnecessary, but I like it) function to save our lyrics to a .txt file.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">lyrics</span><span class="p">):</span>
     <span class="n">line_list</span> <span class="o">=</span> <span class="n">lyrics</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
     <span class="n">line_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">line_list</span> <span class="k">if</span> <span class="p">((</span><span class="s1">'['</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">'('</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="p">)</span> <span class="p">)</span> <span class="ow">and</span> <span class="n">line_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line_list</span><span class="p">)</span>
 
 <span class="n">cleaned</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">song_doom_only</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
-</pre></div>
-<div class="highlight"><pre><span></span><span class="nv">True</span>, <span class="nv">there</span><span class="s1">'</span><span class="s">s rules to this shit, fools dare care</span>
+</pre>
+       </div>
+       <div class="highlight">
+        <pre><span></span><span class="nv">True</span>, <span class="nv">there</span><span class="s1">'</span><span class="s">s rules to this shit, fools dare care</span>
 <span class="nv">Everybody</span> <span class="nv">wanna</span> <span class="nv">rule</span> <span class="nv">the</span> <span class="nv">world</span> <span class="nv">with</span> <span class="nv">tears</span> <span class="k">for</span> <span class="nv">fear</span>
 <span class="nv">Yeah</span>, <span class="nv">yeah</span>, <span class="nv">tell</span> <span class="s1">'</span><span class="s">em tell it on the mountain hill</span>
 <span class="nv">Running</span> <span class="nv">up</span> <span class="nv">they</span> <span class="nv">mouth</span> <span class="nv">bill</span>, <span class="nv">everybody</span> <span class="nv">doubting</span> <span class="nv">still</span>
@@ -452,17 +606,25 @@
 <span class="nv">Son</span>, <span class="nv">shut</span> <span class="nv">your</span> <span class="nv">trap</span>, <span class="nv">save</span> <span class="nv">it</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">bitches</span>
 <span class="nv">Mmm</span>, <span class="nv">delicious</span>, <span class="nv">rapp</span> <span class="nv">snitch</span> <span class="nv">knishes</span>
 <span class="nv">Perpetrator</span>? <span class="nv">Yeah</span>, <span class="nv">I</span><span class="s1">'</span><span class="s">m right here...</span>
-</pre></div>
-<p>If you're running this as a script on windows I recommend creating un-commenting the two top lines, creating a folder called text and using that structure to save all .txt files to that folder. </p>
-<div class="highlight"><pre><span></span><span class="c1"># import os</span>
+</pre>
+       </div>
+       <p>
+        If you're running this as a script on windows I recommend creating un-commenting the two top lines, creating a folder called text and using that structure to save all .txt files to that folder.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="c1"># import os</span>
 <span class="c1"># path = os.path.dirname(os.path.realpath(__file__)).replace('\\', '/')+'/text/'</span>
 
 <span class="k">def</span> <span class="nf">lyrics_to_txt</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
     <span class="n">thefile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">artist</span><span class="o">+</span><span class="s1">'.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span>
     <span class="n">thefile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">lyrics</span><span class="p">)</span>
-</pre></div>
-<p>The following code puts all previous functions together into one coherent subroutine. </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">save_lyrics</span><span class="p">(</span><span class="n">artist</span><span class="p">):</span>
+</pre>
+       </div>
+       <p>
+        The following code puts all previous functions together into one coherent subroutine.
+       </p>
+       <div class="highlight">
+        <pre><span></span><span class="k">def</span> <span class="nf">save_lyrics</span><span class="p">(</span><span class="n">artist</span><span class="p">):</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">name_to_url</span><span class="p">(</span><span class="n">artist</span><span class="p">)</span>
     <span class="n">album_urls</span> <span class="o">=</span>  <span class="n">get_albums</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="n">word_count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -507,65 +669,116 @@
             <span class="k">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' Not enough albums'</span><span class="p">)</span>
 
 <span class="c1">#save_lyrics('2 Chainz')</span>
-</pre></div>
-<p>I've added in some debugging print lines so help identify the source of the problem if the download fails. This may be because the code failed to find the artist's page (for example, Tupac Shakur fails since the Genius page has the artist written as 2Pac). There are a number of artists that fail to meet the 20,000 word threshold. Sometimes, this is because there really aren't enough words in their entire discography. Other times it's because the six listed albums don't have enough words. In this case, the only way you can solve the problem is by manually adding more lyrics. </p>
-<p>Hooray! We finally have a complete function for gathering lyrics. Part one complete. Now for the fun stuff: lyric analysis. </p>
-</section>
-
-<div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<section class="post-info">
-<div class="post-share">
-<a class="twitter" href="https://twitter.com/share?text=Rap Skills Analysis: A Computational Approach part 1&amp;url=/rap-part-one.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-<i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
-</a>
-<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/rap-part-one.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-<i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
-</a>
-<a class="googleplus" href="https://plus.google.com/share?url=/rap-part-one.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-<i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
-</a>
-<div class="clear"></div>
-</div>
-<aside class="post-tags">
-<a href="/tag/data-science.html">data science</a><a href="/tag/python.html">python</a><a href="/tag/natural-language-processing.html">natural language processing</a><a href="/tag/rap.html">rap</a><a href="/tag/hip-hop.html">hip hop</a> </aside>
-<div class="clear"></div>
-</section>
-<aside class="post-nav">
-<div class="clear"></div>
-</aside>
-</div>
-</article>
-</main>
-<!-- TODO : Body class -->
-<div class="" id="body-class" style="display: none;"></div>
-<footer id="footer">
-<div class="inner">
-<section class="credits">
-<span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
-<span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
-</section>
-</div>
-</footer>
-</section>
-<script src="/theme/js/script.js" type="text/javascript"></script>
-</body>
+</pre>
+       </div>
+       <p>
+        I've added in some debugging print lines so help identify the source of the problem if the download fails. This may be because the code failed to find the artist's page (for example, Tupac Shakur fails since the Genius page has the artist written as 2Pac). There are a number of artists that fail to meet the 20,000 word threshold. Sometimes, this is because there really aren't enough words in their entire discography. Other times it's because the six listed albums don't have enough words. In this case, the only way you can solve the problem is by manually adding more lyrics.
+       </p>
+       <p>
+        Hooray! We finally have a complete function for gathering lyrics. Part one complete. Now for the fun stuff: lyric analysis.
+       </p>
+      </section>
+      <div id="disqus_thread">
+      </div>
+      <script>
+       /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+      </script>
+      <noscript>
+       Please enable JavaScript to view the
+       <a href="https://disqus.com/?ref_noscript">
+        comments powered by Disqus.
+       </a>
+      </noscript>
+      <section class="post-info">
+       <div class="post-share">
+        <a class="twitter" href="https://twitter.com/share?text=Rap Skills Analysis: A Computational Approach part 1&amp;url=/rap-part-one.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+         <i class="ic ic-twitter">
+         </i>
+         <span class="hidden">
+          Twitter
+         </span>
+        </a>
+        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/rap-part-one.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+         <i class="ic ic-facebook">
+         </i>
+         <span class="hidden">
+          Facebook
+         </span>
+        </a>
+        <a class="googleplus" href="https://plus.google.com/share?url=/rap-part-one.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+         <i class="ic ic-googleplus">
+         </i>
+         <span class="hidden">
+          Google+
+         </span>
+        </a>
+        <div class="clear">
+        </div>
+       </div>
+       <aside class="post-tags">
+        <a href="/tag/data-science.html">
+         data science
+        </a>
+        <a href="/tag/python.html">
+         python
+        </a>
+        <a href="/tag/natural-language-processing.html">
+         natural language processing
+        </a>
+        <a href="/tag/rap.html">
+         rap
+        </a>
+        <a href="/tag/hip-hop.html">
+         hip hop
+        </a>
+       </aside>
+       <div class="clear">
+       </div>
+      </section>
+      <aside class="post-nav">
+       <div class="clear">
+       </div>
+      </aside>
+     </div>
+    </article>
+   </main>
+   <!-- TODO : Body class -->
+   <div class="" id="body-class" style="display: none;">
+   </div>
+   <footer id="footer">
+    <div class="inner">
+     <section class="credits">
+      <span class="credits-theme">
+       Theme
+       <a href="https://github.com/arulrajnet/attila" rel="nofollow">
+        Attila
+       </a>
+      </span>
+      <span class="credits-software">
+       Published with
+       <a href="https://github.com/getpelican/pelican" rel="nofollow">
+        Pelican
+       </a>
+      </span>
+     </section>
+    </div>
+   </footer>
+  </section>
+  <script src="/theme/js/script.js" type="text/javascript">
+  </script>
+ </body>
 </html>
