@@ -33,7 +33,9 @@
 <meta content="View the blog." property="og:description"/>
 <meta content="" property="og:url"/>
 <meta content="/images/covers/chaos.gif" property="og:image"/>
-</link></meta></head>
+</link></meta>
+    <script src="libs/particlesjs/particles.min.js"></script>
+</head>
 <!-- TODO : Body class -->
 <body class="home-template">
 <nav id="menu">
@@ -54,9 +56,15 @@
 </span>
 </nav>
 <h1 class="blog-name"><a href="">But is it Data Science?</a></h1>
-<div class="blog-cover cover" style="background-image: url('images/covers/chaos.gif')">
+<!--<div class="blog-cover cover" style="background-image: url('images/covers/chaos.gif')">-->
+    <div class="blog-cover cover" id="particles-background"></div>
+        <script>
+            particlesJS.load('particles-background', 'libs/particlesjs/particles.json', function () {
+                console.log('callback - particles.js config loaded');
+            });
+        </script>
 </div>
-</div></header>
+</header>
 <section id="wrapper">
 <a class="hidden-close"></a>
 <div class="container" id="index">
