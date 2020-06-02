@@ -154,13 +154,37 @@
         Introduction
        </h2>
        <p>
-        I am a self-confessed rap fan. I say self-confessed because part of me dreads mentioning this fact to people. I’ve been through enough awkward half-laughs on first dates to understand one thing: as a young person from suburban Britain it’s difficult to tell people you’re in to hip hop without sounding like a tosser. Trying to follow up with “well actually I think hip hop is a really expressive art-form drawing on a long line of blues, soul and African oral tradition, giving a means for the disenfranchised to express frustration and drive political and social change” hardly helps your case.
+        I am a self-confessed rap fan. I say self-confessed because part of me dreads mentioning this fact to people. As an overly privileged white dude from the home counties I understand the initial reaction of people sometimes. But listen, some beats just
+        <em>
+         bang
+        </em>
+        and I've always felt strangley at home with the music of hip hop, despite being very much a tourist in the culture. Maybe it was escapism from my decidedly comfortable suburben existence but over the last 10+ years hip hop has always been a part of my life.
        </p>
        <p>
-        Nevertheless, in this post I want to try marry two seemingly disconnected worlds, that of hip hop and computer programming, in an attempt to gain some interesting data insights. The question I want to answer is this: what computational processes could you use to rank rappers’ ability? Of course, art is fundamentally subjective in nature so individuals are likely to disagree on what constitutes ‘ability’. Also, the complexities of language and sound and the impact that may or may not have on a listener is difficult the analyse computationally.
+        You might also be aware that I am a mssive nerd.
        </p>
        <p>
-        With these limitations in consideration, I chose two relatively simple data points to get a sense of a rap artist’s skill. These are:
+        In this post I want to try marry two seemingly disconnected worlds, that of hip hop and computer programming, in an attempt to gain some interesting data insights. The question I set out to answer was this: would it be possible to come up with a consistent statistical way to rank rappers’ ability? Of course, art is a totally subjective experience. Even skynet could never fully appreciate the genius of  Lil' Waynes infamous line
+       </p>
+       <blockquote>
+        <p>
+         <em>
+          "Real G's move in silence, like lasagne"
+         </em>
+        </p>
+       </blockquote>
+       <p>
+        And what exactly contitutes ability anyway? Can it be extracted mathematically? As much as computer power is advancing at a rapid rate, a true understanding of art is still a
+        <em>
+         long
+        </em>
+        way off.
+       </p>
+       <p>
+        But screw it let's try anyway.
+       </p>
+       <p>
+        I chose two relatively simple data points to get a sense of a rap artist’s skill. These are:
        </p>
        <ol>
         <li>
@@ -174,7 +198,11 @@
         These both have the benefit of being quantifiable and directly comparable across artists. I will walk you through my process of extracting and displaying this data with the programming language python 3 and thus assume some knowledge of python syntax and functionality, as well as basic command line and system know-how. Despite this, I am an intermediate programmer myself so there will doubtlessly be many many areas for improvement and optimisation. All suggestions and comments in this regard would be greatly appreciated.
        </p>
        <p>
-        However, if, like most normal people, you neither know nor care about programming you can skip straight to the end where the results are displayed.
+        However, if, like most normal people, you neither know nor care about programming
+        <a href="https://nickelnine37.github.io/rap-part-three.html">
+         you can skip straight to the end
+        </a>
+        where the results are displayed.
        </p>
        <h2>
         Part 1: Finding lyrics
@@ -421,51 +449,36 @@
 <span class="k">print</span><span class="p">(</span><span class="n">doom_lyrics</span><span class="p">)</span>
 </pre>
        </div>
-       <p>
-        ​
-        <br/>
-        [Intro: MF DOOM &amp; (Mr. Fantastik)]
-    (Yo!) Yo!
-    (MF DOOM) Mr. Fantastik
-    (Mr. Fantastik) Villain
-    (What up, nigga?) Ain't nuttin; what's the word?
-    (What's cracking, boy?) Same ol' shit, kid...
-    (Man) ...different day, you know?
-    (These rap snitches, man...
-    Shit is bugged out, man. What the fuck, man?)
-    Shit, you telling me. (Niggas running their mouth
-    Telling e'rything, e'rything)
-       </p>
        <div class="highlight">
         <pre><span></span><span class="k">[Hook 2X: Mr. Fantastik ]</span>
 <span class="na">Rap snitches, telling all their business</span>
 <span class="na">Sit in the court and be their own star witness</span>
 <span class="na">Do you see the perpetrator? - Yeah, I'm right here</span>
-<span class="na">Fuck around, get the whole label sent up for years</span>
+<span class="na">F*** around, get the whole label sent up for years</span>
 
 <span class="k">[Verse 1: Mr. Fantastik]</span>
 <span class="na">Type profile low, like A in Paid in Full</span>
 <span class="na">Attract heavy cash 'cause the game's centrifugal</span>
 <span class="na">Mister Fantastik, long dough like elastic</span>
 <span class="na">Guard my life with twin Glocks that's made out of plastic</span>
-<span class="na">Can't stand a brown nosing nigga fake ass bastard</span>
+<span class="na">Can't stand a brown nosing n**** fake a** b******</span>
 <span class="na">Admiring my style, tour bus through Manhattan</span>
 <span class="na">Plotting, plan the quickest, my flow's the sickest</span>
-<span class="na">My hoes be the thickest, my dro the stickiest</span>
-<span class="na">Street nigga, stamped and bonafide</span>
-<span class="na">When beef jump niggas come get me 'cause they know I ride</span>
+<span class="na">My h*** be the thickest, my dro the stickiest</span>
+<span class="na">Street n****, stamped and bonafide</span>
+<span class="na">When beef jump n****s come get me 'cause they know I ride</span>
 <span class="na">True to the ski mask, New York's my origin</span>
 <span class="na">Play a fake gangsta like a old accordion</span>
 <span class="na">According to him, when the D's rushed in</span>
 <span class="na">Complication from the wire testimony was thin</span>
 <span class="na">Caused his man to go up north, the ball hit 'em again</span>
-<span class="na">Lame rap snitch nigga even told on the Mexican</span>
+<span class="na">Lame rap snitch n**** even told on the Mexican</span>
 
 <span class="k">[Hook 2X: Mr. Fantastik]</span>
 <span class="na">Rap snitches, telling all their business</span>
 <span class="na">Sit in the court and be their own star witness</span>
 <span class="na">Do you see the perpetrator? - Yeah, I'm right here</span>
-<span class="na">Fuck around, get the whole label sent up for years</span>
+<span class="na">F*** around, get the whole label sent up for years</span>
 
 <span class="k">[Verse 2: MF DOOM]</span>
 <span class="na">True, there's rules to this shit, fools dare care</span>
@@ -482,21 +495,21 @@
 <span class="na">Spitting on enemies, get the steel for tin men</span>
 <span class="na">Where no brains but gum flap</span>
 <span class="na">He said his gun clap, then he fled after one slap (Pap!)</span>
-<span class="na">Son, shut your trap, save it for the bitches</span>
+<span class="na">Son, shut your trap, save it for the b******</span>
 <span class="na">Mmm, delicious, rapp snitch knishes</span>
 
 <span class="k">[Outro: Mr. Fantastik &amp; (MF DOOM)]</span>
 <span class="na">You know what I'm saying?</span>
 <span class="na">(It's terrible)</span>
 <span class="na">Crazy, man, I'm just analyzing this whole game</span>
-<span class="na">This is bugged out, man, niggas is snitching</span>
+<span class="na">This is bugged out, man, n****s is snitching</span>
 <span class="na">Telling on they own self</span>
 <span class="na">(It's a horror, yo)</span>
 <span class="na">Fuck around and get everybody bagged, man</span>
 <span class="na">(Atrocities)</span>
-<span class="na">Fuck around and get yo mama bagged, nigga</span>
+<span class="na">F*** around and get yo mama bagged, n****</span>
 <span class="na">You know your grandmama used to be bootlegging...</span>
-<span class="na">Fake hustling nigga</span>
+<span class="na">Fake hustling n****</span>
 
 <span class="na">Perpetrator? Yeah, I'm right here...</span>
 </pre>
@@ -507,9 +520,6 @@
        <h2>
         1.3 Cleaning Lyrics
        </h2>
-       <p>
-        The next step is to clean up these raw lyrics, and unfortunately by clean I don't mean remove the expletives (sorry mum).
-       </p>
        <p>
         One thing you might notice from the above example is that there are a number of songs on the album that have other artists featuring on. This is problematic as we want to analyse the lyrics of a single artist. One simple solution would be to simply discard any song that has another artist featuring on it. However this seems unnecessarily wasteful and for artists that typically have a lot of other people featuring on the album, it may prevent the artist from reaching the 20,000 word threshold.
        </p>
@@ -539,42 +549,28 @@
 <span class="k">print</span><span class="p">(</span><span class="n">song_doom_only</span><span class="p">)</span>
 </pre>
        </div>
-       <p>
-        ​
-        <br/>
-        [Verse 2: MF DOOM]
-    True, there's rules to this shit, fools dare care
-    Everybody wanna rule the world with tears for fear
-    Yeah, yeah, tell 'em tell it on the mountain hill
-    Running up they mouth bill, everybody doubting still
-    Informer, keep it up and get tested
-    Pop through your bubble vest or double-breasted
-    He keep a lab down south in the little beast
-    So much heat you woulda thought it was the Middle East
-    A little grease always keeps the wheels a spinning
-    Like sitting on twenty threes to get the squealers grinning
-    Hitting on many trees, feel real linen
-    Spitting on enemies, get the steel for tin men
-    Where no brains but gum flap
-    He said his gun clap, then he fled after one slap (Pap!)
-    Son, shut your trap, save it for the bitches
-    Mmm, delicious, rapp snitch knishes
-       </p>
        <div class="highlight">
-        <pre><span></span><span class="n">Perpetrator</span><span class="o">?</span> <span class="n">Yeah</span><span class="p">,</span> <span class="n">I</span><span class="err">'</span><span class="n">m</span> <span class="k">right</span> <span class="n">here</span><span class="p">...</span>
+        <pre><span></span><span class="k">[Verse 2: MF DOOM]</span>
+<span class="na">True, there's rules to this shit, fools dare care</span>
+<span class="na">Everybody wanna rule the world with tears for fear</span>
+<span class="na">Yeah, yeah, tell 'em tell it on the mountain hill</span>
+<span class="na">Running up they mouth bill, everybody doubting still</span>
+<span class="na">Informer, keep it up and get tested</span>
+<span class="na">Pop through your bubble vest or double-breasted</span>
+<span class="na">He keep a lab down south in the little beast</span>
+<span class="na">So much heat you woulda thought it was the Middle East</span>
+<span class="na">A little grease always keeps the wheels a spinning</span>
+<span class="na">Like sitting on twenty threes to get the squealers grinning</span>
+<span class="na">Hitting on many trees, feel real linen</span>
+<span class="na">Spitting on enemies, get the steel for tin men</span>
+<span class="na">Where no brains but gum flap</span>
+<span class="na">He said his gun clap, then he fled after one slap (Pap!)</span>
+<span class="na">Son, shut your trap, save it for the bitches</span>
+<span class="na">Mmm, delicious, rapp snitch knishes</span>
+
+<span class="na">Perpetrator? Yeah, I'm right here...</span>
 </pre>
        </div>
-       <p>
-        ​
-        <br/>
-        ​
-        <br/>
-        ​
-        <br/>
-        ​
-        <br/>
-        ​
-       </p>
        <p>
         The last two helper functions we will write before creating the main function to put this all together. The first is a cleaner function. It removes all lines starting with useless words like [chorus] and all repeated lines. Then, a small (perhaps unnecessary, but I like it) function to save our lyrics to a .txt file.
        </p>
