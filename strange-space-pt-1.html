@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta charset="utf-8" content="text/html" http-equiv="Content-Type"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+   <title>
+    Strage Space Part 1: Creating a basic 3D Graphics Engine
+   </title>
+   <meta content="True" name="HandheldFriendly"/>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+   <meta content="origin" name="referrer"/>
+   <meta content="Pelican" name="generator"/>
+   <link href="" rel="canonical"/>
+   <!-- Feed -->
+   <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+   <!-- Code highlight color scheme -->
+   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <!-- CSS specified by the user -->
+   <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
+   <!-- Custom fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+    <link href="/strange-space-pt-1.html" rel="canonical"/>
+    <meta content="Learn how to create a basic 3D graphics engine with Numpy and Pygame." name="description"/>
+    <meta content="Edward Antonian" name="author"/>
+    <meta content="python" name="tags"/>
+    <meta content="pygame" name="tags"/>
+    <meta content="animation" name="tags"/>
+    <meta content="graphics" name="tags"/>
+    <meta content="3D" name="tags"/>
+    <meta content="" property="og:locale"/>
+    <meta content="But is it Data Science?" property="og:site_name"/>
+    <meta content="website" property="og:type"/>
+    <meta content="But is it Data Science?" property="og:title"/>
+    <meta content="View the blog." property="og:description"/>
+    <meta content="" property="og:url"/>
+    <meta content="/images/covers/chaos.gif" property="og:image"/>
+    <meta content="article" property="og:type">
+     <meta content="/author/edward-antonian.html" property="article:author">
+      <meta content="/strange-space-pt-1.html" property="og:url">
+       <meta content="Strage Space Part 1: Creating a basic 3D Graphics Engine" property="og:title">
+        <meta content="2020-07-04 00:00:00+01:00" property="article:published_time">
+         <meta content="Learn how to create a basic 3D graphics engine with Numpy and Pygame." property="og:description">
+          <meta content="/images/covers/chaos.gif" property="og:image">
+          </meta>
+         </meta>
+        </meta>
+       </meta>
+      </meta>
+     </meta>
+    </meta>
+   </link>
+  </meta>
+ </head>
+ <!-- TODO : Body class -->
+ <body class="home-template">
+  <nav id="menu">
+   <a class="close-button">
+    Close
+   </a>
+   <div class="nav-wrapper">
+    <p class="nav-label">
+     Menu
+    </p>
+    <ul>
+     <li role="presentation">
+      <a href="pages/about.html">
+       About
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="archives.html">
+       Archive
+      </a>
+     </li>
+     <li role="presentation">
+     </li>
+    </ul>
+   </div>
+  </nav>
+  <!-- Progressbar -->
+  <div class="progress-container">
+   <span class="progress-bar">
+   </span>
+  </div>
+  <!-- Page Header -->
+  <!-- Set your background image for this header on the line below. -->
+  <header class="has-cover" id="post-header">
+   <div class="inner">
+    <nav id="navigation">
+     <span class="nav-button" id="home-button">
+      <a class="home-button" href="index.html" title="Home">
+       <i class="ic ic-arrow-left">
+       </i>
+       Home
+      </a>
+     </span>
+     <span class="nav-button" id="menu-button">
+      <a class="menu-button">
+       <i class="ic ic-menu">
+       </i>
+       Menu
+      </a>
+     </span>
+    </nav>
+    <h1 class="post-title">
+     Strage Space Part 1: Creating a basic 3D Graphics Engine
+    </h1>
+    <!-- TODO : Proper class for headline -->
+    <span class="post-meta">
+     <a href="/author/edward-antonian.html">
+      Edward antonian
+     </a>
+     |
+     <time datetime="Sat 04 July 2020">
+      Sat 04 July 2020
+     </time>
+    </span>
+    <!-- TODO : Modified check -->
+    <span class="post-meta">
+     | Updated on Sat 04 July 2020
+    </span>
+    <div class="post-cover cover" style="background-image: url('images/covers/strspa.png')">
+    </div>
+   </div>
+  </header>
+  <section id="wrapper">
+   <a class="hidden-close">
+   </a>
+   <!-- Post content -->
+   <main class="content" role="main">
+    <article class="post">
+     <div class="inner">
+      <section class="post-content">
+       <h1 id="strange-space-part-1-creating-a-basic-3d-graphics-engine">
+        Strange Space Part 1: Creating a basic 3D Graphics Engine
+       </h1>
+       <p>
+        So I've recently been working on a project tentatively named "strange space". The idea is basically this: it's kind of a game, but there's not really any actual objective. You basically fly around through space as if you're in a spacecraft and explore a class of mathematical patterns called
+        <em>
+         strange attractors
+        </em>
+        . It's pretty cool to look and very trippy, especially if you happen to have smoked something funky. It's probably easier to just show you, so to give you a basic idea of what I mean here's a small demo.
+       </p>
+       <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/QAdsIA-e128" width="560">
+       </iframe>
+       <p>
+        To produce this I used Python, with
+        <a href="https://numpy.org/">
+         numpy
+        </a>
+        and
+        <a href="https://www.pygame.org/docs/">
+         pygame
+        </a>
+        and a little dash of
+        <a href="https://matplotlib.org/">
+         matplotlib
+        </a>
+        . The aim of the project
+       </p>
+       <ul>
+        <li>
+         Plot lines and spheres in a 3-dimensional space.
+        </li>
+        <li>
+         Have those objects update their position and color in time.
+        </li>
+        <li>
+         Be able to navigate and rotate through that 3D space as if in a spacecraft
+        </li>
+       </ul>
+       <p>
+        The scope of the project, at least at first, is limited in the following ways:
+       </p>
+       <ul>
+        <li>
+         No advanced lighting techniques such as ray tracing or ray marching.
+        </li>
+        <li>
+         It should be able to run on a CPU without GPU acceleration.
+        </li>
+        <li>
+         No fancy packages - minimalist install procedure only.
+        </li>
+       </ul>
+       <p>
+        This is the first of two blog posts. Here, I explain what the crazy pattern you can see is, and how to set up all the maths to start building a basic 3D engine. In the second post, I will go through the code to make it happen!
+       </p>
+       <div class="toc">
+        <span class="toctitle">
+         Table of contents:
+        </span>
+        <ul>
+         <li>
+          <a href="#strange-space-part-1-creating-a-basic-3d-graphics-engine">
+           Strange Space Part 1: Creating a basic 3D Graphics Engine
+          </a>
+          <ul>
+           <li>
+            <a href="#1-the-crazy-pattern">
+             1. The crazy pattern
+            </a>
+            <ul>
+             <li>
+              <a href="#11-lorenz-attractors">
+               1.1 Lorenz Attractors
+              </a>
+             </li>
+             <li>
+              <a href="#12-strange-attractors">
+               1.2 Strange Attractors
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <a href="#2-coordinate-transformations">
+             2. Coordinate Transformations
+            </a>
+            <ul>
+             <li>
+              <a href="#21-rotation-matrices">
+               2.1 Rotation matrices
+              </a>
+             </li>
+             <li>
+              <a href="#22-rotate-translate-translate-rotate">
+               2.2 Rotate, translate, translate, rotate
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <a href="#3-plotting-points-on-a-screen">
+             3. Plotting points on a screen
+            </a>
+            <ul>
+             <li>
+              <a href="#31-transforming-onto-the-viewing-plane">
+               3.1 Transforming onto the viewing plane
+              </a>
+             </li>
+             <li>
+              <a href="#32-converting-to-a-pixel-position">
+               3.2 Converting to a pixel position
+              </a>
+             </li>
+             <li>
+              <a href="#33-handling-the-object-size">
+               3.3 Handling the object size
+              </a>
+             </li>
+            </ul>
+           </li>
+          </ul>
+         </li>
+        </ul>
+       </div>
+       <h2 id="1-the-crazy-pattern">
+        1. The crazy pattern
+       </h2>
+       <h3 id="11-lorenz-attractors">
+        1.1 Lorenz Attractors
+       </h3>
+       <p>
+        <img src="images/lorenz.jpg" style="max-width:90%;max-height:90%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        Probably the first thing you're thinking is, what is that strange crazy pattern of flying coloured circles? It's called the Lorenz attractor, or Lorenz system. This is the solution to a system of ordinary differential equations that exhibits chaotic behaviour, that is, a small change in the initial configuration causes an increasingly magnified difference in outcomes as time progresses.
+       </p>
+       <p>
+        The differential equations governing the dynamics are
+       </p>
+       <div class="math">
+        $$
+\begin{align}
+\frac{dx}{dt} &amp;= \sigma(y-x), \\
+\frac{dy}{dt} &amp;= x(\rho - z) - y, \\
+\frac{dz}{dt} &amp;= xy - \beta z,
+\end{align}
+$$
+       </div>
+       <p>
+        for some constants
+        <span class="math">
+         \(\sigma, \rho\)
+        </span>
+        and
+        <span class="math">
+         \(\beta\)
+        </span>
+        which Lorenz originally set to 10, 8/3 and 28 respectively. We can approximate the solution using the Euler method, leading to a simple update pattern:
+       </p>
+       <div class="math">
+        $$
+\begin{align}
+x_{t+1} &amp;= \Delta t\; \sigma(y_t-x_t) , \\
+y_{t+1} &amp;= \Delta t \; \big( x(\rho - z_t) - y_t\big) , \\
+z_{t+1} &amp;= \Delta t \; \big(x_ty_t - \beta z_t\big) ,
+\end{align}
+$$
+       </div>
+       <p>
+        with some initial points
+        <span class="math">
+         \((x_0, y_0, z_0)\)
+        </span>
+        . The pattern is then produced by plotting the last 1000 points in 3D space.
+       </p>
+       <h3 id="12-strange-attractors">
+        1.2 Strange Attractors
+       </h3>
+       <p>
+        The Lorenz attractor is actually just one of a class of similar objects. Another example is the Roessler attractor. This has a system of ODEs given by
+       </p>
+       <div class="math">
+        $$
+\begin{align}
+\frac{dx}{dt} &amp;= -y-z, \\
+\frac{dy}{dt} &amp;= x + ay, \\
+\frac{dz}{dt} &amp;= b + z(x-c),
+\end{align}
+$$
+       </div>
+       <p>
+        and can be solved in the exact same way. A good set of examples can be found
+        <a href="https://www.dynamicmath.xyz/strange-attractors/">
+         here
+        </a>
+        .
+       </p>
+       <p>
+        <img src="images/roessler.png" style="max-width:70%;max-height:70%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        In general, many different systems of ODEs may exhibit this kind of behaviour. Pretty cool right!
+       </p>
+       <h2 id="2-coordinate-transformations">
+        2. Coordinate Transformations
+       </h2>
+       <p>
+        Once we have some way of calculating the 3D coordinates as a function of time, we need to start thinking about how to manipulate them so we can do some cool stuff.
+       </p>
+       <p>
+        <img src="images/3d.png" style="max-width:70%;max-height:70%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        The first thing to consider is rotations of these points.
+       </p>
+       <h3 id="21-rotation-matrices">
+        2.1 Rotation matrices
+       </h3>
+       <p>
+        Consider a point moving on some trajectory defined by
+        <span class="math">
+         \(x'(t), y'(t), z'(t)\)
+        </span>
+        . At any given time we could could rotate this vector around the
+        <span class="math">
+         \(x\)
+        </span>
+        -axis by an angle
+        <span class="math">
+         \(\theta\)
+        </span>
+        by pre-multiplying the vector by the
+        <span class="math">
+         \(x\)
+        </span>
+        -rotation matrix.
+       </p>
+       <div class="math">
+        $$
+R_{x}(\theta) = \begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; \cos \theta &amp; -\sin \theta \\
+0 &amp; \sin \theta &amp; \cos \theta 
+\end{bmatrix}
+$$
+       </div>
+       <p>
+        To see which direction this matrix rotates the vector, we can use the right hand rule.
+       </p>
+       <p>
+        <img src="images/rhr.png" style="max-width:40%;max-height:40%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        This can equivalently be thought of as rotating the
+        <em>
+         coordinate system itself
+        </em>
+        , leaving the vector fixed, but in the
+        <em>
+         opposite
+        </em>
+        direction.
+       </p>
+       <p>
+        Similarly, we can rotate any vector about the
+        <span class="math">
+         \(y\)
+        </span>
+        or
+        <span class="math">
+         \(z\)
+        </span>
+        axes using the matrices
+       </p>
+       <div class="math">
+        $$
+R_{y}(\theta) = \begin{bmatrix}
+\cos \theta &amp; 0 &amp; \sin \theta \\
+0 &amp; 1 &amp; 0 \\
+-\sin \theta &amp; 0 &amp; \cos \theta 
+\end{bmatrix} 
+\quad \text{and} \quad 
+R_{z}(\theta) = \begin{bmatrix}
+\cos \theta &amp; -\sin \theta &amp; 0 \\
+\sin \theta &amp; \cos \theta &amp; 0 \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}
+$$
+       </div>
+       <p>
+        Thus, sequentially rotating the point around the
+        <span class="math">
+         \(x, y\)
+        </span>
+        and
+        <span class="math">
+         \(z\)
+        </span>
+        -axes by respective angles
+        <span class="math">
+         \(\theta_x, \theta_y\)
+        </span>
+        and
+        <span class="math">
+         \(\theta_z\)
+        </span>
+        transforms the point
+        <span class="math">
+         \((x, y, z)\)
+        </span>
+        to
+       </p>
+       <div class="math">
+        $$
+\begin{align}
+\begin{bmatrix}
+x \\ y \\ z
+\end{bmatrix}
+&amp;= 
+\begin{bmatrix}
+\cos \theta_z &amp; -\sin \theta_z &amp; 0 \\
+\sin \theta_z &amp; \cos \theta_z &amp; 0 \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}
+\begin{bmatrix}
+\cos \theta_y &amp; 0 &amp; \sin \theta_y \\
+0 &amp; 1 &amp; 0 \\
+-\sin \theta_y &amp; 0 &amp; \cos \theta _y
+\end{bmatrix} 
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; \cos \theta_x &amp; -\sin \theta_x \\
+0 &amp; \sin \theta_x &amp; \cos \theta_x 
+\end{bmatrix}
+\begin{bmatrix}
+x' \\ y' \\ z'
+\end{bmatrix}\\[0.2cm]
+&amp;= R(\theta_x, \theta_y, \theta_z) \begin{bmatrix}
+x' \\ y' \\ z'
+\end{bmatrix}
+\end{align}
+$$
+       </div>
+       <h3 id="22-rotate-translate-translate-rotate">
+        2.2 Rotate, translate, translate, rotate
+       </h3>
+       <p>
+        We can create a new coordinate system by first performing a rotation of the axes, and then translating the axes by some fixed offset
+        <span class="math">
+         \((s_x, s_y, s_z)\)
+        </span>
+        .
+       </p>
+       <div class="math">
+        $$
+\begin{bmatrix}
+x \\ y \\ z
+\end{bmatrix} = \begin{bmatrix}
+s_x \\ s_y \\ s_z
+\end{bmatrix} + R(\theta_x, \theta_y, \theta_z) \begin{bmatrix}
+x' \\ y' \\ z'
+\end{bmatrix}
+$$
+       </div>
+       <p>
+        We now have a system of coordinates for an object centred at a point
+        <span class="math">
+         \((s_x, s_y, s_z)\)
+        </span>
+        , on an axis that has been rotated by
+        <span class="math">
+         \((\theta_x, \theta_y, \theta_z)\)
+        </span>
+        , in the reference frame of an observer located at the origin.
+       </p>
+       <p>
+        <img alt="" src="images/3d2.png"/>
+       </p>
+       <p>
+        However, this observer may change location over time as
+        <span class="math">
+         \((l_x, l_y, l_z)\)
+        </span>
+        . From an observer with this frame of reference, the object appears to have coordinates
+       </p>
+       <div class="math">
+        $$
+\begin{bmatrix}
+x \\ y \\ z
+\end{bmatrix} = 
+\begin{bmatrix}
+s_x \\ s_y \\ s_z
+\end{bmatrix} + R(\theta_x, \theta_y, \theta_z) 
+\begin{bmatrix}
+x' \\ y' \\ z'
+\end{bmatrix}
+-\begin{bmatrix}
+l_x \\ l_y \\ l_z
+\end{bmatrix}
+$$
+       </div>
+       <p>
+        Finally, the observer themselves may rotate their axes by some angles
+        <span class="math">
+         \((\phi_x, \phi_y, \phi_z)\)
+        </span>
+        . This is equivalent to tilting in different directions as if you were in a plane.
+       </p>
+       <p>
+        <img src="images/plane.png" style="max-width:70%;max-height:70%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        In this tilted frame of reference, the points appear to have coordinates
+       </p>
+       <div class="math">
+        $$
+\begin{bmatrix}
+x \\ y \\ z
+\end{bmatrix} = R(\phi_x, \phi_y, \phi_z) \Big(  \begin{bmatrix}
+s_x \\ s_y \\ s_z
+\end{bmatrix} + R(\theta_x, \theta_y, \theta_z) \begin{bmatrix}
+x' \\ y' \\ z'
+\end{bmatrix} -\begin{bmatrix}
+l_x \\ l_y \\ l_z
+\end{bmatrix} \Big)
+$$
+       </div>
+       <h2 id="3-plotting-points-on-a-screen">
+        3. Plotting points on a screen
+       </h2>
+       <h3 id="31-transforming-onto-the-viewing-plane">
+        3.1 Transforming onto the viewing plane
+       </h3>
+       <p>
+        Once we have calculated the relevant coordinate point
+        <span class="math">
+         \((x_0, y_0, z_0)\)
+        </span>
+        in 3D space, we need to project it onto the viewing plane. To do this, we can use the
+        <a href="https://en.wikipedia.org/wiki/Pinhole_camera_model">
+         pinhole camera model
+        </a>
+        . Here, the image that we see is what you would get if you used an old-fashioned camera with an infinitely small aperture.
+       </p>
+       <p>
+        ​
+        <img alt="" src="images/Pinhole-camera.svg" style="max-width:70%;max-height:70%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        The vector equation of the line passing through the origin to a point
+        <span class="math">
+         \((x_0, y_0, z_0)\)
+        </span>
+        is simply
+       </p>
+       <div class="math">
+        $$
+\mathbf{u} =
+k \begin{bmatrix}
+x_0 \\ y_0 \\ z_0
+\end{bmatrix},  \quad \text{for}  \quad{k} \in [-\infty, \infty]
+$$
+       </div>
+       <p>
+        This intersects the viewing plane when the
+        <span class="math">
+         \(z\)
+        </span>
+        -component is
+        <span class="math">
+         \(-d\)
+        </span>
+        .
+       </p>
+       <div class="math">
+        $$
+kz_0 = -d \quad \rightarrow \quad k = -\frac{d}{z_0}
+$$
+       </div>
+       <p>
+        Plugging this back into the vector equation for the line gives the coordinates projected onto the  viewing plane.
+       </p>
+       <div class="math">
+        $$
+\begin{bmatrix}
+v_x \\ v_y
+\end{bmatrix} = -\frac{d}{z_0} \begin{bmatrix}
+y_0 \\ z_0
+\end{bmatrix}
+$$
+       </div>
+       <p>
+        <img src="images/proj.png" style="max-width:70%;max-height:70%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        However, this image will be rotated by
+        <span class="math">
+         \(180^\circ\)
+        </span>
+        with respect to the original. To correct for this, we can just remove the negative sign.
+       </p>
+       <div class="math">
+        $$
+\begin{bmatrix}
+v_x \\ v_y
+\end{bmatrix} = \frac{d}{z_0} \begin{bmatrix}
+y_0 \\ z_0
+\end{bmatrix}
+$$
+       </div>
+       <p>
+        Another way of thinking about this is that
+        <span class="math">
+         \((v_x, v_y)\)
+        </span>
+        represents the point where the same line intersects a virtual viewing plane, located at
+        <span class="math">
+         \(z=d\)
+        </span>
+        .
+       </p>
+       <p>
+        <img src="images/proj2.png" style="max-width:70%;max-height:70%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        Under this model, we always reject points for which
+        <span class="math">
+         \(z_0 \leq 0\)
+        </span>
+        .
+       </p>
+       <h3 id="32-converting-to-a-pixel-position">
+        3.2 Converting to a pixel position
+       </h3>
+       <p>
+        Once we have a position in the viewing plane, we need to convert it to a pixel value.
+       </p>
+       <p>
+        <img src="images/viewing_plane.png" style="max-width:80%;max-height:80%;display: block; margin-left: auto;margin-right: auto;"/>
+       </p>
+       <p>
+        The only thing to bear in mind here is that pixel coordinates generally have the origin at the top left hand side, whereas the
+        <span class="math">
+         \(v_x, v_y\)
+        </span>
+        plane has its origin at the centre.
+       </p>
+       <p>
+        If we assume that the screen resolution is
+        <span class="math">
+         \((P_X, P_Y)\)
+        </span>
+        , and that the coordinate plane extends from
+        <span class="math">
+         \(v_x \in [-V_X / 2, V_X / 2]\)
+        </span>
+        and
+        <span class="math">
+         \(v_y \in [-V_Y / 2, V_Y / 2]\)
+        </span>
+        , then we can convert a point
+        <span class="math">
+         \((v_x, v_y)\)
+        </span>
+        to a pixel point
+        <span class="math">
+         \((p_x, p_y)\)
+        </span>
+        by
+       </p>
+       <div class="math">
+        $$
+p_x = (v_x + V_X) \cdot \frac{P_X}{V_X} \\
+p_y = (V_Y - v_y) \cdot \frac{P_Y}{V_Y}
+$$
+       </div>
+       <h3 id="33-handling-the-object-size">
+        3.3 Handling the object size
+       </h3>
+       <p>
+        In our world, points are represented by spheres with a fixed radius
+        <span class="math">
+         \(r\)
+        </span>
+        . This means that, whichever way you are looking at them, they will always appear as a circle (we are ignoring any lighting effects), but the apparent  radius,
+        <span class="math">
+         \(r_{\text{ap}}\)
+        </span>
+        , of this circle will change based on how close the object is. This follows a simple inverse law.
+       </p>
+       <div class="math">
+        $$
+r_{\text{ap}} \propto \frac{1}{\sqrt{x^2 + y^2 + z^2}}
+$$
+       </div>
+       <p>
+        When the position of the object is
+        <span class="math">
+         \((0, 0, d)\)
+        </span>
+        , the apparent radius will be
+        <span class="math">
+         \(r\)
+        </span>
+        . From this we can see that
+       </p>
+       <div class="math">
+        $$
+r_{\text{ap}} = \frac{rd}{\sqrt{x^2 + y^2 + z^2}}
+$$
+       </div>
+       <p>
+        That's all for this first blog post! Check back soon for part 2 where I will show you how to code up all this to actually produce the game.
+       </p>
+       <script type="text/javascript">
+        if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+       </script>
+      </section>
+      <div id="disqus_thread">
+      </div>
+      <script>
+       /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+      </script>
+      <noscript>
+       Please enable JavaScript to view the
+       <a href="https://disqus.com/?ref_noscript">
+        comments powered by Disqus.
+       </a>
+      </noscript>
+      <section class="post-info">
+       <div class="post-share">
+        <a class="twitter" href="https://twitter.com/share?text=Strage Space Part 1: Creating a basic 3D Graphics Engine&amp;url=/strange-space-pt-1.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+         <i class="ic ic-twitter">
+         </i>
+         <span class="hidden">
+          Twitter
+         </span>
+        </a>
+        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/strange-space-pt-1.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+         <i class="ic ic-facebook">
+         </i>
+         <span class="hidden">
+          Facebook
+         </span>
+        </a>
+        <a class="googleplus" href="https://plus.google.com/share?url=/strange-space-pt-1.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+         <i class="ic ic-googleplus">
+         </i>
+         <span class="hidden">
+          Google+
+         </span>
+        </a>
+        <div class="clear">
+        </div>
+       </div>
+       <aside class="post-tags">
+        <a href="/tag/python.html">
+         python
+        </a>
+        <a href="/tag/pygame.html">
+         pygame
+        </a>
+        <a href="/tag/animation.html">
+         animation
+        </a>
+        <a href="/tag/graphics.html">
+         graphics
+        </a>
+        <a href="/tag/3d.html">
+         3D
+        </a>
+       </aside>
+       <div class="clear">
+       </div>
+      </section>
+      <aside class="post-nav">
+       <div class="clear">
+       </div>
+      </aside>
+     </div>
+    </article>
+   </main>
+   <!-- TODO : Body class -->
+   <div class="" id="body-class" style="display: none;">
+   </div>
+   <footer id="footer">
+    <div class="inner">
+     <section class="credits">
+      <span class="credits-theme">
+       Theme
+       <a href="https://github.com/arulrajnet/attila" rel="nofollow">
+        Attila
+       </a>
+      </span>
+      <span class="credits-software">
+       Published with
+       <a href="https://github.com/getpelican/pelican" rel="nofollow">
+        Pelican
+       </a>
+      </span>
+     </section>
+    </div>
+   </footer>
+  </section>
+  <script src="/theme/js/script.js" type="text/javascript">
+  </script>
+ </body>
+</html>

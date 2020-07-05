@@ -81,9 +81,6 @@
       </a>
      </li>
      <li role="presentation">
-      <a href="pages/but-is-it-data-science.html">
-       But is it?
-      </a>
      </li>
     </ul>
    </div>
@@ -142,13 +139,13 @@
     <article class="post">
      <div class="inner">
       <section class="post-content">
-       <h1>
+       <h1 id="part-2-analysing-lyrics">
         Part 2: Analysing Lyrics
        </h1>
        <p>
         As a recap, the two metrics I'm going to target are verbosity and rhyme density, i.e. the fraction of the 20,000 words that are unique, and the fraction which rhyme with each other. The first part is MUCH simpler than the second as we shall see.
        </p>
-       <h2>
+       <h2 id="21-unique-words">
         2.1 Unique Words
        </h2>
        <p>
@@ -185,10 +182,10 @@
        <p>
         Note that we want to exclude all punctuation and repeats of words with upper and lowercase letters. Therefore we make sure each word isn't inside the punctuation list, and use .lower().
        </p>
-       <h2>
+       <h2 id="32-finding-the-rhyme-density">
         3.2 Finding the Rhyme Density
        </h2>
-       <h3>
+       <h3 id="321-identifying-word-sounds">
         3.2.1 Identifying Word Sounds
        </h3>
        <p>
@@ -306,7 +303,7 @@
     <span class="k">return</span> <span class="n">extract_vowels</span><span class="p">(</span><span class="n">phonetic_text</span><span class="p">)</span>
 </pre>
        </div>
-       <h3>
+       <h3 id="232-sorting-out-rhymes">
         2.3.2 Sorting out Rhymes
        </h3>
        <p>
