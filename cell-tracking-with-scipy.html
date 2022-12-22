@@ -15,7 +15,7 @@
    <!-- Feed -->
    <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
    <!-- Code highlight color scheme -->
-   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet"/>
    <!-- CSS specified by the user -->
    <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
    <!-- Custom fonts -->
@@ -197,8 +197,8 @@
         First lets read-in the data, which is stored as a tif file, and take a look at a single frame.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">skimage.io</span> <span class="kn">import</span> <span class="n">imread</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># set the color channel and read in the frames</span>
 <span class="n">tif_file</span> <span class="o">=</span> <span class="s1">'/path/to/my/tif/file.tif'</span>
@@ -211,7 +211,7 @@
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre>
+</code></pre>
        </div>
        <p>
         <img alt="failed" src="images/cells_raw.png"/>
@@ -223,7 +223,7 @@
         Next we can run the skimage function to output the coordinates of the detected blobs and plot them. We'll test both LoG and DoG.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">blob_log</span><span class="p">,</span> <span class="n">blob_dog</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">blob_log</span><span class="p">,</span> <span class="n">blob_dog</span>
 
 <span class="c1"># use skimage functions to detect cell positions</span>
 <span class="n">LoG_cells</span> <span class="o">=</span> <span class="n">blob_log</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">min_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_sigma</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
@@ -238,12 +238,12 @@
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cells</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">LoG_cells</span><span class="p">,</span> <span class="n">DoG_cells</span><span class="p">]):</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
     <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">:</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">r</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">r</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</pre>
+</code></pre>
        </div>
        <p>
         <img alt="failed" src="images/cells_detected.png"/>
@@ -526,7 +526,7 @@ $$
         Putting it all together
        </h2>
        <div class="highlight">
-        <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">truncnorm</span>
 <span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">cdist</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">linear_sum_assignment</span>
@@ -570,10 +570,10 @@ $$
     <span class="n">out</span> <span class="o">=</span> <span class="n">detected_cells</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])]</span>  <span class="c1"># reorder columns so it's x-y-r</span>
     <span class="n">out</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="mf">0.5</span>
     <span class="k">return</span> <span class="n">out</span>
-</pre>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">detector</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'LoG'</span><span class="p">,</span> <span class="n">min_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">detector</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'LoG'</span><span class="p">,</span> <span class="n">min_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
                      <span class="n">max_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num_sigma</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">"""</span>
 
@@ -604,20 +604,20 @@ $$
 
     <span class="c1"># loop through each frame</span>
     <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
-    <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s1">'Detecting cells using {}.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">detector</span><span class="p">))</span>
+    <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s1">'Detecting cells using </span><span class="si">{}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">detector</span><span class="p">))</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'detector'</span><span class="p">:</span> <span class="n">detector</span><span class="p">,</span> <span class="s1">'min_sigma'</span><span class="p">:</span> <span class="n">min_sigma</span><span class="p">,</span> <span class="s1">'max_sigma'</span><span class="p">:</span> <span class="n">max_sigma</span><span class="p">,</span> <span class="s1">'num_sigma'</span><span class="p">:</span> <span class="n">num_sigma</span><span class="p">,</span>
               <span class="s1">'threshold'</span><span class="p">:</span> <span class="n">threshold</span><span class="p">}</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
         <span class="c1"># calculate the LoG for this frame</span>
         <span class="n">cells</span> <span class="o">=</span> <span class="n">detect_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">all_cells</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">cells</span>
-        <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s1">'Detecting cells using {}. Found {} cells.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s1">'Detecting cells using </span><span class="si">{}</span><span class="s1">. Found </span><span class="si">{}</span><span class="s1"> cells.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">detector</span><span class="p">,</span> <span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
     <span class="k">return</span> <span class="n">all_cells</span>
-</pre>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">find_transitions</span><span class="p">(</span><span class="n">cells1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cells2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t_sep</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">find_transitions</span><span class="p">(</span><span class="n">cells1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cells2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">t_sep</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">"""</span>
 
 <span class="sd">    Use the Hungarian (Munkres) algorithm to output the transitions between cell </span>
@@ -704,10 +704,10 @@ $$
             <span class="n">transitions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">frame1_cell_no</span><span class="p">,</span> <span class="n">frame2_cell_no</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">transitions</span>
-</pre>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">find_paths</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">find_paths</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">"""</span>
 <span class="sd">    Given a disctionary which contains numpy arrays, indexed by frame number t,</span>
 <span class="sd">    which represent the x-y-r coordinates of the cells detected in each of T frames, </span>
@@ -753,7 +753,7 @@ $$
 
         <span class="c1"># initialise</span>
         <span class="n">previous_index</span> <span class="o">=</span> <span class="n">start_index</span>
-        <span class="n">finished</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">finished</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
 
@@ -775,23 +775,23 @@ $$
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># add a new path</span>
                         <span class="n">path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-                        <span class="n">t_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="bp">None</span><span class="p">]</span>
+                        <span class="n">t_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
                         <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">t_index</span><span class="p">,</span> <span class="n">path</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-                        <span class="n">finished</span> <span class="o">=</span> <span class="bp">True</span>
+                        <span class="n">finished</span> <span class="o">=</span> <span class="kc">True</span>
 
                     <span class="n">previous_index</span> <span class="o">=</span> <span class="n">id2</span>
                     <span class="k">break</span>
 
     <span class="k">return</span> <span class="n">paths</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Ok let's run it
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">cells</span> <span class="o">=</span> <span class="n">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+        <pre><span></span><code><span class="n">cells</span> <span class="o">=</span> <span class="n">detect_all_cells</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
 <span class="n">paths</span> <span class="o">=</span> <span class="n">find_paths</span><span class="p">(</span><span class="n">cells</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <video controls="" height="480" width="640">
         <source src="images/test.mp4" type="video/mp4"/>
@@ -815,10 +815,13 @@ $$
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
     mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'none' } }," +
         "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
         "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
         "    displayAlign: '"+ align +"'," +
@@ -832,7 +835,9 @@ $$
         "        preview: 'TeX'," +
         "    }, " +
         "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
         "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
         "    }, " +
         "}); " +
@@ -852,6 +857,8 @@ $$
                 "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
             "});" +
         "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
        </script>

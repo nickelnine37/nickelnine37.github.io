@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta charset="utf-8" content="text/html" http-equiv="Content-Type"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+   <title>
+    Random Ants
+   </title>
+   <meta content="True" name="HandheldFriendly"/>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+   <meta content="origin" name="referrer"/>
+   <meta content="Pelican" name="generator"/>
+   <link href="" rel="canonical"/>
+   <!-- Feed -->
+   <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
+   <!-- Code highlight color scheme -->
+   <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet"/>
+   <!-- CSS specified by the user -->
+   <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
+   <!-- Custom fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,300" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+    <link href="/random-ants.html" rel="canonical"/>
+    <meta content="A maths puzzle about ants taking a random walk" name="description"/>
+    <meta content="Edward Antonian" name="author"/>
+    <meta content="" property="og:locale"/>
+    <meta content="But is it Data Science?" property="og:site_name"/>
+    <meta content="website" property="og:type">
+     <meta content="But is it Data Science?" property="og:title">
+      <meta content="View the blog." property="og:description"/>
+      <meta content="" property="og:url"/>
+      <meta content="/images/covers/chaos.gif" property="og:image"/>
+      <meta content="article" property="og:type"/>
+      <meta content="/author/edward-antonian.html" property="article:author"/>
+      <meta content="/random-ants.html" property="og:url"/>
+      <meta content="Random Ants" property="og:title"/>
+      <meta content="2022-12-22 00:00:00+00:00" property="article:published_time"/>
+      <meta content="A maths puzzle about ants taking a random walk" property="og:description"/>
+      <meta content="/images/covers/chaos.gif" property="og:image"/>
+     </meta>
+    </meta>
+   </link>
+  </meta>
+ </head>
+ <!-- TODO : Body class -->
+ <body class="home-template">
+  <nav id="menu">
+   <a class="close-button">
+    Close
+   </a>
+   <div class="nav-wrapper">
+    <p class="nav-label">
+     Menu
+    </p>
+    <ul>
+     <li role="presentation">
+      <a href="pages/about.html">
+       About
+      </a>
+     </li>
+     <li role="presentation">
+      <a href="archives.html">
+       Archive
+      </a>
+     </li>
+     <li role="presentation">
+     </li>
+    </ul>
+   </div>
+  </nav>
+  <!-- Progressbar -->
+  <div class="progress-container">
+   <span class="progress-bar">
+   </span>
+  </div>
+  <!-- Page Header -->
+  <!-- Set your background image for this header on the line below. -->
+  <header class="has-cover" id="post-header">
+   <div class="inner">
+    <nav id="navigation">
+     <span class="nav-button" id="home-button">
+      <a class="home-button" href="index.html" title="Home">
+       <i class="ic ic-arrow-left">
+       </i>
+       Home
+      </a>
+     </span>
+     <span class="nav-button" id="menu-button">
+      <a class="menu-button">
+       <i class="ic ic-menu">
+       </i>
+       Menu
+      </a>
+     </span>
+    </nav>
+    <h1 class="post-title">
+     Random Ants
+    </h1>
+    <!-- TODO : Proper class for headline -->
+    <span class="post-meta">
+     <a href="/author/edward-antonian.html">
+      Edward antonian
+     </a>
+     |
+     <time datetime="Thu 22 December 2022">
+      Thu 22 December 2022
+     </time>
+    </span>
+    <!-- TODO : Modified check -->
+    <span class="post-meta">
+     | Updated on Thu 22 December 2022
+    </span>
+    <div class="post-cover cover" style="background-image: url('images/covers/ants.webp')">
+    </div>
+   </div>
+  </header>
+  <section id="wrapper">
+   <a class="hidden-close">
+   </a>
+   <!-- Post content -->
+   <main class="content" role="main">
+    <article class="post">
+     <div class="inner">
+      <section class="post-content">
+       <h1 id="random-ants">
+        Random Ants
+       </h1>
+       <p>
+        Recently, I came across a fun puzzle. The setup is as follows:
+       </p>
+       <p>
+        <em>
+         An ant leaves its anthill in order to forage for food. It moves with the speed of 10cm per second, but it doesn’t know where to go, therefore every second it moves randomly 10cm directly north, south, east or west with equal probability.
+        </em>
+       </p>
+       <p>
+        This was then followed by three questions:
+       </p>
+       <h2 id="question-1">
+        Question 1
+       </h2>
+       <p>
+        <em>
+         If the food is located on east-west lines 20cm to the north and 20cm to the south, as well as on north-south lines 20cm to the east and 20cm to the west from the anthill, how long will it take the ant to reach it on average?
+        </em>
+       </p>
+       <p>
+        <img src="images/ants1.jpg" style="zoom: 33%;"/>
+       </p>
+       <p>
+        Figure 1: A representation of the possible places the ant can be, labelled with the expected number of steps to reach the boundary at each location for question 1.
+       </p>
+       <p>
+        For simplicity, let's make the definition that 10cm = 1 unit. Initially, the ant is at the origin which we can label as
+       </p>
+       <div class="math">
+        $$
+\mathbf{x}_0 = \begin{bmatrix} 0 \\ 0 \end{bmatrix}. 
+$$
+       </div>
+       <p>
+        Let's denote the expected number of steps to reach the boundary from this initial location as
+        <span class="math">
+         \(N_0\)
+        </span>
+        . This is labelled in red in figure 1. After one step, the ant takes a step of one unit north, south, east or west with equal probability. This means that it is guaranteed to be at one of the following four points:
+       </p>
+       <div class="math">
+        $$
+\mathbf{x}_1  = \left\{ \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \; \begin{bmatrix} -1 \\ 0 \end{bmatrix},  \; \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \; \begin{bmatrix} 0 \\ -1 \end{bmatrix} \right\}
+$$
+       </div>
+       <p>
+        By examining the symmetry of the problem, it is clear that the expected number of steps to reach the boundary is the same for all four of these points. Let's denote that as
+        <span class="math">
+         \(N_1\)
+        </span>
+        . This is labelled in green in figure 1.
+       </p>
+       <p>
+        If the ant is at
+        <span class="math">
+         \(\mathbf{x}_1\)
+        </span>
+        , there are three possibilities for what can happen next:
+       </p>
+       <ul>
+        <li>
+         With  probability
+         <span class="math">
+          \(1/4\)
+         </span>
+         , it goes back to
+         <span class="math">
+          \(\mathbf{x}_0\)
+         </span>
+         .
+        </li>
+        <li>
+         With  probability
+         <span class="math">
+          \(1/4\)
+         </span>
+         , it reaches the boundary.
+        </li>
+        <li>
+         With  probability
+         <span class="math">
+          \(1/2\)
+         </span>
+         , it reaches one of the following points
+        </li>
+       </ul>
+       <div class="math">
+        $$
+\mathbf{x}_2  = \left\{ \begin{bmatrix} 1 \\ 1 \end{bmatrix}, \; \begin{bmatrix} -1 \\ 1 \end{bmatrix},  \; \begin{bmatrix}  1 \\ -1 \end{bmatrix}, \; \begin{bmatrix} -1 \\ -1 \end{bmatrix} \right\}
+$$
+       </div>
+       <p>
+        Again, due to the symmetry of the problem, the expected number of steps required to reach the boundary from one of these points is the same for each. Let's denote that
+        <span class="math">
+         \(N_2\)
+        </span>
+        . If the ant is at
+        <span class="math">
+         \(\mathbf{x}_2\)
+        </span>
+        , there are two possibilities for what can happen next:
+       </p>
+       <ul>
+        <li>
+         With probability
+         <span class="math">
+          \(1/2\)
+         </span>
+         , it reaches the boundary
+        </li>
+        <li>
+         With probability
+         <span class="math">
+          \(1/2\)
+         </span>
+         , it goes back to
+         <span class="math">
+          \(\mathbf{x}_1\)
+         </span>
+         .
+        </li>
+       </ul>
+       <p>
+        In order to solve for
+        <span class="math">
+         \(N_0\)
+        </span>
+        ,
+        <span class="math">
+         \(N_1\)
+        </span>
+        and
+        <span class="math">
+         \(N_2\)
+        </span>
+        , the key point to recognise is that
+       </p>
+       <div class="math">
+        $$
+N_i = \sum_{j}  (1 + N_j) \, p(\mathbf{x}_i \rightarrow \mathbf{x}_j)
+$$
+       </div>
+       <p>
+        All this information can be summarised into a system of linear equations:
+       </p>
+       <div class="math">
+        $$
+\begin{align*}
+    N_0 &amp;= 1 + N_1 \\
+    N_1 &amp;=  (1 + N_2) \times \frac{1}{2} + (1 + N_0) \times \frac{1}{4} + 1 \times \frac{1}{4}  = 1 + \frac{N_2}{2} + \frac{N_0}{4} \\
+    N_2 &amp;= (1 + N_1) \times \frac{1}{2} + 1 \times \frac{1}{2} = 1 + \frac{N_1}{2}
+\end{align*}
+$$
+       </div>
+       <p>
+        This system of equations has the following solution.
+       </p>
+       <div class="math">
+        $$
+N_0 = 4.5, \quad N_1 = 3.5, \quad N_2 = 2.75
+$$
+       </div>
+       <p>
+        Therefore the expected number of steps to reach the food, starting from the origin is 4.5.
+       </p>
+       <h2 id="question-2">
+        Question 2
+       </h2>
+       <p>
+        <em>
+         What is the average time the ant will reach food if it is located only on a diagonal line passing through (10cm, 0cm) and (0cm, 10cm) points?
+        </em>
+       </p>
+       <p>
+        <img src="images/ants2.jpg" style="zoom: 33%;"/>
+       </p>
+       <p>
+        Figure 2: A representation of the possible places the ant can be, labelled with the expected number of steps to reach the boundary at each location for question 2.
+       </p>
+       <p>
+        For this problem, we effectively have the setup depicted in figure 2, where once again we are using the notation
+        <span class="math">
+         \(N_i\)
+        </span>
+        to denote the expected number of steps required to reach the boundary from a set of points. In this case, all the points along the  boundary line are labelled
+        <span class="math">
+         \(N_0\)
+        </span>
+        . All the points passing through the line parallel to the boundary, shifted down by one, are labelled
+        <span class="math">
+         \(N_1\)
+        </span>
+        and so on (see figure). We know that
+        <span class="math">
+         \(N_0 = 0\)
+        </span>
+        the task is to find
+        <span class="math">
+         \(N_1\)
+        </span>
+        .
+       </p>
+       <p>
+        <img src="images/ants3.jpg" style="zoom: 33%;"/>
+       </p>
+       <p>
+        Figure 3: An equivalent 1D representation of the problem.
+       </p>
+       <p>
+        By examining the symmetry of this problem, we can actually shift it to a 1D view for simplicity. This is shown in figure 3. We denote all the points along the
+        <span class="math">
+         \(N_0\)
+        </span>
+        line as
+        <span class="math">
+         \(\mathbf{x}_0\)
+        </span>
+        , all the points along the
+        <span class="math">
+         \(N_1\)
+        </span>
+        line as
+        <span class="math">
+         \(\mathbf{x}_1\)
+        </span>
+        and so on. For an ant at
+        <span class="math">
+         \(\mathbf{x}_i\)
+        </span>
+        , where
+        <span class="math">
+         \(i&gt;0\)
+        </span>
+        , it has a probability of
+        <span class="math">
+         \(1/2\)
+        </span>
+        of moving to
+        <span class="math">
+         \(\mathbf{x}_{i-1}\)
+        </span>
+        and
+        <span class="math">
+         \(1/2\)
+        </span>
+        of moving to
+        <span class="math">
+         \(\mathbf{x}_{i+1}\)
+        </span>
+        . This can be summarised in the following system of equations.
+       </p>
+       <div class="math">
+        $$
+\begin{align*}
+     N_0 &amp;= 0 \\
+     N_i &amp;= (1 + N_{i-1}) \times \frac{1}{2} + (1 + N_{i+1}) \times \frac{1}{2}, \\[0.1cm]
+     &amp;= 1 + \frac{N_{i-1} + N_{i+1}}{2} \quad \text{for} \; i = 1, 2, 3, ... 
+ \end{align*}
+$$
+       </div>
+       <p>
+        Trying to solve this as a system of linear equations is problematic, as there are an infinite number of variables. Let's start with a simplifying assumption. Assume that for some
+        <span class="math">
+         \(k\)
+        </span>
+        , the probability of going from
+        <span class="math">
+         \(\mathbf{x}_k\)
+        </span>
+        to
+        <span class="math">
+         \(\mathbf{x}_{k+1}\)
+        </span>
+        is zero, and the ant moves back to
+        <span class="math">
+         \(\mathbf{x}_{k-1}\)
+        </span>
+        with probability 1. Lets denote the expected number of steps under this new setup for a given
+        <span class="math">
+         \(k\)
+        </span>
+        , at some point
+        <span class="math">
+         \(\mathbf{x}_i\)
+        </span>
+        , to be
+        <span class="math">
+         \(N^k_i\)
+        </span>
+        . Then
+       </p>
+       <div class="math">
+        $$
+ \begin{align*}
+     N^k_0 &amp;= 0 \\
+     N^k_i &amp;= 1 + \frac{N^k_{i-1} + N^k_{i+1}}{2}, \quad \text{for} \; i = 1, 2, ..., k-1 \\
+     N^k_k &amp;= 1 + N^k_{k-1}
+ \end{align*}
+$$
+       </div>
+       <p>
+        Note that, for any finite
+        <span class="math">
+         \(k\)
+        </span>
+        ,
+        <span class="math">
+         \(N_1 &gt; N^k_1\)
+        </span>
+        , because we have artificially disallowed movement backwards past a certain point. In a sense,
+       </p>
+       <div class="math">
+        $$
+N_1 = \lim_{k \rightarrow \infty} N^k_1
+$$
+       </div>
+       <p>
+        Since the system of equations for some given
+        <span class="math">
+         \(k\)
+        </span>
+        is finite, it can be solved. Let's take
+        <span class="math">
+         \(k=4\)
+        </span>
+        as an example.
+       </p>
+       <div class="math">
+        $$
+\begin{align*}
+     N^4_0 &amp;= 0 \\
+     N^4_i &amp;= 1 + \frac{N^4_{i-1} + N^4_{i+1}}{2}, \quad \text{for} \; i = 1, 2, 3 \\
+     N^4_4 &amp;= 1 + N^4_{3}
+ \end{align*}
+$$
+       </div>
+       <p>
+        Performing some simple substitutions, we can see that
+       </p>
+       <div class="math">
+        $$
+ N^4_0 = 0; \quad 
+ N^4_1 = 7 +  N^4_0 ; \quad
+ N^4_2 = 5 + N^4_1  ; \quad
+ N^4_3 = 3 + N^4_2  ; \quad
+ N^4_4 = 1 + N^4_3
+$$
+       </div>
+       <p>
+        So, in this case,
+        <span class="math">
+         \(N^4_1 = 7\)
+        </span>
+        . Solving for
+        <span class="math">
+         \(k=5\)
+        </span>
+        gives
+        <span class="math">
+         \(N^5_1 = 9\)
+        </span>
+        . The pattern becomes clear:
+       </p>
+       <div class="math">
+        $$
+N^k_1 = 2k - 1
+$$
+       </div>
+       <p>
+        It is clear that
+       </p>
+       <div class="math">
+        $$
+\lim_{k \rightarrow \infty} N^k_1 = \infty
+$$
+       </div>
+       <p>
+        Therefore the expected number of steps the ant takes in this setup is infinite.
+       </p>
+       <h2 id="question-3">
+        Question 3
+       </h2>
+       <p>
+        <em>
+         Can you write a program that comes up with an estimate of average time to find food for any closed boundary around the anthill? What would be the answer if food is located outside an defined by
+        </em>
+       </p>
+       <div class="math">
+        $$
+\Big(\frac{x - 2.5\text{cm}}{30\text{cm}}\Big)^2 + \Big(\frac{y - 2.5\text{cm}}{40\text{cm}}\Big)^2 &lt; 1
+$$
+       </div>
+       <p>
+        <em>
+         in coordinate system where the anthill is located at
+         <span class="math">
+          \((x = 0\text{cm}, y = 0\text{cm})\)
+         </span>
+         ?
+        </em>
+       </p>
+       <p>
+        <img src="images/ants4.jpg" style="zoom: 33%;"/>
+       </p>
+       <p>
+        Figure 4: The general case. No symmetry is assumed, and the expected number of steps to reach the boundary can be different at each location. We also have a bounding box of points to consider marked in red.
+       </p>
+       <p>
+        If the boundary is closed around the origin, the expected number of steps to reach it must be finite. The simplest way to approximate the expected number of steps from the origin would be to just simulate the random walk many times and take an average. However, since the resulting linear system will be finite, we can actually solve for it directly.
+       </p>
+       <p>
+        Let's begin by defining a boundary function that accepts an
+        <span class="math">
+         \(x\)
+        </span>
+        and
+        <span class="math">
+         \(y\)
+        </span>
+        coordinate in our scaled units, and returns a boolean flag indicating whether the point is contained within the boundary. This can be any closed path around the origin, here we use the one defined in the question.
+       </p>
+       <div class="math">
+        $$
+\text{boundary}(x, y) = \begin{cases} 1 &amp; \text{if} \; \big( \frac{x - 0.25}{3}\big)^2 + \big( \frac{y - 0.25}{4}\big)^2 &lt; 1 \\ 0 &amp; \text{otherwise} \end{cases}
+$$
+       </div>
+       <p>
+        In code, this looks like
+       </p>
+       <div class="highlight">
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">boundary</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    Define a general boundary function, in this case an ellipse. This takes a </span>
+<span class="sd">    series of x ad y coordinates, and returns an array of boolean flags </span>
+<span class="sd">    indicating whether each x-y pair is contained within the boundary. </span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        x: x-coordinates of interest</span>
+<span class="sd">        y: y-coordinates of interest</span>
+
+<span class="sd">    Returns an array of bools </span>
+<span class="sd">    """</span>
+
+    <span class="k">return</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</code></pre>
+       </div>
+       <p>
+        Next let's specify a region of interest by defined by a grid of points going from integers
+        <span class="math">
+         \(x_0\)
+        </span>
+        to
+        <span class="math">
+         \(x_1\)
+        </span>
+        and
+        <span class="math">
+         \(y_0\)
+        </span>
+        to
+        <span class="math">
+         \(y_1\)
+        </span>
+        . Lets hand-select these values such that the resulting rectangle surrounds the boundary. Then, let's label the number of steps required to reach the boundary from each point inside this rectangle (including the edges) as
+        <span class="math">
+         \(N_{(x, y)}\)
+        </span>
+        . For any point outside the boundary,
+        <span class="math">
+         \(N_{(x, y)} = 0\)
+        </span>
+        . Our goal is to compute
+        <span class="math">
+         \(N_{(0, 0)}\)
+        </span>
+        . This is depicted in figure 4. In this case, the boundary is shown in gray, and the rectangle with
+        <span class="math">
+         \(x_0=-3\)
+        </span>
+        ,
+        <span class="math">
+         \(x_1=4\)
+        </span>
+        ,
+        <span class="math">
+         \(y_0=-4\)
+        </span>
+        and
+        <span class="math">
+         \(y_1=5\)
+        </span>
+        is shown in red.
+       </p>
+       <p>
+        For any point inside the boundary, the ant has equal probability of going north, south east or west. Therefore, if
+        <span class="math">
+         \((x, y)\)
+        </span>
+        is within the boundary, then
+       </p>
+       <div class="math">
+        $$
+N_{(x, y)}  = \frac{1}{4} \big(1 +  N_{(x + 1, y)}\big) + \frac{1}{4} \big(1 +  N_{(x - 1, y)}\big) + \frac{1}{4} \big(1 +  N_{(x, y + 1)}\big) + \frac{1}{4} \big(1 +  N_{(x, y-1)}\big)
+$$
+       </div>
+       <p>
+        or
+       </p>
+       <div class="math">
+        $$
+N_{(x, y)} - \frac{N_{(x + 1, y)}}{4} - \frac{N_{(x - 1, y)}}{4}  - \frac{N_{(x, y + 1)}}{4}  - \frac{N_{(x, y - 1)}}{4}  = 1.
+$$
+       </div>
+       <p>
+        We can put this together into a system of equations as follows.
+       </p>
+       <div class="math">
+        $$
+A \mathbf{n} = \mathbf{b}
+$$
+       </div>
+       <p>
+        where
+       </p>
+       <div class="math">
+        $$
+\mathbf{n} = \begin{bmatrix} N_{(x_0, y_0)} \\ N_{(x_0 + 1, y_0)}  \\ \vdots \\ N_{(x_1, y_1)} \end{bmatrix} \quad \text{and} \quad \mathbf{b} = \begin{bmatrix} \text{boundary}{(x_0, y_0)} \\ \text{boundary}{(x_0 + 1, y_0)}  \\ \vdots \\ \text{boundary}{(x_1, y_1)} \end{bmatrix}
+$$
+       </div>
+       <p>
+        The matrix
+        <span class="math">
+         \(A\)
+        </span>
+        has elements
+        <span class="math">
+         \(A_{i, j}\)
+        </span>
+        given by
+       </p>
+       <div class="math">
+        $$
+A_{i, j} = \begin{cases} 1 &amp; \text{if} \; i = j \\ -1/4 &amp; \text{if} \; i = j + 1, \; \text{or} \; i = j - 1, \; \text{or} \; i = j + n_x, \; \text{or} \; i = j - n_x \\ 0 &amp; \text{otherwise} \end{cases}
+$$
+       </div>
+       <p>
+        where
+        <span class="math">
+         \(n_x = (x_1 - x_0 + 1)\)
+        </span>
+        .
+       </p>
+       <p>
+        Let's put all of this into a function.
+       </p>
+       <div class="highlight">
+        <pre><span></span><code><span class="k">def</span> <span class="nf">expected_steps</span><span class="p">(</span><span class="n">boundary</span><span class="p">:</span> <span class="n">callable</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute the expected number of steps to reach the boundary from each point</span>
+<span class="sd">    within the bounding rectangle. </span>
+
+<span class="sd">    Params:</span>
+<span class="sd">        boundary:   a boundary function</span>
+<span class="sd">        xlim:       the x-limits of the rectangle</span>
+<span class="sd">        ylim:       the y-limits of the rectangle</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        expected_steps:   the expected number of steps to reach the boundary.  </span>
+
+<span class="sd">    """</span>
+
+    <span class="c1"># create a grid of points</span>
+    <span class="n">xrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-5</span><span class="p">)</span>
+    <span class="n">yrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-5</span><span class="p">)</span>
+
+    <span class="n">nx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xrange</span><span class="p">)</span>
+    <span class="n">ny</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">yrange</span><span class="p">)</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">nx</span> <span class="o">*</span> <span class="n">ny</span>
+
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">yrange</span><span class="p">)</span>
+
+    <span class="c1"># check if each point is inside the boundary</span>
+    <span class="n">bounded</span> <span class="o">=</span> <span class="n">boundary</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+    <span class="c1"># create system matrix</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">bounded</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">nx</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">nx</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span>
+
+    <span class="c1"># solve the linear system </span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">bounded</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+</code></pre>
+       </div>
+       <p>
+        It remains only to construct this matrix and solve the resultant linear system. In this case, we get that
+       </p>
+       <div class="math">
+        $$
+N_{(0, 0)} = 13.99205...
+$$
+       </div>
+       <p>
+        We can plot the result to get a sense of the whole solution.
+       </p>
+       <p>
+        <img src="images/ants5.jpg" style="zoom:33%;"/>
+       </p>
+       <p>
+        Let's try it with another arbitrary boundary function
+       </p>
+       <div class="highlight">
+        <pre><span></span><code><span class="k">def</span> <span class="nf">batman_upper</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">7</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">c3</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">c4</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">c5</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.75</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">c6</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.5</span>
+
+    <span class="n">y</span><span class="p">[</span><span class="n">c1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">c2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">c3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c3</span><span class="p">])</span> <span class="o">-</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="mi">14</span> <span class="o">*</span> <span class="p">((</span><span class="mi">3</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">c3</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c3</span><span class="p">]))</span> <span class="o">**</span> <span class="mf">0.5</span>  <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">c4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span> <span class="o">-</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c4</span><span class="p">])</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">c5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c5</span><span class="p">])</span> <span class="o">+</span> <span class="mf">0.75</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">c6</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.25</span>
+
+    <span class="k">return</span> <span class="n">y</span>
+
+
+<span class="k">def</span> <span class="nf">batman_lower</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">7</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">c3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span>
+
+    <span class="n">y</span><span class="p">[</span><span class="n">c1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">c2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">c3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">c3</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="mi">33</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">112</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c3</span><span class="p">])</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="mi">3</span>
+
+    <span class="k">return</span> <span class="n">y</span>
+
+
+<span class="k">def</span> <span class="nf">batman_boundary</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+
+    <span class="n">upper</span> <span class="o">=</span> <span class="n">batman_upper</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="n">batman_lower</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>        
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">upper</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">lower</span><span class="p">)</span>
+</code></pre>
+       </div>
+       <p>
+        <img src="images/ants6.jpg" style="zoom:33%;"/>
+       </p>
+       <p>
+        Notes for improvement:
+       </p>
+       <ul>
+        <li>
+         <p>
+          We really should perform some checks on the boundary function and the rectangle before running the solver. For example, the origin should be inside the boundary and the rectangle, and all points along the rectangle edges should be outside the boundary.
+         </p>
+        </li>
+        <li>
+         <p>
+          Some of the points that are inside the rectangle but outside the boundary are redundant. We really need only include the points outside the boundary that are adjacent to points inside the boundary. A simple check could be run the remove all redundant points.
+         </p>
+        </li>
+        <li>
+         <p>
+          Currently the run time of this algorithm is
+          <span class="math">
+           \(O(n^3)\)
+          </span>
+          where
+          <span class="math">
+           \(n\)
+          </span>
+          is the total number of grid points. However, this is a sparse linear system so, if the number of points under consideration was large, it would be more efficient to use an iterative solver rather than direct Gaussian elimination. Each iteration of a conjugate gradient type solver could then be performed in
+          <span class="math">
+           \(O(n)\)
+          </span>
+          time.
+         </p>
+        </li>
+        <li>
+         <p>
+          It would be better to simply provide a boundary function, and compute a bounding rectangle rather than selecting it by hand. This is a slightly tricky problem for arbitrary boundaries, but could be solved by, for example, finding one edge of boundary and then walking around it point-by-point, until to arrive back where you started. Then simply select the min/max
+          <span class="math">
+           \((x, y)\)
+          </span>
+          coordinates encountered.
+         </p>
+        </li>
+       </ul>
+       <script type="text/javascript">
+        if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+       </script>
+      </section>
+      <div id="disqus_thread">
+      </div>
+      <script>
+       /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://but-is-it-data-science.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+      </script>
+      <noscript>
+       Please enable JavaScript to view the
+       <a href="https://disqus.com/?ref_noscript">
+        comments powered by Disqus.
+       </a>
+      </noscript>
+      <section class="post-info">
+       <div class="post-share">
+        <a class="twitter" href="https://twitter.com/share?text=Random Ants&amp;url=/random-ants.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+         <i class="ic ic-twitter">
+         </i>
+         <span class="hidden">
+          Twitter
+         </span>
+        </a>
+        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/random-ants.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+         <i class="ic ic-facebook">
+         </i>
+         <span class="hidden">
+          Facebook
+         </span>
+        </a>
+        <a class="googleplus" href="https://plus.google.com/share?url=/random-ants.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+         <i class="ic ic-googleplus">
+         </i>
+         <span class="hidden">
+          Google+
+         </span>
+        </a>
+        <div class="clear">
+        </div>
+       </div>
+       <div class="clear">
+       </div>
+      </section>
+      <aside class="post-nav">
+       <div class="clear">
+       </div>
+      </aside>
+     </div>
+    </article>
+   </main>
+   <!-- TODO : Body class -->
+   <div class="" id="body-class" style="display: none;">
+   </div>
+   <footer id="footer">
+    <div class="inner">
+     <section class="credits">
+      <span class="credits-theme">
+       Theme
+       <a href="https://github.com/arulrajnet/attila" rel="nofollow">
+        Attila
+       </a>
+      </span>
+      <span class="credits-software">
+       Published with
+       <a href="https://github.com/getpelican/pelican" rel="nofollow">
+        Pelican
+       </a>
+      </span>
+     </section>
+    </div>
+   </footer>
+  </section>
+  <script src="/theme/js/script.js" type="text/javascript">
+  </script>
+ </body>
+</html>

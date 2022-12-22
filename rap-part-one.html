@@ -15,7 +15,7 @@
    <!-- Feed -->
    <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
    <!-- Code highlight color scheme -->
-   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet"/>
    <!-- CSS specified by the user -->
    <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
    <!-- Custom fonts -->
@@ -214,7 +214,7 @@
         We start by obtaining the Wikipedia URL, using requests to grab the HTML, then using BeautifulSoup to create a BS object, using the key "a" to get the titles. If you're not familiar with BeautifulSoup don't worry - neither was I. It basically takes a lump of raw HTML data and converts it into a nice custom object that allows you to access things quickly within it. They have some nice docs online which I suggest you read if you are unsure. Next, we loop through the titles, extracting all the artist names and appending them to a list. The code I have was just a bit of trial and error. It's not the most pretty, but it gets the job done. Our function outputs a nice python list containing strings with all the artist names in.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="k">def</span> <span class="nf">master_list</span><span class="p">():</span>
@@ -225,14 +225,14 @@
     <span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">wiki_url</span><span class="p">)</span>
     <span class="n">html_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span> 
     <span class="n">artists_raw</span> <span class="o">=</span> <span class="n">html_bs</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)</span>
-    <span class="n">artists_started</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">artists_started</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">artists</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">artist</span> <span class="ow">in</span> <span class="n">artists_raw</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">title</span> <span class="o">=</span> <span class="n">artist</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">title</span> <span class="o">==</span> <span class="s1">'100 Kila'</span><span class="p">:</span>    <span class="c1">#First rapper on the list</span>
-                <span class="n">artists_started</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">artists_started</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">if</span> <span class="n">artists_started</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">title</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'Edit'</span> <span class="ow">and</span> <span class="n">title</span> <span class="o">!=</span> <span class="s1">'Enlarge'</span><span class="p">:</span>    <span class="c1">#Messy</span>
                     <span class="k">if</span> <span class="s1">'('</span> <span class="ow">in</span> <span class="n">title</span><span class="p">:</span>
@@ -244,13 +244,13 @@
             <span class="k">pass</span>
 
     <span class="k">return</span> <span class="n">artists</span>
-</pre>
+</code></pre>
        </div>
        <p>
         From this list, I chose a selection of rappers that I knew personally and thought were worth including. Please forgive me if I have omitted any big names! I did this manually, copying and pasting the master list, then removing rappers I didn't want to include. Laborious maybe, but I wanted to have control over each rapper in the list, making sure all my personal favourites made it on. This left the following
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">my_artist_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2 Chainz'</span><span class="p">,</span><span class="s1">'21 Savage'</span><span class="p">,</span><span class="s1">'50 Cent'</span><span class="p">,</span><span class="s1">'Andre 3000'</span><span class="p">,</span><span class="s1">'Big Boi'</span><span class="p">,</span><span class="s1">'Ab-Soul'</span><span class="p">,</span><span class="s1">'Abstract Rude'</span><span class="p">,</span><span class="s1">'Ace Hood'</span><span class="p">,</span><span class="s1">'Action Bronson'</span><span class="p">,</span>
+        <pre><span></span><code><span class="n">my_artist_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2 Chainz'</span><span class="p">,</span><span class="s1">'21 Savage'</span><span class="p">,</span><span class="s1">'50 Cent'</span><span class="p">,</span><span class="s1">'Andre 3000'</span><span class="p">,</span><span class="s1">'Big Boi'</span><span class="p">,</span><span class="s1">'Ab-Soul'</span><span class="p">,</span><span class="s1">'Abstract Rude'</span><span class="p">,</span><span class="s1">'Ace Hood'</span><span class="p">,</span><span class="s1">'Action Bronson'</span><span class="p">,</span>
 <span class="s1">'Aesop Rock'</span><span class="p">,</span><span class="s1">'Afrika Bambaataa'</span><span class="p">,</span><span class="s1">'Afroman'</span><span class="p">,</span><span class="s1">'Akala'</span><span class="p">,</span><span class="s1">'Akon'</span><span class="p">,</span><span class="s1">'Anderson .Paak'</span><span class="p">,</span><span class="s1">'Andre 3000'</span><span class="p">,</span><span class="s1">'Angel Haze'</span><span class="p">,</span><span class="s1">'A$AP Ferg'</span><span class="p">,</span><span class="s1">'A$AP Rocky'</span><span class="p">,</span>
 <span class="s1">'Asher Roth'</span><span class="p">,</span><span class="s1">'Astronautalis'</span><span class="p">,</span><span class="s1">'Awol One'</span><span class="p">,</span><span class="s1">'Awkwafina'</span><span class="p">,</span><span class="s1">'Azealia Banks'</span><span class="p">,</span><span class="s1">'Big Daddy Kane'</span><span class="p">,</span><span class="s1">'B-Real'</span><span class="p">,</span><span class="s1">'B.o.B'</span><span class="p">,</span><span class="s1">'Benzino'</span><span class="p">,</span><span class="s1">'Beastie Boys'</span><span class="p">,</span>
 <span class="s1">'Big Boi'</span><span class="p">,</span><span class="s1">'Big K.R.I.T.'</span><span class="p">,</span><span class="s1">'Big L'</span><span class="p">,</span><span class="s1">'Big Pun'</span><span class="p">,</span><span class="s1">'Big Scoob'</span><span class="p">,</span><span class="s1">'Big Sean'</span><span class="p">,</span><span class="s1">'Billy Woods'</span><span class="p">,</span><span class="s1">'Birdman'</span><span class="p">,</span><span class="s1">'Bishop Nehru'</span><span class="p">,</span><span class="s1">'Bizarre'</span><span class="p">,</span><span class="s1">'Bizzy Bone'</span><span class="p">,</span>
@@ -281,7 +281,7 @@
 <span class="s1">'Vast Aire'</span><span class="p">,</span><span class="s1">'Vic Mensa'</span><span class="p">,</span><span class="s1">'Vince Staples'</span><span class="p">,</span><span class="s1">'Violent J'</span><span class="p">,</span><span class="s1">'Xzibit'</span><span class="p">,</span><span class="s1">'Waka Flocka Flame'</span><span class="p">,</span><span class="s1">'Wale'</span><span class="p">,</span><span class="s1">'Watsky'</span><span class="p">,</span><span class="s1">'Will Smith'</span><span class="p">,</span><span class="s1">'Will.i.am'</span><span class="p">,</span>
 <span class="s1">'Wiz Khalifa'</span><span class="p">,</span><span class="s1">'Wrekonize'</span><span class="p">,</span><span class="s1">'XXXTENTACION'</span><span class="p">,</span><span class="s1">'Young Jeezy'</span><span class="p">,</span><span class="s1">'Yelawolf'</span><span class="p">,</span><span class="s1">'Young Buck'</span><span class="p">,</span><span class="s1">'Young Thug'</span><span class="p">,</span><span class="s1">'Your Old Droog'</span><span class="p">,</span><span class="s1">'Yukmouth'</span><span class="p">,</span>
 <span class="s1">'Yung Lean'</span><span class="p">,</span><span class="s1">'Zebra Katz'</span><span class="p">]</span>
-</pre>
+</code></pre>
        </div>
        <h3 id="12-accessing-lyrics">
         1.2 Accessing lyrics
@@ -307,7 +307,7 @@
         Our first function therefore converts the names as written in the above list into the correct artist URLs on Genius.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">'''Take an artists name and output the link to their genius page'''</span>
 
     <span class="n">base_url</span> <span class="o">=</span> <span class="s1">'https://genius.com/artists/'</span>
@@ -321,20 +321,20 @@
 
     <span class="k">return</span> <span class="n">base_url</span><span class="o">+</span><span class="n">name_new</span>
 
-<span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="k">print</span><span class="p">(</span><span class="n">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'KRS-One'</span><span class="p">,</span><span class="s1">'LL Cool J'</span><span class="p">,</span><span class="s1">'MF Doom'</span><span class="p">]</span> <span class="p">]</span> 
-</pre>
+<span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">name_to_url</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'KRS-One'</span><span class="p">,</span><span class="s1">'LL Cool J'</span><span class="p">,</span><span class="s1">'MF Doom'</span><span class="p">]</span> <span class="p">]</span> 
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Krs</span><span class="o">-</span><span class="n">one</span>
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Ll</span><span class="o">-</span><span class="n">cool</span><span class="o">-</span><span class="n">j</span>
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">artists</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span>
-</pre>
+        <pre><span></span><code>https://genius.com/artists/Krs-one
+https://genius.com/artists/Ll-cool-j
+https://genius.com/artists/Mf-doom
+</code></pre>
        </div>
        <p>
         I found the best way to access individual songs from here was through the albums linked from this page. This is because unfortunately, without messing around with the javascript, you only have access to a few songs directly from this page, whereas you can directly access six albums, where you can link directly to all the songs. So my next step was to find links to all albums possible.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="k">def</span> <span class="nf">get_albums</span><span class="p">(</span><span class="n">artist_url</span><span class="p">):</span>
@@ -348,23 +348,23 @@
 <span class="c1"># Test: Find the links to the 6 most recent MF Doom albums on Genius </span>
 <span class="n">MF_Doom_albums</span> <span class="o">=</span> <span class="n">get_albums</span><span class="p">(</span><span class="n">name_to_url</span><span class="p">(</span><span class="s1">'MF Doom'</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">album_link</span> <span class="ow">in</span> <span class="n">MF_Doom_albums</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">album_link</span><span class="p">)</span>
-</pre>
+    <span class="nb">print</span><span class="p">(</span><span class="n">album_link</span><span class="p">)</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Born</span><span class="o">-</span><span class="k">like</span><span class="o">-</span><span class="n">this</span>
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Metalfingers</span><span class="o">-</span><span class="n">presents</span><span class="o">-</span><span class="n">special</span><span class="o">-</span><span class="n">herbs</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="k">set</span><span class="o">-</span><span class="n">vol</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="n">disc</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Metal</span><span class="o">-</span><span class="n">fingers</span><span class="o">-</span><span class="n">presents</span><span class="o">-</span><span class="n">special</span><span class="o">-</span><span class="n">herbs</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="k">set</span><span class="o">-</span><span class="n">vol</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="o">-</span><span class="n">disc</span><span class="o">-</span><span class="mi">1</span>
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Mm</span><span class="o">-</span><span class="n">food</span>
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Special</span><span class="o">-</span><span class="n">blends</span><span class="o">-</span><span class="n">volume</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">albums</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">/</span><span class="n">Dead</span><span class="o">-</span><span class="n">bent</span><span class="o">-</span><span class="n">doomsday</span>
-</pre>
+        <pre><span></span><code>https://genius.com/albums/Mf-doom/Born-like-this
+https://genius.com/albums/Mf-doom/Metalfingers-presents-special-herbs-the-box-set-vol-0-9-disc-2
+https://genius.com/albums/Mf-doom/Metal-fingers-presents-special-herbs-the-box-set-vol-0-9-disc-1
+https://genius.com/albums/Mf-doom/Mm-food
+https://genius.com/albums/Mf-doom/Special-blends-volume-1-2
+https://genius.com/albums/Mf-doom/Dead-bent-doomsday
+</code></pre>
        </div>
        <p>
         Next, given an album url we want to extract the urls and titles of all the songs on that album
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">get_songs</span><span class="p">(</span><span class="n">album_url</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">get_songs</span><span class="p">(</span><span class="n">album_url</span><span class="p">):</span>
     <span class="sd">'''Take an album URL link and find all the song titles and their related URLs'''</span>
     <span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">album_url</span><span class="p">)</span>
     <span class="n">html_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
@@ -376,64 +376,64 @@
 <span class="c1"># Test: Print all the titles and URLs for the most recent MF Doom album on Genius</span>
 <span class="n">doom_urls</span><span class="p">,</span> <span class="n">doom_titles</span> <span class="o">=</span> <span class="n">get_songs</span><span class="p">(</span><span class="n">MF_Doom_albums</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">doom_urls</span><span class="p">,</span> <span class="n">doom_titles</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">title</span><span class="p">[:</span><span class="n">title</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'Lyrics'</span><span class="p">)])</span>
-</pre>
+    <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">title</span><span class="p">[:</span><span class="n">title</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'Lyrics'</span><span class="p">)])</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">beef</span><span class="o">-</span><span class="n">rapp</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Beef</span> <span class="n">Rapp</span>
+        <pre><span></span><code>https://genius.com/Mf-doom-beef-rapp-lyrics 
+              Beef Rapp
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">hoe</span><span class="o">-</span><span class="n">cakes</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Hoe</span> <span class="n">Cakes</span>
+https://genius.com/Mf-doom-hoe-cakes-lyrics 
+              Hoe Cakes
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">potholderz</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Potholderz</span> <span class="p">(</span><span class="n">Ft</span><span class="p">.</span> <span class="k">Count</span> <span class="n">Bass</span> <span class="n">D</span><span class="p">)</span>
+https://genius.com/Mf-doom-potholderz-lyrics 
+              Potholderz (Ft. Count Bass D)
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">one</span><span class="o">-</span><span class="n">beer</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">One</span> <span class="n">Beer</span>
+https://genius.com/Mf-doom-one-beer-lyrics 
+              One Beer
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">deep</span><span class="o">-</span><span class="n">fried</span><span class="o">-</span><span class="n">frenz</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Deep</span> <span class="n">Fried</span> <span class="n">Frenz</span>
+https://genius.com/Mf-doom-deep-fried-frenz-lyrics 
+              Deep Fried Frenz
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">poo</span><span class="o">-</span><span class="n">putt</span><span class="o">-</span><span class="n">platter</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Poo</span> <span class="n">Putt</span> <span class="n">Platter</span>
+https://genius.com/Mf-doom-poo-putt-platter-lyrics 
+              Poo Putt Platter
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">fillet</span><span class="o">-</span><span class="n">o</span><span class="o">-</span><span class="n">rapper</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Fillet</span><span class="o">-</span><span class="n">O</span><span class="o">-</span><span class="n">Rapper</span>
+https://genius.com/Mf-doom-fillet-o-rapper-lyrics 
+              Fillet-O-Rapper
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">gumbo</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Gumbo</span>
+https://genius.com/Mf-doom-gumbo-lyrics 
+              Gumbo
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">fig</span><span class="o">-</span><span class="n">leaf</span><span class="o">-</span><span class="n">bi</span><span class="o">-</span><span class="n">carbonate</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Fig</span> <span class="n">Leaf</span> <span class="n">Bi</span><span class="o">-</span><span class="n">Carbonate</span>
+https://genius.com/Mf-doom-fig-leaf-bi-carbonate-lyrics 
+              Fig Leaf Bi-Carbonate
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">kon</span><span class="o">-</span><span class="n">karne</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Kon</span> <span class="n">Karne</span>
+https://genius.com/Mf-doom-kon-karne-lyrics 
+              Kon Karne
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">guinnesses</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Guinnesses</span> <span class="p">(</span><span class="n">Ft</span><span class="p">.</span> <span class="mi">4</span><span class="n">ize</span> <span class="o">&amp;</span> <span class="n">Stahhr</span><span class="p">)</span>
+https://genius.com/Mf-doom-guinnesses-lyrics 
+              Guinnesses (Ft. 4ize &amp; Stahhr)
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">kon</span><span class="o">-</span><span class="n">queso</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Kon</span> <span class="n">Queso</span>
+https://genius.com/Mf-doom-kon-queso-lyrics 
+              Kon Queso
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">rapp</span><span class="o">-</span><span class="n">snitch</span><span class="o">-</span><span class="n">knishes</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Rapp</span> <span class="n">Snitch</span> <span class="n">Knishes</span> <span class="p">(</span><span class="n">Ft</span><span class="p">.</span> <span class="n">Mr</span><span class="p">.</span> <span class="n">Fantastik</span><span class="p">)</span>
+https://genius.com/Mf-doom-rapp-snitch-knishes-lyrics 
+              Rapp Snitch Knishes (Ft. Mr. Fantastik)
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">vomitspit</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Vomitspit</span>
+https://genius.com/Mf-doom-vomitspit-lyrics 
+              Vomitspit
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">kookies</span><span class="o">-</span><span class="n">lyrics</span> 
-              <span class="n">Kookies</span>
+https://genius.com/Mf-doom-kookies-lyrics 
+              Kookies
 
-<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">genius</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">Mf</span><span class="o">-</span><span class="n">doom</span><span class="o">-</span><span class="n">mm</span><span class="o">-</span><span class="n">food</span><span class="o">-</span><span class="n">tracklist</span><span class="o">-</span><span class="n">album</span><span class="o">-</span><span class="n">artwork</span><span class="o">-</span><span class="n">annotated</span> 
-              <span class="n">MM</span><span class="p">..</span> <span class="n">FOOD</span> <span class="p">[</span><span class="n">Tracklist</span> <span class="o">+</span> <span class="n">Album</span> <span class="n">Artwork</span><span class="p">]</span>
-</pre>
+https://genius.com/Mf-doom-mm-food-tracklist-album-artwork-annotated 
+              MM.. FOOD [Tracklist + Album Artwork]
+</code></pre>
        </div>
        <p>
         The next step is to get the raw text of the lyrics for each song. One thing to note here is that you must be running python3 for the following to work as expected. This is because of python3's handling of unicode strings. It's possible to do in python2 but you will have to play around with converting the text from unicode to ASCII.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">get_lyrics</span><span class="p">(</span><span class="n">song_url</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">get_lyrics</span><span class="p">(</span><span class="n">song_url</span><span class="p">):</span>
     <span class="sd">'''take a song url and gather the raw text containg the lyrics for that song'''</span>
     <span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">song_url</span><span class="p">)</span>
     <span class="n">html_bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
@@ -443,73 +443,73 @@
 
 <span class="c1"># Test: Find the lyrics to the first track on the latest Doom album on Genius</span>
 <span class="n">doom_lyrics</span> <span class="o">=</span> <span class="n">get_lyrics</span><span class="p">(</span><span class="n">doom_urls</span><span class="p">[</span><span class="mi">12</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">doom_lyrics</span><span class="p">)</span>
-</pre>
+<span class="nb">print</span><span class="p">(</span><span class="n">doom_lyrics</span><span class="p">)</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="k">[Hook 2X: Mr. Fantastik ]</span>
-<span class="na">Rap snitches, telling all their business</span>
-<span class="na">Sit in the court and be their own star witness</span>
-<span class="na">Do you see the perpetrator? - Yeah, I'm right here</span>
-<span class="na">F*** around, get the whole label sent up for years</span>
+        <pre><span></span><code><span class="k">[Hook 2X: Mr. Fantastik ]</span><span class="w"></span>
+<span class="na">Rap snitches, telling all their business</span><span class="w"></span>
+<span class="na">Sit in the court and be their own star witness</span><span class="w"></span>
+<span class="na">Do you see the perpetrator? - Yeah, I'm right here</span><span class="w"></span>
+<span class="na">F*** around, get the whole label sent up for years</span><span class="w"></span>
 
-<span class="k">[Verse 1: Mr. Fantastik]</span>
-<span class="na">Type profile low, like A in Paid in Full</span>
-<span class="na">Attract heavy cash 'cause the game's centrifugal</span>
-<span class="na">Mister Fantastik, long dough like elastic</span>
-<span class="na">Guard my life with twin Glocks that's made out of plastic</span>
-<span class="na">Can't stand a brown nosing n**** fake a** b******</span>
-<span class="na">Admiring my style, tour bus through Manhattan</span>
-<span class="na">Plotting, plan the quickest, my flow's the sickest</span>
-<span class="na">My h*** be the thickest, my dro the stickiest</span>
-<span class="na">Street n****, stamped and bonafide</span>
-<span class="na">When beef jump n****s come get me 'cause they know I ride</span>
-<span class="na">True to the ski mask, New York's my origin</span>
-<span class="na">Play a fake gangsta like a old accordion</span>
-<span class="na">According to him, when the D's rushed in</span>
-<span class="na">Complication from the wire testimony was thin</span>
-<span class="na">Caused his man to go up north, the ball hit 'em again</span>
-<span class="na">Lame rap snitch n**** even told on the Mexican</span>
+<span class="k">[Verse 1: Mr. Fantastik]</span><span class="w"></span>
+<span class="na">Type profile low, like A in Paid in Full</span><span class="w"></span>
+<span class="na">Attract heavy cash 'cause the game's centrifugal</span><span class="w"></span>
+<span class="na">Mister Fantastik, long dough like elastic</span><span class="w"></span>
+<span class="na">Guard my life with twin Glocks that's made out of plastic</span><span class="w"></span>
+<span class="na">Can't stand a brown nosing n**** fake a** b******</span><span class="w"></span>
+<span class="na">Admiring my style, tour bus through Manhattan</span><span class="w"></span>
+<span class="na">Plotting, plan the quickest, my flow's the sickest</span><span class="w"></span>
+<span class="na">My h*** be the thickest, my dro the stickiest</span><span class="w"></span>
+<span class="na">Street n****, stamped and bonafide</span><span class="w"></span>
+<span class="na">When beef jump n****s come get me 'cause they know I ride</span><span class="w"></span>
+<span class="na">True to the ski mask, New York's my origin</span><span class="w"></span>
+<span class="na">Play a fake gangsta like a old accordion</span><span class="w"></span>
+<span class="na">According to him, when the D's rushed in</span><span class="w"></span>
+<span class="na">Complication from the wire testimony was thin</span><span class="w"></span>
+<span class="na">Caused his man to go up north, the ball hit 'em again</span><span class="w"></span>
+<span class="na">Lame rap snitch n**** even told on the Mexican</span><span class="w"></span>
 
-<span class="k">[Hook 2X: Mr. Fantastik]</span>
-<span class="na">Rap snitches, telling all their business</span>
-<span class="na">Sit in the court and be their own star witness</span>
-<span class="na">Do you see the perpetrator? - Yeah, I'm right here</span>
-<span class="na">F*** around, get the whole label sent up for years</span>
+<span class="k">[Hook 2X: Mr. Fantastik]</span><span class="w"></span>
+<span class="na">Rap snitches, telling all their business</span><span class="w"></span>
+<span class="na">Sit in the court and be their own star witness</span><span class="w"></span>
+<span class="na">Do you see the perpetrator? - Yeah, I'm right here</span><span class="w"></span>
+<span class="na">F*** around, get the whole label sent up for years</span><span class="w"></span>
 
-<span class="k">[Verse 2: MF DOOM]</span>
-<span class="na">True, there's rules to this shit, fools dare care</span>
-<span class="na">Everybody wanna rule the world with tears for fear</span>
-<span class="na">Yeah, yeah, tell 'em tell it on the mountain hill</span>
-<span class="na">Running up they mouth bill, everybody doubting still</span>
-<span class="na">Informer, keep it up and get tested</span>
-<span class="na">Pop through your bubble vest or double-breasted</span>
-<span class="na">He keep a lab down south in the little beast</span>
-<span class="na">So much heat you woulda thought it was the Middle East</span>
-<span class="na">A little grease always keeps the wheels a spinning</span>
-<span class="na">Like sitting on twenty threes to get the squealers grinning</span>
-<span class="na">Hitting on many trees, feel real linen</span>
-<span class="na">Spitting on enemies, get the steel for tin men</span>
-<span class="na">Where no brains but gum flap</span>
-<span class="na">He said his gun clap, then he fled after one slap (Pap!)</span>
-<span class="na">Son, shut your trap, save it for the b******</span>
-<span class="na">Mmm, delicious, rapp snitch knishes</span>
+<span class="k">[Verse 2: MF DOOM]</span><span class="w"></span>
+<span class="na">True, there's rules to this shit, fools dare care</span><span class="w"></span>
+<span class="na">Everybody wanna rule the world with tears for fear</span><span class="w"></span>
+<span class="na">Yeah, yeah, tell 'em tell it on the mountain hill</span><span class="w"></span>
+<span class="na">Running up they mouth bill, everybody doubting still</span><span class="w"></span>
+<span class="na">Informer, keep it up and get tested</span><span class="w"></span>
+<span class="na">Pop through your bubble vest or double-breasted</span><span class="w"></span>
+<span class="na">He keep a lab down south in the little beast</span><span class="w"></span>
+<span class="na">So much heat you woulda thought it was the Middle East</span><span class="w"></span>
+<span class="na">A little grease always keeps the wheels a spinning</span><span class="w"></span>
+<span class="na">Like sitting on twenty threes to get the squealers grinning</span><span class="w"></span>
+<span class="na">Hitting on many trees, feel real linen</span><span class="w"></span>
+<span class="na">Spitting on enemies, get the steel for tin men</span><span class="w"></span>
+<span class="na">Where no brains but gum flap</span><span class="w"></span>
+<span class="na">He said his gun clap, then he fled after one slap (Pap!)</span><span class="w"></span>
+<span class="na">Son, shut your trap, save it for the b******</span><span class="w"></span>
+<span class="na">Mmm, delicious, rapp snitch knishes</span><span class="w"></span>
 
-<span class="k">[Outro: Mr. Fantastik &amp; (MF DOOM)]</span>
-<span class="na">You know what I'm saying?</span>
-<span class="na">(It's terrible)</span>
-<span class="na">Crazy, man, I'm just analyzing this whole game</span>
-<span class="na">This is bugged out, man, n****s is snitching</span>
-<span class="na">Telling on they own self</span>
-<span class="na">(It's a horror, yo)</span>
-<span class="na">Fuck around and get everybody bagged, man</span>
-<span class="na">(Atrocities)</span>
-<span class="na">F*** around and get yo mama bagged, n****</span>
-<span class="na">You know your grandmama used to be bootlegging...</span>
-<span class="na">Fake hustling n****</span>
+<span class="k">[Outro: Mr. Fantastik &amp; (MF DOOM)]</span><span class="w"></span>
+<span class="na">You know what I'm saying?</span><span class="w"></span>
+<span class="na">(It's terrible)</span><span class="w"></span>
+<span class="na">Crazy, man, I'm just analyzing this whole game</span><span class="w"></span>
+<span class="na">This is bugged out, man, n****s is snitching</span><span class="w"></span>
+<span class="na">Telling on they own self</span><span class="w"></span>
+<span class="na">(It's a horror, yo)</span><span class="w"></span>
+<span class="na">Fuck around and get everybody bagged, man</span><span class="w"></span>
+<span class="na">(Atrocities)</span><span class="w"></span>
+<span class="na">F*** around and get yo mama bagged, n****</span><span class="w"></span>
+<span class="na">You know your grandmama used to be bootlegging...</span><span class="w"></span>
+<span class="na">Fake hustling n****</span><span class="w"></span>
 
-<span class="na">Perpetrator? Yeah, I'm right here...</span>
-</pre>
+<span class="na">Perpetrator? Yeah, I'm right here...</span><span class="w"></span>
+</code></pre>
        </div>
        <p>
         ​
@@ -527,7 +527,7 @@
         My function identifies each verse, determines whether the featuring artist's name is in the first section of each verse, and removes each verse identified as not the main artist's. This is by no means perfect. Although genius is relatively standardised, there will be exceptions, and bits of lyrical content not belonging to the main artist may sneak through. However, the simple rule in general gives relatively good results.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">remove_guest_verse</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">remove_guest_verse</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="n">lyrics</span> <span class="o">+=</span> <span class="s1">'</span><span class="se">\n\n</span><span class="s1">'</span>
     <span class="n">verses_listed</span> <span class="o">=</span> <span class="n">lyrics</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n\n</span><span class="s1">'</span><span class="p">)</span>
     <span class="n">new_verses</span> <span class="o">=</span> <span class="p">[]</span>
@@ -543,46 +543,46 @@
     <span class="k">return</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
 
 <span class="n">song_doom_only</span> <span class="o">=</span> <span class="n">remove_guest_verse</span><span class="p">(</span><span class="n">doom_lyrics</span><span class="p">,</span> <span class="s1">'Mr. Fantastik'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">song_doom_only</span><span class="p">)</span>
-</pre>
+<span class="nb">print</span><span class="p">(</span><span class="n">song_doom_only</span><span class="p">)</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="k">[Verse 2: MF DOOM]</span>
-<span class="na">True, there's rules to this shit, fools dare care</span>
-<span class="na">Everybody wanna rule the world with tears for fear</span>
-<span class="na">Yeah, yeah, tell 'em tell it on the mountain hill</span>
-<span class="na">Running up they mouth bill, everybody doubting still</span>
-<span class="na">Informer, keep it up and get tested</span>
-<span class="na">Pop through your bubble vest or double-breasted</span>
-<span class="na">He keep a lab down south in the little beast</span>
-<span class="na">So much heat you woulda thought it was the Middle East</span>
-<span class="na">A little grease always keeps the wheels a spinning</span>
-<span class="na">Like sitting on twenty threes to get the squealers grinning</span>
-<span class="na">Hitting on many trees, feel real linen</span>
-<span class="na">Spitting on enemies, get the steel for tin men</span>
-<span class="na">Where no brains but gum flap</span>
-<span class="na">He said his gun clap, then he fled after one slap (Pap!)</span>
-<span class="na">Son, shut your trap, save it for the bitches</span>
-<span class="na">Mmm, delicious, rapp snitch knishes</span>
+        <pre><span></span><code><span class="k">[Verse 2: MF DOOM]</span><span class="w"></span>
+<span class="na">True, there's rules to this shit, fools dare care</span><span class="w"></span>
+<span class="na">Everybody wanna rule the world with tears for fear</span><span class="w"></span>
+<span class="na">Yeah, yeah, tell 'em tell it on the mountain hill</span><span class="w"></span>
+<span class="na">Running up they mouth bill, everybody doubting still</span><span class="w"></span>
+<span class="na">Informer, keep it up and get tested</span><span class="w"></span>
+<span class="na">Pop through your bubble vest or double-breasted</span><span class="w"></span>
+<span class="na">He keep a lab down south in the little beast</span><span class="w"></span>
+<span class="na">So much heat you woulda thought it was the Middle East</span><span class="w"></span>
+<span class="na">A little grease always keeps the wheels a spinning</span><span class="w"></span>
+<span class="na">Like sitting on twenty threes to get the squealers grinning</span><span class="w"></span>
+<span class="na">Hitting on many trees, feel real linen</span><span class="w"></span>
+<span class="na">Spitting on enemies, get the steel for tin men</span><span class="w"></span>
+<span class="na">Where no brains but gum flap</span><span class="w"></span>
+<span class="na">He said his gun clap, then he fled after one slap (Pap!)</span><span class="w"></span>
+<span class="na">Son, shut your trap, save it for the bitches</span><span class="w"></span>
+<span class="na">Mmm, delicious, rapp snitch knishes</span><span class="w"></span>
 
-<span class="na">Perpetrator? Yeah, I'm right here...</span>
-</pre>
+<span class="na">Perpetrator? Yeah, I'm right here...</span><span class="w"></span>
+</code></pre>
        </div>
        <p>
         The last two helper functions we will write before creating the main function to put this all together. The first is a cleaner function. It removes all lines starting with useless words like [chorus] and all repeated lines. Then, a small (perhaps unnecessary, but I like it) function to save our lyrics to a .txt file.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">lyrics</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">lyrics</span><span class="p">):</span>
     <span class="n">line_list</span> <span class="o">=</span> <span class="n">lyrics</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
     <span class="n">line_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">line_list</span> <span class="k">if</span> <span class="p">((</span><span class="s1">'['</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">'('</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="p">)</span> <span class="p">)</span> <span class="ow">and</span> <span class="n">line_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line_list</span><span class="p">)</span>
 
 <span class="n">cleaned</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">song_doom_only</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
-</pre>
+<span class="nb">print</span><span class="p">(</span><span class="n">cleaned</span><span class="p">)</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="nv">True</span>, <span class="nv">there</span><span class="s1">'</span><span class="s">s rules to this shit, fools dare care</span>
+        <pre><span></span><code><span class="nv">True</span>, <span class="nv">there</span><span class="s1">'</span><span class="s">s rules to this shit, fools dare care</span>
 <span class="nv">Everybody</span> <span class="nv">wanna</span> <span class="nv">rule</span> <span class="nv">the</span> <span class="nv">world</span> <span class="nv">with</span> <span class="nv">tears</span> <span class="k">for</span> <span class="nv">fear</span>
 <span class="nv">Yeah</span>, <span class="nv">yeah</span>, <span class="nv">tell</span> <span class="s1">'</span><span class="s">em tell it on the mountain hill</span>
 <span class="nv">Running</span> <span class="nv">up</span> <span class="nv">they</span> <span class="nv">mouth</span> <span class="nv">bill</span>, <span class="nv">everybody</span> <span class="nv">doubting</span> <span class="nv">still</span>
@@ -599,25 +599,25 @@
 <span class="nv">Son</span>, <span class="nv">shut</span> <span class="nv">your</span> <span class="nv">trap</span>, <span class="nv">save</span> <span class="nv">it</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">bitches</span>
 <span class="nv">Mmm</span>, <span class="nv">delicious</span>, <span class="nv">rapp</span> <span class="nv">snitch</span> <span class="nv">knishes</span>
 <span class="nv">Perpetrator</span>? <span class="nv">Yeah</span>, <span class="nv">I</span><span class="s1">'</span><span class="s">m right here...</span>
-</pre>
+</code></pre>
        </div>
        <p>
         If you're running this as a script on windows I recommend creating un-commenting the two top lines, creating a folder called text and using that structure to save all .txt files to that folder.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="c1"># import os</span>
+        <pre><span></span><code><span class="c1"># import os</span>
 <span class="c1"># path = os.path.dirname(os.path.realpath(__file__)).replace('\\', '/')+'/text/'</span>
 
 <span class="k">def</span> <span class="nf">lyrics_to_txt</span><span class="p">(</span><span class="n">lyrics</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
     <span class="n">thefile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">artist</span><span class="o">+</span><span class="s1">'.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span>
     <span class="n">thefile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">lyrics</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <p>
         The following code puts all previous functions together into one coherent subroutine.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">save_lyrics</span><span class="p">(</span><span class="n">artist</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">save_lyrics</span><span class="p">(</span><span class="n">artist</span><span class="p">):</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">name_to_url</span><span class="p">(</span><span class="n">artist</span><span class="p">)</span>
     <span class="n">album_urls</span> <span class="o">=</span>  <span class="n">get_albums</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="n">word_count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -648,21 +648,21 @@
                 <span class="c1">#check the word count</span>
                 <span class="n">word_count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lyrics</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">))</span> 
                 <span class="k">if</span> <span class="n">word_count</span><span class="o">&gt;=</span> <span class="mi">20000</span><span class="p">:</span>
-                    <span class="k">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' complete'</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' complete'</span><span class="p">)</span>
 
-                    <span class="k">print</span><span class="p">(</span><span class="n">all_lyrics</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">all_lyrics</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
                     <span class="k">return</span> 
 
-        <span class="k">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' Couldn</span><span class="se">\'</span><span class="s1">t get to 20,000 words'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' Couldn</span><span class="se">\'</span><span class="s1">t get to 20,000 words'</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">album_urls</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' Problem loading page'</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' Problem loading page'</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' Not enough albums'</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">artist</span> <span class="o">+</span> <span class="s1">' Not enough albums'</span><span class="p">)</span>
 
 <span class="c1">#save_lyrics('2 Chainz')</span>
-</pre>
+</code></pre>
        </div>
        <p>
         I've added in some debugging print lines so help identify the source of the problem if the download fails. This may be because the code failed to find the artist's page (for example, Tupac Shakur fails since the Genius page has the artist written as 2Pac). There are a number of artists that fail to meet the 20,000 word threshold. Sometimes, this is because there really aren't enough words in their entire discography. Other times it's because the six listed albums don't have enough words. In this case, the only way you can solve the problem is by manually adding more lyrics.

@@ -15,7 +15,7 @@
    <!-- Feed -->
    <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
    <!-- Code highlight color scheme -->
-   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet"/>
    <!-- CSS specified by the user -->
    <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
    <!-- Custom fonts -->
@@ -360,27 +360,27 @@
         WELL. Thank Christ that's over. Lets get on to the fun bit. First we need to import the relevant modules. I know I said we'd only use NumPy. But we're also going to use the mnist package that lets you handle the data a bit easier.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">mnist</span> <span class="kn">import</span> <span class="n">MNIST</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Then we'll define the sigmoid and sigmoid prime functions
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
 
 <span class="k">def</span> <span class="nf">sigmoid_dash</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Then we'll extract the data. Make sure you've downloaded it and saved it into your desired directory.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">mndata</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="s1">'/home/ed/Documents/Code/Projects/ML/MNIST'</span><span class="p">)</span>
+        <pre><span></span><code><span class="n">mndata</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="s1">'/home/ed/Documents/Code/Projects/ML/MNIST'</span><span class="p">)</span>
 
 
 <span class="n">training_data</span><span class="p">,</span> <span class="n">training_labels</span> <span class="o">=</span> <span class="n">mndata</span><span class="o">.</span><span class="n">load_training</span><span class="p">()</span>
@@ -390,26 +390,26 @@
 <span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">test_data</span><span class="p">]</span>
 
 <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">training_labels</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Then define the layer structure
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">784</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+        <pre><span></span><code><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">784</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
 <span class="n">n_layers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Let's initialise the weights and biases randomly
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">initial_weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <pre><span></span><code><span class="n">initial_weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
 
 <span class="n">initial_biases</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
-</pre>
+</code></pre>
        </div>
        <p>
         ok. Now we'll start building our model class as class: Model. I'll take you through the methods one by one, then put them all together. The
@@ -419,7 +419,7 @@
         method just takes the initial weights and biases and adds them to the class. If you're picking up from before, you can also load them from a previous run.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">initial_biases</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">from_saved</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">initial_biases</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_saved</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">from_saved</span><span class="p">:</span>
         <span class="n">saved_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'best_weights.npz'</span><span class="p">)</span>
         <span class="n">saved_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'best_biases.npz'</span><span class="p">)</span>
@@ -428,35 +428,35 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">initial_weights</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">initial_biases</span>
-</pre>
+</code></pre>
        </div>
        <p>
         The propogate method just takes the input neurons and runs them through the network
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">propagate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_neurons</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">propagate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_neurons</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_neurons</span><span class="p">]</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-</pre>
+</code></pre>
        </div>
        <p>
         The answer method just gives us a neat way to visualise the answer given
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_neurons</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_neurons</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">propagate</span><span class="p">(</span><span class="n">input_neurons</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-</pre>
+</code></pre>
        </div>
        <p>
         The learn method goes through every example in the training data, works out the corresponding changes that should be made to the weights, and averages them to find a final proposed change. It takes the learning rate hyperparamter.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">):</span>
 
     <span class="n">dw</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W</span><span class="p">)</span> <span class="k">for</span> <span class="n">W</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">]</span>
     <span class="n">db</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="k">for</span> <span class="n">B</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">]</span>
@@ -484,14 +484,14 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">/</span> <span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="n">dw</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">/</span> <span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="n">db</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Define a simple train method to repeat learning. If the mode produces weights and biases with better accuracy we save them.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">training_loops</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">'Beginning Training...'</span><span class="p">)</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">training_loops</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Beginning Training...'</span><span class="p">)</span>
     <span class="n">best_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">training_loops</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">learning_rate</span><span class="p">)</span>
@@ -500,13 +500,13 @@
             <span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="s1">'best_weights.npz'</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
             <span class="n">np</span><span class="o">.</span><span class="n">savez</span><span class="p">(</span><span class="s1">'best_biases.npz'</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
             <span class="n">best_score</span> <span class="o">=</span> <span class="n">this_score</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Finally, a simple method to neaty evaluate the model.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">correct</span> <span class="o">=</span> <span class="n">incorrect</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">input_neurons</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">answer</span><span class="p">(</span><span class="n">input_neurons</span><span class="p">)</span> <span class="o">==</span> <span class="n">label</span><span class="p">:</span>
@@ -514,17 +514,17 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">incorrect</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">fraction</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="p">(</span><span class="n">correct</span> <span class="o">+</span> <span class="n">incorrect</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">'{:.2f}</span><span class="si">% c</span><span class="s1">orrect'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">fraction</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2f}% c</span><span class="s1">orrect'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">fraction</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">fraction</span>
-</pre>
+</code></pre>
        </div>
        <p>
         And that's it! All we need to do now is instantiate the class and run
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+        <pre><span></span><code><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">initial_biases</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">from_saved</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">initial_biases</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_saved</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">from_saved</span><span class="p">:</span>
             <span class="n">saved_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'best_weights.npz'</span><span class="p">)</span>
             <span class="n">saved_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'best_biases.npz'</span><span class="p">)</span>
@@ -576,7 +576,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">/</span> <span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="n">db</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">training_loops</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">'Beginning Training...'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Beginning Training...'</span><span class="p">)</span>
         <span class="n">best_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">training_loops</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="n">learning_rate</span><span class="p">)</span>
@@ -594,31 +594,31 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">incorrect</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">fraction</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="p">(</span><span class="n">correct</span> <span class="o">+</span> <span class="n">incorrect</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">'{:.2f}</span><span class="si">% c</span><span class="s1">orrect'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">fraction</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2f}% c</span><span class="s1">orrect'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">fraction</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">fraction</span>
 
 
 
-<span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">from_saved</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+<span class="n">my_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">from_saved</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">initial_weights</span><span class="o">=</span><span class="n">initial_weights</span><span class="p">,</span>
                  <span class="n">initial_biases</span><span class="o">=</span><span class="n">initial_biases</span><span class="p">)</span>
 <span class="n">my_model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_loops</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="n">Beginning</span> <span class="n">Training</span><span class="p">...</span>
-<span class="mi">12</span><span class="p">.</span><span class="mi">47</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">10</span><span class="p">.</span><span class="mi">01</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">12</span><span class="p">.</span><span class="mi">01</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">12</span><span class="p">.</span><span class="mi">26</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">12</span><span class="p">.</span><span class="mi">51</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">12</span><span class="p">.</span><span class="mi">76</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">13</span><span class="p">.</span><span class="mi">95</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">15</span><span class="p">.</span><span class="mi">62</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">17</span><span class="p">.</span><span class="mi">12</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">18</span><span class="p">.</span><span class="mi">13</span><span class="o">%</span> <span class="n">correct</span>
-<span class="mi">19</span><span class="p">.</span><span class="mi">26</span><span class="o">%</span> <span class="n">correct</span>
-</pre>
+        <pre><span></span><code>Beginning Training...
+12.47% correct
+10.01% correct
+12.01% correct
+12.26% correct
+12.51% correct
+12.76% correct
+13.95% correct
+15.62% correct
+17.12% correct
+18.13% correct
+19.26% correct
+</code></pre>
        </div>
        <p>
         I managed to get my model up to 95% accuracy after about half an hour of training. Laughable for the MNIST data set? Maybe. But a lot of fun, and pretty cool anyway.
@@ -639,10 +639,13 @@
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
     mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'none' } }," +
         "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
         "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
         "    displayAlign: '"+ align +"'," +
@@ -656,7 +659,9 @@
         "        preview: 'TeX'," +
         "    }, " +
         "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
         "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
         "    }, " +
         "}); " +
@@ -676,6 +681,8 @@
                 "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
             "});" +
         "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
        </script>

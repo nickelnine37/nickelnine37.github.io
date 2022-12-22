@@ -15,7 +15,7 @@
    <!-- Feed -->
    <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
    <!-- Code highlight color scheme -->
-   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet"/>
    <!-- CSS specified by the user -->
    <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
    <!-- Custom fonts -->
@@ -154,15 +154,15 @@
         First, set the folder where you want to save the image to.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">SAVE_FILES_TO</span> <span class="o">=</span> <span class="s1">'/home/ed/Pictures/BingWallpapers'</span>
-</pre>
+        <pre><span></span><code><span class="n">SAVE_FILES_TO</span> <span class="o">=</span> <span class="s1">'/home/ed/Pictures/BingWallpapers'</span>
+</code></pre>
        </div>
        <p>
         Next, fetch the URL for the photo of the day.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">urlopen</span>
-<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">urlopen</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
 
 <span class="k">def</span> <span class="nf">get_image</span><span class="p">():</span>
     <span class="sd">'''</span>
@@ -177,13 +177,13 @@
     <span class="n">name</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"startdate"</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="s2">".jpg"</span>
 
     <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="n">url</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Now save this image to the directory you specified.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
 
@@ -195,22 +195,22 @@
     <span class="n">image_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SAVE_FILES_TO</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">SAVE_FILES_TO</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">SAVE_FILES_TO</span> <span class="o">+</span> <span class="s1">': This directory does not exist'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">SAVE_FILES_TO</span> <span class="o">+</span> <span class="s1">': This directory does not exist'</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
         <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">image_path</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">True</span><span class="p">,</span> <span class="n">image_path</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">image_path</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">'File exists already'</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">False</span><span class="p">,</span> <span class="n">image_path</span>
-</pre>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'File exists already'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">image_path</span>
+</code></pre>
        </div>
        <p>
         Here's a few helper functions that will set the background and screensaver.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">import</span> <span class="nn">gi</span>
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">gi</span>
 <span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s1">'Gtk'</span><span class="p">,</span> <span class="s1">'3.0'</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gio</span>
 
@@ -224,25 +224,25 @@
 
 <span class="k">def</span> <span class="nf">change_screensaver</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="n">set_gsettings</span><span class="p">(</span><span class="s1">'screensaver'</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Now our main function just sets these, if it hasn't done so already
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">success</span><span class="p">,</span> <span class="n">image_path</span> <span class="o">=</span> <span class="n">save_image</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
         <span class="n">change_background</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
         <span class="n">change_screensaver</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Finally, a little loop to wait for an internet connection
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">socket</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
@@ -253,10 +253,10 @@
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">gaierror</span><span class="p">:</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">'Retrying'</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">'Connection Failed'</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'Retrying'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Connection Failed'</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Now, to make this script automatically change the screen saver each day, just navigate to Startup Applications (in Ubuntu), make a new entry, and set the command to

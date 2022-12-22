@@ -15,7 +15,7 @@
    <!-- Feed -->
    <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
    <!-- Code highlight color scheme -->
-   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet"/>
    <!-- CSS specified by the user -->
    <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
    <!-- Custom fonts -->
@@ -298,7 +298,7 @@ $$
         Which you can code up in python fairly easily.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">D</span><span class="p">,</span> <span class="n">Q_0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
 <span class="n">x_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -313,7 +313,7 @@ $$
     <span class="n">c</span> <span class="o">=</span> <span class="n">Q_0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
     <span class="n">r_squared</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r_squared</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>
-</pre>
+</code></pre>
        </div>
        <p>
         <img alt="failed" src="images/inst_point_source.gif"/>
@@ -458,7 +458,7 @@ $$
         Cool! We're also massively helped out by the fact that Scipy has the exponential integral as one of its special function. Let's code it up.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expi</span> <span class="c1"># The exponential integral function</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expi</span> <span class="c1"># The exponential integral function</span>
 <span class="n">q</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span>
 
 <span class="k">def</span> <span class="nf">A_cont_ps</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">x_0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_0</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -474,7 +474,7 @@ $$
         <span class="k">return</span> <span class="o">-</span><span class="n">q_on_4piD</span> <span class="o">*</span> <span class="n">ei2</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">q_on_4piD</span> <span class="o">*</span> <span class="p">(</span><span class="n">expi</span><span class="p">(</span><span class="o">-</span><span class="n">r_squared_on_4D</span> <span class="o">/</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">tau</span><span class="p">))</span> <span class="o">-</span> <span class="n">ei2</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <p>
         <img alt="failed" src="images/cont_point_source.gif"/>
@@ -524,7 +524,7 @@ $$
         and then string them altogether into a gif.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="k">def</span> <span class="nf">plot_field</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
    <span class="sd">'''</span>
@@ -533,8 +533,8 @@ $$
 
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'t={:.2f}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'{:.2f}.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'t=</span><span class="si">{:.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2f}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">save_gifs</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
@@ -573,7 +573,7 @@ $$
 <span class="n">make_gif1</span><span class="p">()</span>
 <span class="n">make_gif2</span><span class="p">()</span>
 <span class="n">make_gif3</span><span class="p">()</span>
-</pre>
+</code></pre>
        </div>
        <script type="text/javascript">
         if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
@@ -591,10 +591,13 @@ $$
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
     mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'none' } }," +
         "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
         "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
         "    displayAlign: '"+ align +"'," +
@@ -608,7 +611,9 @@ $$
         "        preview: 'TeX'," +
         "    }, " +
         "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
         "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
         "    }, " +
         "}); " +
@@ -628,6 +633,8 @@ $$
                 "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
             "});" +
         "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
        </script>

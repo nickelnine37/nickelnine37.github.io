@@ -15,7 +15,7 @@
    <!-- Feed -->
    <link href="/theme/css/style.css" rel="stylesheet" type="text/css"/>
    <!-- Code highlight color scheme -->
-   <link href="/theme/css/code_blocks/c3.css" rel="stylesheet"/>
+   <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet"/>
    <!-- CSS specified by the user -->
    <link href="//home/ed/Documents/Code/PA2/attila/static/css/my_colors.css" rel="stylesheet" type="text/css"/>
    <!-- Custom fonts -->
@@ -152,7 +152,7 @@
         We can do a basic word count pretty easily. The only complication comes from deciding what counts as a word. While this might sound easy, there's actually a significant amount of difficulty that arises from this. As a simple example, are words joined by a hyphen one or two words? The headache can be avoided entirely by using a third party word tokeniser (an algorithm that splits text into words). The most renowned python module out there for this kind of analysis is the Natural Language Tool-Kit (NLTK) package. Note that to use their tokeniser you will have to download some additional things on top of the pip install (see website for documentation). For now, I'm just going to use it in the code.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
 
 <span class="n">punc</span> <span class="o">=</span> <span class="p">[</span><span class="s1">','</span><span class="p">,</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\'</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\"</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'$'</span><span class="p">,</span> <span class="s1">';'</span><span class="p">,</span> <span class="s1">':'</span><span class="p">,</span> <span class="s1">'!'</span><span class="p">,</span> <span class="s1">'?'</span><span class="p">,</span> <span class="s1">'-'</span><span class="p">,</span>  <span class="s1">'#'</span><span class="p">,</span> <span class="s1">'('</span><span class="p">,</span> <span class="s1">')'</span><span class="p">]</span>
 
@@ -177,7 +177,7 @@
                 <span class="n">dic</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">counts</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>   
                 <span class="k">return</span> <span class="n">dic</span>
     <span class="k">return</span> <span class="s1">'Not enough words'</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Note that we want to exclude all punctuation and repeats of words with upper and lowercase letters. Therefore we make sure each word isn't inside the punctuation list, and use .lower().
@@ -195,61 +195,61 @@
         You can go on over to their website install and the software. It's a command line tool so make sure to add the eSpeak directory to your system path to allow command line calls. If you're running a Linux machine, a simple
        </p>
        <div class="highlight">
-        <pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">espeak</span>
-</pre>
+        <pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">espeak</span>
+</code></pre>
        </div>
        <p>
         should do the trick. Once that's done, we can convert text into its phonetic form with the following call:
        </p>
        <div class="highlight">
-        <pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">espeak</span> <span class="o">-</span><span class="n">q</span> <span class="o">--</span><span class="n">ipa</span> <span class="o">-</span><span class="n">v</span> <span class="n">en</span><span class="o">-</span><span class="n">us</span> <span class="o">&lt;</span><span class="n">text</span><span class="o">&gt;</span> 
-</pre>
+        <pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">espeak</span> <span class="o">-</span><span class="n">q</span> <span class="o">--</span><span class="n">ipa</span> <span class="o">-</span><span class="n">v</span> <span class="n">en</span><span class="o">-</span><span class="n">us</span> <span class="o">&lt;</span><span class="n">text</span><span class="o">&gt;</span> 
+</code></pre>
        </div>
        <p>
         We can use the check_output() function within python to access the command line. Here's an example of call and expected output:
        </p>
        <div class="highlight">
-        <pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">check_output</span>
+        <pre><span></span><code><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">check_output</span>
 
 <span class="n">line</span> <span class="o">=</span>  <span class="s2">"I'm still not a player but you still a hater,</span><span class="se">\n</span><span class="s2">Elevator to the top hah see you later</span><span class="se">\n</span><span class="s2">"</span>
 <span class="n">line_phonetic</span> <span class="o">=</span> <span class="n">check_output</span><span class="p">([</span><span class="s2">"espeak"</span><span class="p">,</span> <span class="s2">"-q"</span><span class="p">,</span> <span class="s2">"--ipa"</span><span class="p">,</span> <span class="s2">"-v"</span><span class="p">,</span> <span class="s2">"en-us"</span><span class="p">,</span> <span class="n">line</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s1">'Original line: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">'Phonetic Version: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line_phonetic</span><span class="p">)</span>
-</pre>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Original line: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Phonetic Version: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line_phonetic</span><span class="p">)</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="n">Original</span> <span class="n">line</span><span class="p">:</span> 
- <span class="n">I</span><span class="err">'</span><span class="n">m</span> <span class="n">still</span> <span class="k">not</span> <span class="n">a</span> <span class="n">player</span> <span class="n">but</span> <span class="n">you</span> <span class="n">still</span> <span class="n">a</span> <span class="n">hater</span><span class="p">,</span>
-<span class="n">Elevator</span> <span class="k">to</span> <span class="n">the</span> <span class="n">top</span> <span class="n">hah</span> <span class="n">see</span> <span class="n">you</span> <span class="n">later</span>
+        <pre><span></span><code>Original line: 
+ I'm still not a player but you still a hater,
+Elevator to the top hah see you later
 
-<span class="n">Phonetic</span> <span class="k">Version</span><span class="p">:</span> 
-  <span class="n">aɪm</span> <span class="n">stˈɪl</span> <span class="n">nˌɑːɾə</span> <span class="n">plˈeɪɚ</span> <span class="n">bˌʌt</span> <span class="n">juː</span> <span class="n">stˈɪl</span> <span class="err">ɐ</span> <span class="n">hˈeɪɾɚ</span>
- <span class="err">ˈɛ</span><span class="n">lɪvˌeɪɾɚ</span> <span class="n">tə</span> <span class="err">ðə</span> <span class="n">tˈɑːp</span> <span class="n">hˈɑː</span> <span class="n">sˈiː</span> <span class="n">juː</span> <span class="n">lˈeɪɾɚ</span>
-</pre>
+Phonetic Version: 
+  aɪm stˈɪl nˌɑːɾə plˈeɪɚ bˌʌt juː stˈɪl ɐ hˈeɪɾɚ
+ ˈɛlɪvˌeɪɾɚ tə ðə tˈɑːp hˈɑː sˈiː juː lˈeɪɾɚ
+</code></pre>
        </div>
        <p>
         Since we are interested in rhyming sounds (and are going to be lenient about half-rhymes) we're really only interested in the vowel sounds. So the first thing we want to do is take our lyrics, and convert it into a list of ordered vowel sounds, stripped of their consonants. An exhaustive list of all the possible English vowel sounds is shown below.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">vowels_sounds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'aɪ'</span><span class="p">,</span><span class="s1">'aʊ'</span><span class="p">,</span><span class="s1">'eɪ'</span><span class="p">,</span><span class="s1">'i'</span><span class="p">,</span><span class="s1">'oʊ'</span><span class="p">,</span><span class="s1">'oː'</span><span class="p">,</span><span class="s1">'uː'</span><span class="p">,</span><span class="s1">'æ'</span><span class="p">,</span> <span class="s1">'ɑː'</span><span class="p">,</span>
+        <pre><span></span><code><span class="n">vowels_sounds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'aɪ'</span><span class="p">,</span><span class="s1">'aʊ'</span><span class="p">,</span><span class="s1">'eɪ'</span><span class="p">,</span><span class="s1">'i'</span><span class="p">,</span><span class="s1">'oʊ'</span><span class="p">,</span><span class="s1">'oː'</span><span class="p">,</span><span class="s1">'uː'</span><span class="p">,</span><span class="s1">'æ'</span><span class="p">,</span> <span class="s1">'ɑː'</span><span class="p">,</span>
                  <span class="s1">'ɔ'</span><span class="p">,</span><span class="s1">'ɔɪ'</span><span class="p">,</span><span class="s1">'ɔː'</span><span class="p">,</span><span class="s1">'ɛ'</span><span class="p">,</span><span class="s1">'ɛ'</span><span class="p">,</span><span class="s1">'ɜː'</span><span class="p">,</span><span class="s1">'ɪ'</span><span class="p">,</span><span class="s1">'ʊ'</span><span class="p">,</span><span class="s1">'ʌ'</span><span class="p">,</span> <span class="s1">'ɚ'</span><span class="p">,</span> <span class="s1">'ə'</span><span class="p">]</span>
-</pre>
+</code></pre>
        </div>
        <p>
         Notice that some are two characters long, and sometimes the first character of a two-character vowel sound also exists as its own separate vowel sound. Therefore we can split this into two lists: possible first characters and possible second characters
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">first</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span><span class="s1">'e'</span><span class="p">,</span><span class="s1">'i'</span><span class="p">,</span><span class="s1">'o'</span><span class="p">,</span><span class="s1">'u'</span><span class="p">,</span><span class="s1">'ɐ'</span><span class="p">,</span><span class="s1">'æ'</span><span class="p">,</span><span class="s1">'ɑ'</span><span class="p">,</span><span class="s1">'ɒ'</span><span class="p">,</span>
+        <pre><span></span><code><span class="n">first</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span><span class="s1">'e'</span><span class="p">,</span><span class="s1">'i'</span><span class="p">,</span><span class="s1">'o'</span><span class="p">,</span><span class="s1">'u'</span><span class="p">,</span><span class="s1">'ɐ'</span><span class="p">,</span><span class="s1">'æ'</span><span class="p">,</span><span class="s1">'ɑ'</span><span class="p">,</span><span class="s1">'ɒ'</span><span class="p">,</span>
          <span class="s1">'ɔ'</span><span class="p">,</span><span class="s1">'ɛ'</span><span class="p">,</span><span class="s1">'ɜ'</span><span class="p">,</span><span class="s1">'ɪ'</span><span class="p">,</span><span class="s1">'ʊ'</span><span class="p">,</span><span class="s1">'ʌ'</span><span class="p">,</span><span class="s1">'ɚ'</span><span class="p">,</span> <span class="s1">'ə'</span><span class="p">]</span>
 <span class="n">second</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ɪ'</span><span class="p">,</span><span class="s1">'ʊ'</span><span class="p">,</span><span class="s1">'ː'</span><span class="p">]</span>
-</pre>
+</code></pre>
        </div>
        <p>
         We can use these two lists to extract all the vowels from a phonetic string
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">extract_vowels</span><span class="p">(</span><span class="n">phonetic_text</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">extract_vowels</span><span class="p">(</span><span class="n">phonetic_text</span><span class="p">):</span>
 
     <span class="n">phonetic_vowels</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -272,24 +272,24 @@
     <span class="k">return</span> <span class="n">phonetic_vowels</span>
 
 <span class="n">vowel_list</span> <span class="o">=</span> <span class="n">extract_vowels</span><span class="p">(</span><span class="n">line_phonetic</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line_phonetic</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">vowel_list</span><span class="p">)</span>
-</pre>
+<span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">line_phonetic</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">vowel_list</span><span class="p">)</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="n">I</span><span class="s1">'m still not a player but you still a hater,</span>
-<span class="s1">Elevator to the top hah see you later</span>
+        <pre><span></span><code>I'm still not a player but you still a hater,
+Elevator to the top hah see you later
 
-<span class="s1">  aɪm stˈɪl nˌɑːɾə plˈeɪɚ bˌʌt juː stˈɪl ɐ hˈeɪɾɚ</span>
-<span class="s1"> ˈɛlɪvˌeɪɾɚ tə ðə tˈɑːp hˈɑː sˈiː juː lˈeɪɾɚ</span>
+  aɪm stˈɪl nˌɑːɾə plˈeɪɚ bˌʌt juː stˈɪl ɐ hˈeɪɾɚ
+ ˈɛlɪvˌeɪɾɚ tə ðə tˈɑːp hˈɑː sˈiː juː lˈeɪɾɚ
 
-<span class="s1"> ['</span><span class="n">aɪ</span><span class="s1">', '</span><span class="err">ɪ</span><span class="s1">', '</span><span class="err">ɑː</span><span class="s1">', '</span><span class="err">ə</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ</span><span class="s1">', '</span><span class="err">ʌ</span><span class="s1">', '</span><span class="n">uː</span><span class="s1">', '</span><span class="err">ɪ</span><span class="s1">', '</span><span class="err">ɐ</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ</span><span class="s1">', '</span><span class="err">ɛ</span><span class="s1">', '</span><span class="err">ɪ</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ</span><span class="s1">', '</span><span class="err">ə</span><span class="s1">', '</span><span class="err">ə</span><span class="s1">', '</span><span class="err">ɑː</span><span class="s1">', '</span><span class="err">ɑː</span><span class="s1">', '</span><span class="n">iː</span><span class="s1">', '</span><span class="n">uː</span><span class="s1">', '</span><span class="n">eɪ</span><span class="s1">', '</span><span class="err">ɚ'</span><span class="p">]</span>
-</pre>
+ ['aɪ', 'ɪ', 'ɑː', 'ə', 'eɪ', 'ɚ', 'ʌ', 'uː', 'ɪ', 'ɐ', 'eɪ', 'ɚ', 'ɛ', 'ɪ', 'eɪ', 'ɚ', 'ə', 'ə', 'ɑː', 'ɑː', 'iː', 'uː', 'eɪ', 'ɚ']
+</code></pre>
        </div>
        <p>
         We now want a function to go through our lyrics and output a vowel list. However, this function allows only a limited number of characters to be sent to the command line. Thus, the text file has to be split up into chunks. My function is as below
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">find_phonetic_vowels</span><span class="p">(</span><span class="n">text_file</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">find_phonetic_vowels</span><span class="p">(</span><span class="n">text_file</span><span class="p">):</span>
     <span class="sd">'''Strip the text of constanants and output vowell list'''</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">text_file</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">text_file</span><span class="p">:</span>
         <span class="n">original_text</span><span class="o">=</span><span class="n">text_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">)</span>
@@ -301,7 +301,7 @@
         <span class="n">phonetic_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">check_output</span><span class="p">([</span><span class="s2">"espeak"</span><span class="p">,</span> <span class="s2">"-q"</span><span class="p">,</span> <span class="s2">"--ipa"</span><span class="p">,</span> <span class="s2">"-v"</span><span class="p">,</span> <span class="s2">"en-us"</span><span class="p">,</span> <span class="n">chunk</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">extract_vowels</span><span class="p">(</span><span class="n">phonetic_text</span><span class="p">)</span>
-</pre>
+</code></pre>
        </div>
        <h3 id="232-sorting-out-rhymes">
         2.3.2 Sorting out Rhymes
@@ -358,18 +358,18 @@
         Note that part of this process involves searching for a sub-list within a list. There's no in-built python function for this as far as I could tell, so I had to write my own. It is shown below.
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">is_it_in</span><span class="p">(</span><span class="n">sub_list</span><span class="p">,</span> <span class="n">main_list</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">is_it_in</span><span class="p">(</span><span class="n">sub_list</span><span class="p">,</span> <span class="n">main_list</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">main_list</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">main_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">main_list</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)]</span> <span class="o">==</span> <span class="n">sub_list</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">True</span>
-    <span class="k">return</span> <span class="bp">False</span>
-</pre>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre>
        </div>
        <p>
         To put the above algorithm into python was a bit of a headache for me. The function I finally came up with is shown below
        </p>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">find_rhymes</span><span class="p">(</span><span class="n">phonetic_vowels</span><span class="p">,</span> <span class="n">trail</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">find_rhymes</span><span class="p">(</span><span class="n">phonetic_vowels</span><span class="p">,</span> <span class="n">trail</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
 
     <span class="n">phonetic_vowels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
@@ -398,19 +398,19 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">rhymes</span>
-</pre>
+</code></pre>
        </div>
        <p>
         If we run this function on the same line as before, we get
        </p>
        <div class="highlight">
-        <pre><span></span><span class="n">rhymes</span> <span class="o">=</span> <span class="n">find_rhymes</span><span class="p">(</span><span class="n">vowel_list</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">rhymes</span><span class="p">)</span>
-</pre>
+        <pre><span></span><code><span class="n">rhymes</span> <span class="o">=</span> <span class="n">find_rhymes</span><span class="p">(</span><span class="n">vowel_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rhymes</span><span class="p">)</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="p">[[</span><span class="s1">'ɪ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'eɪ'</span><span class="p">,</span> <span class="s1">'ɚ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ɪ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'eɪ'</span><span class="p">,</span> <span class="s1">'ɚ'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ə'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ə'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ɑː'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ɑː'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'uː'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'eɪ'</span><span class="p">,</span> <span class="s1">'ɚ'</span><span class="p">]]</span>
-</pre>
+        <pre><span></span><code>[['ɪ'], ['eɪ', 'ɚ'], ['ɪ'], ['eɪ', 'ɚ'], ['ə'], ['ə'], ['ɑː'], ['ɑː'], ['uː'], ['eɪ', 'ɚ']]
+</code></pre>
        </div>
        <p>
         Finally, I want some function to designate points based on this output list of lists of rhyme sounds. The function that I decided on allocates more points to longer multis quadratically by
@@ -419,19 +419,19 @@
         $$ f(\text{length}) = \text{length} \times (1 + \frac{\text{length} - 1}{10} \, ) $$
        </div>
        <div class="highlight">
-        <pre><span></span><span class="k">def</span> <span class="nf">points</span><span class="p">(</span><span class="n">rhymes</span><span class="p">):</span>
+        <pre><span></span><code><span class="k">def</span> <span class="nf">points</span><span class="p">(</span><span class="n">rhymes</span><span class="p">):</span>
     <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">rhyme</span> <span class="ow">in</span> <span class="n">rhymes</span><span class="p">:</span>
         <span class="n">multi</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rhyme</span><span class="p">)</span>
         <span class="n">score</span> <span class="o">+=</span> <span class="n">multi</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">multi</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">score</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">points</span><span class="p">(</span><span class="n">rhymes</span><span class="p">))</span>
-</pre>
+<span class="nb">print</span><span class="p">(</span><span class="n">points</span><span class="p">(</span><span class="n">rhymes</span><span class="p">))</span>
+</code></pre>
        </div>
        <div class="highlight">
-        <pre><span></span><span class="mi">13</span><span class="p">.</span><span class="mi">600000000000001</span>
-</pre>
+        <pre><span></span><code><span class="mf">13.600000000000001</span><span class="w"></span>
+</code></pre>
        </div>
        <p>
         And there we have it. The final step is simply to loop over all the saved text files and save the scores to a pandas dataframe. See my next post for the results!
@@ -452,10 +452,13 @@
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
     mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({" +
         "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js','color.js','mhchem.js'], equationNumbers: { autoNumber: 'none' } }," +
         "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
         "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
         "    displayAlign: '"+ align +"'," +
@@ -469,7 +472,9 @@
         "        preview: 'TeX'," +
         "    }, " +
         "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'red ! important'} }," +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
         "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
         "    }, " +
         "}); " +
@@ -489,6 +494,8 @@
                 "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
             "});" +
         "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
        </script>
